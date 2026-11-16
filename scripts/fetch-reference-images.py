@@ -89,7 +89,7 @@ for slug, title in FILES.items():
 lines = ['# Reference photo credits', '', 'These photographs illustrate sample concepts. They are not SorviaGlobal inventory photographs or evidence of product specifications.', '', 'Downloaded 16 November 2026 from Wikimedia Commons. Images retain their individual licenses; application code licensing does not replace them.', '']
 for record in records:
     lines.extend([f"## {record['file']}", '', f"- Title: {record['title']}", f"- Author: {record['author']}", f"- Source: {record['source']}", f"- License: {record['license']} {record['licenseUrl']}", f"- Changes: {record['changes']}", ''])
-(ROOT / 'IMAGE_CREDITS.md').write_text('\n'.join(lines), encoding='utf-8')
+(ROOT / 'IMAGE_CREDITS.md').write_text('\n'.join(line.rstrip() for line in lines), encoding='utf-8')
 
 entries = []
 for record in records:

@@ -41,7 +41,7 @@ Downloaded 16 November 2026 from Wikimedia Commons. Images retain their individu
 - Title: File:Vase, made by Yahiya b. Yusuf as-Sa'igh, Arab Spain, 15th century AD, brass - Aga Khan Museum - Toronto, Canada - DSC06582.jpg
 - Author: Daderot
 - Source: https://commons.wikimedia.org/wiki/File:Vase,_made_by_Yahiya_b._Yusuf_as-Sa%27igh,_Arab_Spain,_15th_century_AD,_brass_-_Aga_Khan_Museum_-_Toronto,_Canada_-_DSC06582.jpg
-- License: Public domain 
+- License: Public domain
 - Changes: Wikimedia thumbnail; displayed in a responsive image frame. No retouching.
 
 ## /images/reference/wood-vase.jpg
@@ -129,7 +129,7 @@ Downloaded 16 November 2026 from Wikimedia Commons. Images retain their individu
 - Title: File:Hanging flower vase in the form of a bamboo shoot, Japan, Edo period, 1700s-1800s AD, copper alloy with silver - Peabody Essex Museum - DSC07561.jpg
 - Author: Daderot
 - Source: https://commons.wikimedia.org/wiki/File:Hanging_flower_vase_in_the_form_of_a_bamboo_shoot,_Japan,_Edo_period,_1700s-1800s_AD,_copper_alloy_with_silver_-_Peabody_Essex_Museum_-_DSC07561.jpg
-- License: Public domain 
+- License: Public domain
 - Changes: Wikimedia thumbnail; displayed in a responsive image frame. No retouching.
 
 ## /images/reference/copper-enamel-vase.jpg
@@ -177,7 +177,7 @@ Downloaded 16 November 2026 from Wikimedia Commons. Images retain their individu
 - Title: File:Calyx Floriform Vase, Louis Comfort Tiffany, 1893-1929, iridescent blue favrile glass - Currier Museum of Art - Manchester, NH - DSC07241.jpg
 - Author: Daderot
 - Source: https://commons.wikimedia.org/wiki/File:Calyx_Floriform_Vase,_Louis_Comfort_Tiffany,_1893-1929,_iridescent_blue_favrile_glass_-_Currier_Museum_of_Art_-_Manchester,_NH_-_DSC07241.jpg
-- License: Public domain 
+- License: Public domain
 - Changes: Wikimedia thumbnail; displayed in a responsive image frame. No retouching.
 
 ## /images/reference/glass-overlay-vase.jpg
