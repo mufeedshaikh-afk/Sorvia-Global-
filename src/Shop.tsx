@@ -11,9 +11,12 @@ const products = [
   { id: '06', name: 'Natural wooden vessels', category: 'Vases & vessels', material: 'Wood', kind: 'wood' },
   { id: '07', name: 'Copper tabletop accents', category: 'Decorative objects', material: 'Copper', kind: 'copper' },
   { id: '08', name: 'Brass decorative chess', category: 'Decorative chess', material: 'Brass', kind: 'chess' },
+  { id: '09', name: 'Decorative ceramic vase', category: 'Vases & vessels', material: 'Ceramic', kind: 'ceramic' },
+  { id: '10', name: 'Sculptural glass vase', category: 'Vases & vessels', material: 'Glass', kind: 'glass' },
+  { id: '11', name: 'Carved stone vessel', category: 'Vases & vessels', material: 'Stone', kind: 'stone' },
 ];
 const categories = ['Decorative objects', 'Vases & vessels', 'Decorative chess'];
-const materials = ['Brass', 'Copper', 'Wood'];
+const materials = collections.flatMap(collection => collection.material ? [collection.material] : []);
 const sorts = ['featured', 'az', 'za'];
 
 export function Shop({ collection }: { collection?: Collection }) {

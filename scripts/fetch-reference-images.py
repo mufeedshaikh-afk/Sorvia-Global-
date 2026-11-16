@@ -18,6 +18,9 @@ FILES = {
     'wood-vase': 'File:Decorative wooden vase (26450223658).jpg',
     'copper-bowl': 'File:Copper bowl - 19c - State Historical Museum of the Southern Urals.jpg',
     'metal-chess': 'File:Chess set MET LC-48 174 32-001.jpg',
+    'ceramic-vase': 'File:Flower Vase.jpg',
+    'glass-vase': 'File:Glass Vase (49320596312).jpg',
+    'stone-vase': 'File:Marble vase with high foot and four lug handles MET DP256408.jpg',
 }
 
 def fetch(url):
@@ -29,6 +32,10 @@ def plain(value):
 
 OUT.mkdir(parents=True, exist_ok=True)
 records = []
+if '--only-new' in sys.argv:
+    records = json.loads((OUT / 'credits.json').read_text(encoding='utf-8'))
+    existing = {Path(record['file']).stem for record in records}
+    FILES = {slug: title for slug, title in FILES.items() if slug not in existing}
 if '--credits-only' in sys.argv:
     records = json.loads((OUT / 'credits.json').read_text(encoding='utf-8'))
     FILES = {}

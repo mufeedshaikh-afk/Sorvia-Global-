@@ -5,6 +5,9 @@ const photos: Record<string, { file: string; alt: string }> = {
   wood: { file: 'wood-vase', alt: 'Carved dark wooden vessel with a decorative lid' },
   copper: { file: 'copper-vessel', alt: 'Copper bottle and its lid on a wooden surface' },
   chess: { file: 'wood-chess', alt: 'Carved wooden chess pieces arranged on a chessboard' },
+  ceramic: { file: 'ceramic-vase', alt: 'Decorative ceramic flower vase' },
+  glass: { file: 'glass-vase', alt: 'Decorative glass vase photographed against a plain background' },
+  stone: { file: 'stone-vase', alt: 'Historic marble vase with a high foot and four lug handles' },
   '01': { file: 'brass-vessels', alt: 'Sculptural, durian-shaped brass vessel in a museum display' },
   '02': { file: 'wood-accents', alt: 'Carved wooden bowl with a patterned lid on a white background' },
   '03': { file: 'copper-vessel', alt: 'Copper bottle and its lid on a wooden surface' },
@@ -13,6 +16,9 @@ const photos: Record<string, { file: string; alt: string }> = {
   '06': { file: 'wood-vase', alt: 'Carved dark wooden vessel with a decorative lid' },
   '07': { file: 'copper-bowl', alt: 'Historic copper bowl with a dark patina in a museum display' },
   '08': { file: 'metal-chess', alt: 'Historic metal chess pieces, used as a reference for the brass chess concept' },
+  '09': { file: 'ceramic-vase', alt: 'Decorative ceramic flower vase' },
+  '10': { file: 'glass-vase', alt: 'Decorative glass vase photographed against a plain background' },
+  '11': { file: 'stone-vase', alt: 'Historic marble vase with a high foot and four lug handles' },
 };
 
 export function ObjectArt({ kind, hero = false, productId }: { kind: string; hero?: boolean; productId?: string }) {

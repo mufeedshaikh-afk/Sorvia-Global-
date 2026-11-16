@@ -1,6 +1,6 @@
 # SorviaGlobal project handover
 
-Updated: 16 November 2026. Current milestone: Step 3 complete with a photographic update, awaiting user review. Do not begin Step 4 until authorized.
+Updated: 16 November 2026. Current milestone: Step 3 complete with reference photos and expanded materials, awaiting user review. Do not begin Step 4 until authorized.
 
 ## Working agreement
 
@@ -24,13 +24,15 @@ The user said “yes and now begin with the step 2”, authorizing continuation 
 
 4. User requested real images matching sample product names. Added eight reusable reference photographs from Wikimedia Commons across homepage, Shop and collection/category pages. These are third-party object references (including museum objects), NOT confirmed SorviaGlobal inventory. Design and material can differ; this is stated in the UI. Each image has a credit link, the footer links all credits, and originals/author/license details are preserved in IMAGE_CREDITS.md and public/images/reference/credits.json. Product 08 uses historic metal chess as a reference only; brass material is not verified by that photo. No AI images were used. Step 3 source commit before this update: `87c3156`.
 
+5. User requested more materials. Added Ceramic, Glass and Stone, each with a collection page, one sample item (IDs 09-11), and a locally stored credited reference photo. Catalog now has 11 sample items, six material collections and three categories. New routes: `/collections/ceramic`, `/collections/glass`, `/collections/stone`. Homepage cards and Shop material filters derive from `collections.ts` to stay in sync. Photo update commit before this expansion: `134dbc1`. Fetch script supports `--only-new` to preserve existing credits while retrieving additions. Checked each new material filter returns one item and reset restores eleven; checked collection pages, mobile glass layout and desktop ceramic layout. TypeScript and production build passed.
+
 ## Files
 
 - `src/main.tsx`: homepage, shared header/footer, pathname choice between homepage, Shop, collections/categories and missing-collection recovery.
 - `src/Shop.tsx`: sample catalog and reusable browsing template, with optional collection scope.
 - `src/collections.ts`: typed definitions for six category/material pages.
 - `src/ObjectArt.tsx`: photo mapping by material/product ID, responsive local images with alt text/credit links, lazy loading and CSS artwork fallback on errors.
-- `public/images/reference/`: eight JPGs plus credits.json and credits.html.
+- `public/images/reference/`: eleven JPGs plus credits.json and credits.html.
 - `scripts/fetch-reference-images.py`: reproducible photo/credit retrieval; --credits-only regenerates credits offline.
 - `IMAGE_CREDITS.md`: source, author and license records. Individual photo licenses apply independently of application code.
 - `src/styles.css`: shared and responsive Shop styling.
@@ -63,4 +65,4 @@ Wait for Step 3 review. Apply requested adjustments if any. After approval, Step
 
 ## Prompt for a new agent
 
-Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 3 category/collection pages and the requested reference-photo update are complete and awaiting review. Step 4 product details is next after approval. Report current state and the next pending action before continuing. Update this handover at every milestone.
+Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 3 category/collection pages and the reference-photo and material expansions are complete and awaiting review. Step 4 product details is next after approval. Report current state and the next pending action before continuing. Update this handover at every milestone.

@@ -78,5 +78,35 @@
     "license": "CC0",
     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
     "changes": "Wikimedia thumbnail; displayed in a responsive image frame. No retouching."
+  },
+  {
+    "file": "/images/reference/ceramic-vase.jpg",
+    "title": "File:Flower Vase.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Flower_Vase.jpg",
+    "original": "https://upload.wikimedia.org/wikipedia/commons/2/28/Flower_Vase.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "author": "Adbh266",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "changes": "Wikimedia thumbnail; displayed in a responsive image frame. No retouching."
+  },
+  {
+    "file": "/images/reference/glass-vase.jpg",
+    "title": "File:Glass Vase (49320596312).jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Glass_Vase_(49320596312).jpg",
+    "original": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Glass_Vase_%2849320596312%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "author": "Jonas Salcedo",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "changes": "Wikimedia thumbnail; displayed in a responsive image frame. No retouching."
+  },
+  {
+    "file": "/images/reference/stone-vase.jpg",
+    "title": "File:Marble vase with high foot and four lug handles MET DP256408.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Marble_vase_with_high_foot_and_four_lug_handles_MET_DP256408.jpg",
+    "original": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Marble_vase_with_high_foot_and_four_lug_handles_MET_DP256408.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "author": "See source page",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "changes": "Wikimedia thumbnail; displayed in a responsive image frame. No retouching."
   }
 ]

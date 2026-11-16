@@ -67,3 +67,27 @@ Downloaded 16 November 2026 from Wikimedia Commons. Images retain their individu
 - Source: https://commons.wikimedia.org/wiki/File:Chess_set_MET_LC-48_174_32-001.jpg
 - License: CC0 http://creativecommons.org/publicdomain/zero/1.0/deed.en
 - Changes: Wikimedia thumbnail; displayed in a responsive image frame. No retouching.
+
+## /images/reference/ceramic-vase.jpg
+
+- Title: File:Flower Vase.jpg
+- Author: Adbh266
+- Source: https://commons.wikimedia.org/wiki/File:Flower_Vase.jpg
+- License: CC0 http://creativecommons.org/publicdomain/zero/1.0/deed.en
+- Changes: Wikimedia thumbnail; displayed in a responsive image frame. No retouching.
+
+## /images/reference/glass-vase.jpg
+
+- Title: File:Glass Vase (49320596312).jpg
+- Author: Jonas Salcedo
+- Source: https://commons.wikimedia.org/wiki/File:Glass_Vase_(49320596312).jpg
+- License: CC0 http://creativecommons.org/publicdomain/zero/1.0/deed.en
+- Changes: Wikimedia thumbnail; displayed in a responsive image frame. No retouching.
+
+## /images/reference/stone-vase.jpg
+
+- Title: File:Marble vase with high foot and four lug handles MET DP256408.jpg
+- Author: See source page
+- Source: https://commons.wikimedia.org/wiki/File:Marble_vase_with_high_foot_and_four_lug_handles_MET_DP256408.jpg
+- License: CC0 http://creativecommons.org/publicdomain/zero/1.0/deed.en
+- Changes: Wikimedia thumbnail; displayed in a responsive image frame. No retouching.
