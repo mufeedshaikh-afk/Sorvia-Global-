@@ -12,7 +12,7 @@ Install Node.js, then run `npm install` and `npm run dev`. Open the local addres
 - Try the mobile menu and in-page navigation.
 - Product and collection visuals use locally stored reference photographs; these are not confirmed inventory photos. Copy remains draft. Photo credits are linked on every image and in the footer; see IMAGE_CREDITS.md. CSS concept art is retained as an image-error fallback.
 - Homepage collection links open the dedicated collection/category pages.
-- Open `/shop`: search eleven sample items, filter by category/material, sort by name, and reset. Filter state is preserved in the URL on refresh.
+- Open `/shop`: search thirty sample items, filter by category/material, sort by name, and reset. Filter state is preserved in the URL on refresh.
 - Check a search with no matches and use the recovery button.
 - No live products, pricing, authentication, checkout or backend are connected yet.
 - No analytics, payment credentials or customer data are included.
@@ -40,8 +40,12 @@ Open `/collections/brass` or use the homepage collection links. Check the introd
 
 ## Reference photographs
 
-Eleven reusable photos from Wikimedia Commons are stored in `public/images/reference`. Their source records and individual licenses are in `IMAGE_CREDITS.md` and `public/images/reference/credits.json`; the website exposes a photo-credit page. Preserve these credits when sharing or deploying. Run `scripts/fetch-reference-images.py --credits-only` with Python to regenerate the credit pages without downloading files. Replace reference images with approved catalog photography before launch.
+Thirty reusable photos from Wikimedia Commons are stored in `public/images/reference`. Their source records and individual licenses are in `IMAGE_CREDITS.md` and `public/images/reference/credits.json`; the website exposes a photo-credit page. Preserve these credits when sharing or deploying. Run `scripts/fetch-reference-images.py --credits-only` with Python to regenerate the credit pages without downloading files. Replace reference images with approved catalog photography before launch.
 
 ## Expanded material preview
 
-Six materials: Brass, Wood, Copper, Ceramic, Glass and Stone. New routes: `/collections/ceramic`, `/collections/glass`, `/collections/stone`. Each new material has one sample vase/vessel, bringing the catalog to eleven samples and nine collection/category pages. The homepage and Shop links/filters derive their material choices from the collection definitions. Reference photography remains clearly labelled.
+Six materials: Brass, Wood, Copper, Ceramic, Glass and Stone. New routes: `/collections/ceramic`, `/collections/glass`, `/collections/stone`. Every material now has five sample products, bringing the catalog to thirty samples across nine collection/category pages. The homepage and Shop links/filters derive their material choices from the collection definitions. Reference photography remains clearly labelled.
+
+## Five samples per material
+
+Brass, Wood, Copper, Ceramic, Glass and Stone each contain five samples (30 total). Sample records and their image mapping live together in `src/catalog.ts`. Search, filters and name sorting work across the expanded catalog. Photos remain reference images, often of historic objects, with no confirmed stock or prices.

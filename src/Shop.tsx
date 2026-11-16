@@ -1,20 +1,9 @@
 import { useEffect, useState } from 'react';
 import { ObjectArt } from './ObjectArt';
+import { products } from './catalog';
 import { collections, type Collection } from './collections';
 
-const products = [
-  { id: '01', name: 'Sculptural brass vessels', category: 'Decorative objects', material: 'Brass', kind: 'brass' },
-  { id: '02', name: 'Carved wooden accents', category: 'Decorative objects', material: 'Wood', kind: 'wood' },
-  { id: '03', name: 'Warm copper vessels', category: 'Vases & vessels', material: 'Copper', kind: 'copper' },
-  { id: '04', name: 'Classic wooden chess set', category: 'Decorative chess', material: 'Wood', kind: 'chess' },
-  { id: '05', name: 'Brass statement vase', category: 'Vases & vessels', material: 'Brass', kind: 'brass' },
-  { id: '06', name: 'Natural wooden vessels', category: 'Vases & vessels', material: 'Wood', kind: 'wood' },
-  { id: '07', name: 'Copper tabletop accents', category: 'Decorative objects', material: 'Copper', kind: 'copper' },
-  { id: '08', name: 'Brass decorative chess', category: 'Decorative chess', material: 'Brass', kind: 'chess' },
-  { id: '09', name: 'Decorative ceramic vase', category: 'Vases & vessels', material: 'Ceramic', kind: 'ceramic' },
-  { id: '10', name: 'Sculptural glass vase', category: 'Vases & vessels', material: 'Glass', kind: 'glass' },
-  { id: '11', name: 'Carved stone vessel', category: 'Vases & vessels', material: 'Stone', kind: 'stone' },
-];
+
 const categories = ['Decorative objects', 'Vases & vessels', 'Decorative chess'];
 const materials = collections.flatMap(collection => collection.material ? [collection.material] : []);
 const sorts = ['featured', 'az', 'za'];

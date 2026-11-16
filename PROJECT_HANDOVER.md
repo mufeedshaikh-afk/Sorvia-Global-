@@ -1,6 +1,6 @@
 # SorviaGlobal project handover
 
-Updated: 16 November 2026. Current milestone: Step 3 complete with reference photos and expanded materials, awaiting user review. Do not begin Step 4 until authorized.
+Updated: 16 November 2026. Current milestone: Step 3 complete with five sample products in each of six materials (30 total), awaiting user review. Do not begin Step 4 until authorized.
 
 ## Working agreement
 
@@ -26,13 +26,16 @@ The user said “yes and now begin with the step 2”, authorizing continuation 
 
 5. User requested more materials. Added Ceramic, Glass and Stone, each with a collection page, one sample item (IDs 09-11), and a locally stored credited reference photo. Catalog now has 11 sample items, six material collections and three categories. New routes: `/collections/ceramic`, `/collections/glass`, `/collections/stone`. Homepage cards and Shop material filters derive from `collections.ts` to stay in sync. Photo update commit before this expansion: `134dbc1`. Fetch script supports `--only-new` to preserve existing credits while retrieving additions. Checked each new material filter returns one item and reset restores eleven; checked collection pages, mobile glass layout and desktop ceramic layout. TypeScript and production build passed.
 
+6. User asked for "4-5 materials in each" and replied "yesss" to clarification. We explicitly stated the assumption of five PRODUCTS per material and proceeded. Added 19 samples (IDs 12-30) with distinct reference photo files; every material now has five products, 30 total. Source/credits are bundled locally. Moved sample records and photo mapping into `src/catalog.ts` for reuse by future product details. `Shop.tsx` and `ObjectArt.tsx` consume that shared catalog. Updated ceramic/glass/stone collection descriptions. Browser verified all six filter counts = 5, Stone category refinement = 3, alabaster search = 1, A-Z ordering, and collection reset = 5. Build/TypeScript passed; asset audit confirmed 30 unique IDs, image files and credit records. Previous expansion commit: `2ddb064`. Current work still belongs to Step 3; wait for review before Step 4.
+
 ## Files
 
 - `src/main.tsx`: homepage, shared header/footer, pathname choice between homepage, Shop, collections/categories and missing-collection recovery.
-- `src/Shop.tsx`: sample catalog and reusable browsing template, with optional collection scope.
+- `src/Shop.tsx`: reusable browsing template and controls, with optional collection scope.
+- `src/catalog.ts`: shared 30 sample product records, five per material, with image keys and alt text.
 - `src/collections.ts`: typed definitions for six category/material pages.
-- `src/ObjectArt.tsx`: photo mapping by material/product ID, responsive local images with alt text/credit links, lazy loading and CSS artwork fallback on errors.
-- `public/images/reference/`: eleven JPGs plus credits.json and credits.html.
+- `src/ObjectArt.tsx`: material photo mapping and shared product catalog lookup, responsive local images with alt text/credit links, lazy loading and CSS artwork fallback on errors.
+- `public/images/reference/`: thirty JPGs plus credits.json and credits.html.
 - `scripts/fetch-reference-images.py`: reproducible photo/credit retrieval; --credits-only regenerates credits offline.
 - `IMAGE_CREDITS.md`: source, author and license records. Individual photo licenses apply independently of application code.
 - `src/styles.css`: shared and responsive Shop styling.
