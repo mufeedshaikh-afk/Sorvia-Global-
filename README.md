@@ -1,6 +1,6 @@
 # SorviaGlobal frontend
 
-Step 1: homepage for review, built with React, TypeScript and Vite.
+Steps 1–2: homepage and Shop preview, built with React, TypeScript and Vite. Step 2 is awaiting review.
 
 ## Run locally
 
@@ -11,14 +11,16 @@ Install Node.js, then run `npm install` and `npm run dev`. Open the local addres
 - Review the ivory/green palette, typography, desktop and mobile layout.
 - Try the mobile menu and in-page navigation.
 - All illustrations are CSS concept art, not product photography. All copy is draft.
-- Category cards are previews, not links to implemented collection pages.
+- Homepage collection links open the Shop with the relevant filter.
+- Open `/shop`: search eight sample items, filter by category/material, sort by name, and reset. Filter state is preserved in the URL on refresh.
+- Check a search with no matches and use the recovery button.
 - No live products, pricing, authentication, checkout or backend are connected yet.
 - No analytics, payment credentials or customer data are included.
 
 ## Page-by-page plan
 
-1. Homepage and shared header/footer — awaiting review.
-2. Shop listing, filters and sorting.
+1. Homepage and shared header/footer — complete; user authorized Step 2.
+2. Shop listing, filters and sorting — complete; awaiting review.
 3. Category and collection templates.
 4. Product detail.
 5. Search and wishlist.
@@ -29,3 +31,5 @@ Install Node.js, then run `npm install` and `npm run dev`. Open the local addres
 10. Admin product management.
 
 Review each page before proceeding. Confirm backend API contracts before production integration. Real product assets, supported markets, prices, contact details and policies must be provided by the business.
+
+Read `PROJECT_HANDOVER.md` first when continuing with another agent. Static hosting must serve `index.html` for `/shop` (Vite already does this locally).
