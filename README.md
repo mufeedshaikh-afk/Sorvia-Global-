@@ -10,7 +10,7 @@ Install Node.js, then run `npm install` and `npm run dev`. Open the local addres
 
 - Review the ivory/green palette, typography, desktop and mobile layout.
 - Try the mobile menu and in-page navigation.
-- All illustrations are CSS concept art, not product photography. All copy is draft.
+- Product and collection visuals use locally stored reference photographs; these are not confirmed inventory photos. Copy remains draft. Photo credits are linked on every image and in the footer; see IMAGE_CREDITS.md. CSS concept art is retained as an image-error fallback.
 - Homepage collection links open the dedicated collection/category pages.
 - Open `/shop`: search eight sample items, filter by category/material, sort by name, and reset. Filter state is preserved in the URL on refresh.
 - Check a search with no matches and use the recovery button.
@@ -36,4 +36,8 @@ Read `PROJECT_HANDOVER.md` first when continuing with another agent. Static host
 
 ## Step 3 review
 
-Open `/collections/brass` or use the homepage collection links. Check the introduction, matching sample items, filters, sorting, reset and related collection links. All product information and illustrations remain draft samples. Reset clears additional filters while preserving the current collection.
+Open `/collections/brass` or use the homepage collection links. Check the introduction, matching sample items, filters, sorting, reset and related collection links. All product information remains draft; photos are references, not inventory or material confirmation. Reset clears additional filters while preserving the current collection.
+
+## Reference photographs
+
+Eight reusable photos from Wikimedia Commons are stored in `public/images/reference`. Their source records and individual licenses are in `IMAGE_CREDITS.md` and `public/images/reference/credits.json`; the website exposes a photo-credit page. Preserve these credits when sharing or deploying. Run `scripts/fetch-reference-images.py --credits-only` with Python to regenerate the credit pages without downloading files. Replace reference images with approved catalog photography before launch.
