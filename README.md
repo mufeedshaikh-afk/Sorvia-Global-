@@ -49,3 +49,7 @@ Six materials: Brass, Wood, Copper, Ceramic, Glass and Stone. New routes: `/coll
 ## Five samples per material
 
 Brass, Wood, Copper, Ceramic, Glass and Stone each contain five samples (30 total). Sample records and their image mapping live together in `src/catalog.ts`. Search, filters and name sorting work across the expanded catalog. Photos remain reference images, often of historic objects, with no confirmed stock or prices.
+
+## Hosted preview
+
+Hosting target: https://sorvia-global-preview.cozycondor32.chatgpt.site . The preview is private to the owner and may require ChatGPT sign-in. Hosting identity is preserved in `.openai/hosting.json`; reuse it for future deployments. Vite output is served from `dist`; `public/_redirects` supports direct Shop and collection links. Local edits must be rebuilt and published before they appear at the hosted link. GitHub remains the project backup.

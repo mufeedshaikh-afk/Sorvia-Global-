@@ -1,6 +1,6 @@
 # SorviaGlobal project handover
 
-Updated: 16 November 2026. Current milestone: Step 3 complete with five sample products in each of six materials (30 total), awaiting user review. Do not begin Step 4 until authorized.
+Updated: 17 November 2026. Current milestone: Step 3 complete with five sample products in each of six materials (30 total), awaiting user review. Do not begin Step 4 until authorized.
 
 ## Working agreement
 
@@ -69,3 +69,7 @@ Wait for Step 3 review. Apply requested adjustments if any. After approval, Step
 ## Prompt for a new agent
 
 Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 3 category/collection pages and the reference-photo and material expansions are complete and awaiting review. Step 4 product details is next after approval. Report current state and the next pending action before continuing. Update this handover at every milestone.
+
+## Hosted preview setup (17 November)
+
+User requested a hosted preview that works with the computer off. Sites project: `appgprj_6afbfa2edf6081919d3199d7ab2d1af1`; target origin: https://sorvia-global-preview.cozycondor32.chatgpt.site . Access was verified owner-only (custom policy with owner and no other users/groups). Keep it private unless the user requests sharing. Hosting manifest `.openai/hosting.json` uses static dist. Added `public/_redirects` for direct route navigation. Reuse this project identity; never create another site for updates. Publish using Sites source helper and fresh short-lived credentials passed only through stdin. Preserve GitHub origin and push completed source there as well. Verify deployment status/current_live_url before claiming it is live. Local Vite server may stop between sessions; hosted preview does not depend on it. Hosted content updates only after another build/deployment. User approved Steps 1-3 and planned Step 4 for next work session; this task only enables hosting.
