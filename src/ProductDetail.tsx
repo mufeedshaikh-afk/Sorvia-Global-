@@ -3,6 +3,7 @@ import { products } from './catalog';
 import { collections } from './collections';
 import { ObjectArt } from './ObjectArt';
 import { ProductCard } from './ProductCard';
+import { SaveButton } from './WishlistContext';
 
 const introductions: Record<string, string> = {
   Brass: 'An exploration of warm metallic tones and expressive form, selected as a starting point for the brass collection.',
@@ -18,7 +19,7 @@ function browsingLink(fallback: string) {
   if (!value) return fallback;
   try {
     const url = new URL(value, location.origin);
-    const allowed = url.pathname === '/shop' || collections.some(collection => collection.path === url.pathname);
+    const allowed = ['/shop', '/search', '/wishlist'].includes(url.pathname) || collections.some(collection => collection.path === url.pathname);
     if (url.origin === location.origin && allowed) return `${url.pathname}${url.search}#browse`;
   } catch { /* Invalid return addresses use the material collection. */ }
   return fallback;
@@ -42,7 +43,7 @@ export function ProductDetail({ id }: { id: string }) {
       <div className="detail-copy"><a className="detail-back" href={back}>← Back to browsing</a><div className="eyebrow">THE {product.material.toUpperCase()} COLLECTION · SAMPLE {product.id}</div><h1 id="product-title">{product.name}</h1><p className="detail-intro">{introductions[product.material]}</p>
         <div className="detail-tags"><a href={collection?.path || '/shop'}>{product.material}</a><a href={category?.path || '/shop'}>{product.category}</a></div>
         <div className="purchase-preview"><span className="eyebrow">DESIGN PREVIEW</span><h2>Catalog details coming soon</h2><p>Price and availability will appear here once the actual product is confirmed.</p><button className="button" disabled>Ordering not yet available</button><span className="purchase-note">This sample cannot be purchased.</span></div>
-        <div className="detail-accordions">
+        <div className="detail-save"><SaveButton id={product.id} name={product.name}/><a className="text-button" href="/wishlist">View wishlist ↗</a></div><div className="detail-accordions">
           <details open><summary>About this sample</summary><p>{product.alt}. The image illustrates the concept only and does not confirm the specifications of an item we sell.</p><dl><div><dt>Sample reference</dt><dd>SG-{product.id}</dd></div><div><dt>Collection</dt><dd>{product.material} · concept</dd></div><div><dt>Category</dt><dd>{product.category}</dd></div></dl></details>
           <details><summary>Dimensions & materials</summary><p>Exact materials, finish, dimensions, weight, variants and included pieces are awaiting the real product information. Material filters currently group design concepts.</p></details>
           <details><summary>Care information</summary><p>Product-specific care instructions will be supplied with the confirmed materials and finish.</p></details>

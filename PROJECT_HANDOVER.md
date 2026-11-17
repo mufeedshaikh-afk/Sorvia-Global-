@@ -1,6 +1,6 @@
 # SorviaGlobal project handover
 
-Updated: 17 November 2026. Current milestone: Step 4 product details complete, awaiting user review. Do not begin Step 5 until authorized.
+Updated: 17 November 2026. Current milestone: Step 5 Search and Wishlist complete, awaiting user review. Do not begin Step 6 until authorized.
 
 ## Working agreement
 
@@ -64,11 +64,11 @@ Git writes and host-visible preview previously required native permission escala
 
 ## Next
 
-Wait for Step 4 review. Apply requested adjustments if any. After approval, Step 5 is search/wishlist, followed by cart/region, checkout, accounts/orders, tracking/support/policies, admin. Real product photos, approved business copy, supported countries/prices, policies and API contracts are outstanding.
+Wait for Step 5 review. Apply requested adjustments if any. After approval, Step 6 is cart/region, checkout, accounts/orders, tracking/support/policies, admin. Real product photos, approved business copy, supported countries/prices, policies and API contracts are outstanding.
 
 ## Prompt for a new agent
 
-Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 4 product-detail pages are complete and awaiting review. Step 5 search/wishlist is next after approval. Report current state and the next pending action before continuing. Update this handover at every milestone.
+Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 5 Search and Wishlist are complete and awaiting review. Step 6 cart/region is next after approval. Report current state and the next pending action before continuing. Update this handover at every milestone.
 
 ## Hosted preview setup (17 November)
 
@@ -81,3 +81,9 @@ Hosting route note: the host did not apply the SPA rewrite alone. The production
 User explicitly authorized Step 4. Added `src/ProductDetail.tsx` and shared `src/ProductCard.tsx`; all 30 product IDs have pages at `/product/ID` (e.g. `/product/05`). Image/title/details links open them from Shop and collections. Features: large single reference photo, native dialog enlargement with Escape/focus restoration, concept description, material/category links, disabled ordering pending real catalog, native expandable About/Dimensions/Care/Delivery sections, three same-material related samples and validated return link preserving Shop/collection queries. No stock, pricing, dimensions, extra photos or product claims were fabricated. Unknown IDs have a recovery component; explicit `/product/not-found` generated for hosted recovery. Static build helper now generates 41 page routes (10 existing, 30 product, one missing-product page) as HTML aliases and indexes. Do not remove these; hosted SPA rewrite alone was insufficient.
 
 Validation: TypeScript/build passed; local browser checked filtered Shop -> photo link -> detail -> Back preserving Brass + A-Z, enlargement dialog opening/Escape/focus return, expandable specs, related sample navigation, external return address rejection, missing sample, desktop and mobile layout. Private hosting audience remains owner-only. Publish updated build using the existing Sites project and preserve GitHub backup. Step 4 awaits review before Step 5.
+
+## Step 5 (17 November)
+
+User explicitly authorized Search and Wishlist. Added `src/DiscoveryPages.tsx` (SearchPage/WishlistPage) and `src/WishlistContext.tsx` (provider, storage handling, shared SaveButton). Search at `/search` has explicit form submission, all-word case-insensitive matching across name/material/category, six material suggestions, material filter, URL state and no-result recovery. Favourites appear on all shared product cards and product details; header includes Search and Wishlist/count, mobile menu and footer updated. `/wishlist` supports view/remove and empty recovery. localStorage key `sorvia-wishlist-v1`, validated known product IDs, deduplication, guarded reads/writes and storage-event synchronization. Browser storage only, per origin; no account sync or stock reservation. Storage write failures show a notice on Wishlist/detail. Product Back to browsing accepts internal Search/Wishlist routes and preserves queries. Static build now includes 43 routes.
+
+Validation: local UI verified brass bowl search = 2, add two favourites, navigate/refresh preserves 2, remove from product details returns to wishlist with 1, remove last gives empty state, no-result search = 0, reset = 30, Glass suggestion/filter = 5 and survives refresh. Checked narrow layout at 320px with no horizontal overflow. TypeScript and production build passed. Step 5 awaits review; Step 6 (cart/region) is next after approval. Previous milestone commit: `0b5389b`.

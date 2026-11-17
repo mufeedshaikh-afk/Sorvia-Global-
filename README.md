@@ -1,6 +1,6 @@
 # SorviaGlobal frontend
 
-Steps 1–4: homepage, Shop, collections and product-detail previews, built with React, TypeScript and Vite. Step 4 is awaiting review.
+Steps 1–5: homepage, Shop, collections, product details, Search and Wishlist, built with React, TypeScript and Vite. Step 5 is awaiting review.
 
 ## Run locally
 
@@ -22,8 +22,8 @@ Install Node.js, then run `npm install` and `npm run dev`. Open the local addres
 1. Homepage and shared header/footer — complete; user authorized Step 2.
 2. Shop listing, filters and sorting — complete; user authorized Step 3.
 3. Category and collection templates — complete; user approved.
-4. Product detail — complete; awaiting review.
-5. Search and wishlist.
+4. Product detail — complete; user approved.
+5. Search and wishlist — complete; awaiting review.
 6. Cart and region selection.
 7. Checkout and payment states.
 8. Accounts and orders.
@@ -59,3 +59,7 @@ Hosting route note: the host did not apply the SPA rewrite alone. The production
 ## Step 4 review
 
 Open any product image/title from Shop or a collection, or visit `/product/05`. All 30 sample IDs have detail pages with a larger reference photo, accessible enlargement dialog, material/category links, expandable details and three related samples. Back to browsing preserves supported filter/search/sort query state. Exact dimensions, materials, pricing, stock, delivery and ordering remain pending actual catalog/backend data. There is one photo per sample; no alternative product views are invented. Ordering is disabled. Direct product routes are generated during the production build. Unknown IDs show a recovery screen locally; `/product/not-found` is also an explicit hosted route.
+
+## Step 5 review
+
+Open `/search` from the header. Search matches all typed words against sample names, material and category; submit the form or use material suggestions. Search/filter state is stored in the URL. Save/remove a sample using the heart on any card or product-detail page; header count updates immediately. `/wishlist` shows saved items with removal and an empty-state recovery link. Favourites persist in localStorage for this browser and origin only, with cross-tab updates; they do not sync to accounts/devices, confirm availability or reserve stock. If browser storage is unavailable, the wishlist/detail views explain that favourites will not persist. Local and hosted previews have separate browser storage. Native route entries now include Search and Wishlist (43 static routes total).
