@@ -1,6 +1,6 @@
 # SorviaGlobal project handover
 
-Updated: 17 November 2026. Current milestone: Step 5 complete; Shop warm-luxury theme trial awaiting user review; modern and classic comparisons retained. Do not begin Step 6 until authorized.
+Updated: 17 November 2026. Current milestone: Step 6 cart and region frontend complete, awaiting user review. Theme changes postponed until remaining frontend steps are finished. Do not start Step 7 without authorization.
 
 ## Working agreement
 
@@ -64,11 +64,11 @@ Git writes and host-visible preview previously required native permission escala
 
 ## Next
 
-Wait for Step 5 review. Apply requested adjustments if any. After approval, Step 6 is cart/region, checkout, accounts/orders, tracking/support/policies, admin. Real product photos, approved business copy, supported countries/prices, policies and API contracts are outstanding.
+Wait for Step 6 review. Apply requested adjustments if any. Next is Step 7 checkout/payment states, followed by accounts/orders, tracking/support/policies and admin. Real product photos, approved business copy, supported countries/prices, policies and API contracts are outstanding.
 
 ## Prompt for a new agent
 
-Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 5 Search and Wishlist are complete and awaiting review. Step 6 cart/region is next after approval. Report current state and the next pending action before continuing. Update this handover at every milestone.
+Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 6 cart/region frontend is complete and awaiting review. Next is Step 7 checkout/payment states, only after authorization. Finish remaining frontend steps before revisiting themes or building backend. Report current state and the next pending action before continuing. Update this handover at every milestone.
 
 ## Hosted preview setup (17 November)
 
@@ -99,3 +99,12 @@ Checks: TypeScript; browser comparison retains Brass filter and A-Z (5 results),
 ## Warm luxury Shop theme — 17 November 2026
 User selected warm luxury after clarifying they wanted a theme change. Default /shop now uses cream, chocolate brown and muted gold, including its shared header/footer. Modern palette remains /shop?design=modern and original layout remains /shop?design=classic. Comparison links retain filters/sort; product return links preserve the selected design. Other routes retain the existing theme pending review. Theme styles live in src/warm-theme.css and are scoped by the App wrapper. No backend work or Step 6 started.
 Validation: TypeScript, Vite build and all 43 static routes passed. Browser verified warm theme presence, Brass filter = 5, switching modern/warm preserves selection, clearing restores 30, and 390px mobile viewport has no horizontal overflow. Browser screenshot capture was unavailable during local QA. No dependencies changed; direct build tools used because pnpm's automatic store registration hit a sandbox symlink restriction.
+
+## Step 6 — cart and region (17 November 2026)
+User explicitly authorized Step 6, after stopping the proposed artisan theme. No artisan changes were applied. Keep the current Shop theme comparisons; revisit design after the remaining frontend steps.
+
+Added `CommerceContext.tsx`, `Cart.tsx` and `cart.css`. `/cart` has sample photos/details, quantity selection and increment/decrement, remove feedback and empty recovery, region control and a summary with unavailable pricing/shipping/taxes. Header has accessible mini-cart/count; region controls appear below the header and in the footer. Product detail permits explicitly labelled **Add to preview cart**, with quantity and feedback. Cart return links are validated. Checkout stays disabled: there are no confirmed products, stock, prices, shipping or backend integration.
+
+Local persistence keys `sorvia-cart-v1` and `sorvia-region-v1` are written synchronously in user actions, validated on load, guarded on write failures and synchronized via storage events. Cart merges repeated sample IDs, preserves positive integer quantities up to a UI-only maximum of 99, drops invalid IDs/duplicates/untrusted price fields. Samples are not purchasable and do not reserve stock. Currency changes never calculate prices. Country examples: IN/US/GB/DE/FR and Other, with INR/USD/GBP/EUR preferences; all are preview options, not confirmed shipping/payment coverage. Country change suggests a matching currency; visitors can override it. Optional first-visit suggestion uses browser language only, without external geolocation. Actual supported markets must come from backend configuration later.
+
+Validation: TypeScript and production build passed; 44 static routes now include `/cart` (both HTML alias and directory index). Browser checked empty state, US selection defaults USD, save across product/cart/refresh, add then immediate navigation, repeated add merges to one line, quantity updates/count/refresh, disabled min/max buttons, mini-cart Escape/removal and final-item empty recovery, Other-country notice, 1280px/390px/320px layouts, mobile menu and no horizontal overflow. Eight pure-data validation assertions passed for malformed carts, duplicate/unknown IDs, invalid quantities, removal of untrusted prices, invalid markets/currencies and manual currency override. No backend, payment, account or new theme work included. Preserve private Sites audience and push source to existing GitHub origin.

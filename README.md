@@ -1,6 +1,6 @@
 # SorviaGlobal frontend
 
-Steps 1–5: homepage, Shop, collections, product details, Search and Wishlist, built with React, TypeScript and Vite. Step 5 is awaiting review.
+Steps 1–6: homepage, Shop, collections, product details, Search, Wishlist, preview cart and region controls, built with React, TypeScript and Vite. Step 6 is awaiting review.
 
 ## Run locally
 
@@ -23,8 +23,8 @@ Install Node.js, then run `npm install` and `npm run dev`. Open the local addres
 2. Shop listing, filters and sorting — complete; user authorized Step 3.
 3. Category and collection templates — complete; user approved.
 4. Product detail — complete; user approved.
-5. Search and wishlist — complete; awaiting review.
-6. Cart and region selection.
+5. Search and wishlist — complete.
+6. Cart and region selection — complete; awaiting review.
 7. Checkout and payment states.
 8. Accounts and orders.
 9. Tracking and support/policies.
@@ -69,3 +69,11 @@ Open `/search` from the header. Search matches all typed words against sample na
 Modern luxury is the default Shop preview at `/shop`. Compare with `/shop?design=classic` or use the style links at the top. The trial adds an editorial photo introduction, a two-column large-photo grid on desktop, one column on mobile, and a collapsible filter area. Category/collection pages keep their existing design. Filters, search, sort and product return links preserve the selected style. This is a review trial awaiting the user’s choice, not approval to redesign other pages.
 
 Warm luxury theme trial: `/shop` now uses cream, chocolate brown and muted gold. Compare the earlier modern palette at `/shop?design=modern` and original layout at `/shop?design=classic`. The theme includes the Shop header/footer and is isolated in `src/warm-theme.css`; other pages await review.
+
+
+## Step 6 review
+Open `/product/05`, choose a quantity and use **Add to preview cart**. Open the header mini-cart or `/cart` to adjust quantities, remove samples and review the empty state. Cart counts represent total quantities. Repeated additions merge by sample ID; the 99-item limit is a preview control, not stock information. Photos and concept records are not sellable inventory. Prices, subtotal and totals remain unavailable; shipping/taxes are not calculated and checkout is disabled.
+
+Choose country/currency below the header, in the cart summary or in the footer. Example countries and INR/USD/GBP/EUR are review options only, not confirmed delivery/payment support. Browser language can suggest a country; no IP lookup runs. Country changes suggest a currency, which can be overridden. No exchange rates or prices are fabricated. Cart and preferences persist locally for this browser/origin, synchronize across tabs, and show write-failure notices. Backend configuration will replace preview options later.
+
+Theme changes are postponed until the remaining frontend steps are complete. Next: Step 7 checkout/payment-state interface, after review and authorization.
