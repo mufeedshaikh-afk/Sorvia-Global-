@@ -1,6 +1,6 @@
 # SorviaGlobal frontend
 
-Steps 1–8: homepage, Shop, collections, product details, Search, Wishlist, preview cart, region controls checkout preview, and account/orders preview, built with React, TypeScript and Vite. Step 8 is awaiting review.
+Steps 1–9: homepage, Shop, collections, product details, Search, Wishlist, preview cart, region controls checkout preview, account/orders preview, and support/tracking/policy pages, built with React, TypeScript and Vite. Step 9 is awaiting review.
 
 ## Run locally
 
@@ -26,8 +26,8 @@ Install Node.js, then run `npm install` and `npm run dev`. Open the local addres
 5. Search and wishlist — complete.
 6. Cart and region selection — complete.
 7. Checkout and payment states — complete.
-8. Accounts and orders — complete; awaiting review.
-9. Tracking and support/policies.
+8. Accounts and orders — complete.
+9. Tracking and support/policies — complete; awaiting review.
 10. Admin product management.
 
 Review each page before proceeding. Confirm backend API contracts before production integration. Real product assets, supported markets, prices, contact details and policies must be provided by the business.
@@ -93,3 +93,11 @@ Open `/account` through the header, mobile menu or footer. Try sign-in, registra
 Account sections include overview, profile edits, an address book (add/edit/cancel/confirmed deletion), fictional example order history/detail, and the existing browser-local wishlist link. Example orders are labelled Demo, have unavailable totals, and are separate from checkout simulations. Account edits and addresses exist only in memory and clear on leave/refresh or **End demo session**; cart, currency and wishlist remain independent. Real authentication, profile/address persistence and account orders await the backend. Do not enter actual credentials/customer information into this preview.
 
 Run `npm run test:account` for 10 account validation assertions and `npm run test:checkout` for 16 checkout assertions. Build generates 46 static routes. Homepage theme is retained; next is Step 9 tracking/support/policies after review.
+
+
+## Step 9 review
+Open `/support` for searchable, topic-filtered FAQs and links to tracking, contact and policies. `/track-order` offers fictional DEMO-1001 and DEMO-1002 examples, required-field validation, loading, missing result and an explicit error/retry demonstration. No real order lookup or shipment updates run. Account example orders link here.
+
+`/contact` validates an enquiry and displays a local preview summary; edit or clear it afterward. No message is sent. Contact and tracking values stay in memory and clear on refresh/leave. Business contact information and response hours are not invented.
+
+`/policies` links draft shipping, returns/refunds/cancellations, privacy and terms pages. These require approved business content before launch; no commercial promises or final legal terms are supplied. Privacy text describes only current application behavior. `/404` demonstrates page recovery; unknown routes recover inside the app, while direct unknown-host URL handling depends on the static host. Build generates 55 static routes. Run `npm run test:support` for 15 assertions, alongside existing account/checkout tests. Next: Step 10 admin product management after review, then final frontend review before backend integration.

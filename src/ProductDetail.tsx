@@ -48,7 +48,7 @@ export function ProductDetail({ id }: { id: string }) {
           <details open><summary>About this sample</summary><p>{product.alt}. The image illustrates the concept only and does not confirm the specifications of an item we sell.</p><dl><div><dt>Sample reference</dt><dd>SG-{product.id}</dd></div><div><dt>Collection</dt><dd>{product.material} · concept</dd></div><div><dt>Category</dt><dd>{product.category}</dd></div></dl></details>
           <details><summary>Dimensions & materials</summary><p>Exact materials, finish, dimensions, weight, variants and included pieces are awaiting the real product information. Material filters currently group design concepts.</p></details>
           <details><summary>Care information</summary><p>Product-specific care instructions will be supplied with the confirmed materials and finish.</p></details>
-          <details><summary>Delivery & returns</summary><p>Supported destinations, shipping costs, delivery estimates and return terms will be shown once business policies and country settings are confirmed.</p></details>
+          <details><summary>Delivery & returns</summary><p>Supported destinations, shipping costs, delivery estimates and return terms will be shown once business policies and country settings are confirmed. <a className="text-button" href="/policies/shipping">Shipping information ↗</a> <a className="text-button" href="/policies/returns">Returns policy preview ↗</a></p></details>
         </div>
       </div>
     </section>

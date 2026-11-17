@@ -1,6 +1,6 @@
 # SorviaGlobal project handover
 
-Updated: 17 November 2026. Current milestone: Step 8 account/orders frontend complete, awaiting user review. Theme changes postponed until remaining frontend steps are finished. Do not start Step 9 without authorization.
+Updated: 17 November 2026. Current milestone: Step 9 tracking/support/policies frontend complete, awaiting user review. Theme changes postponed until remaining frontend steps are finished. Do not start Step 10 without authorization.
 
 ## Working agreement
 
@@ -64,11 +64,11 @@ Git writes and host-visible preview previously required native permission escala
 
 ## Next
 
-Wait for Step 8 review. Apply requested adjustments if any. Next is Step 9 tracking/support/policies, followed by admin. Real product photos, approved business copy, supported countries/prices, policies and API contracts are outstanding.
+Wait for Step 9 review. Apply requested adjustments if any. Next is Step 10 admin product management. Real product photos, approved business copy, supported countries/prices, policies and API contracts are outstanding.
 
 ## Prompt for a new agent
 
-Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 8 account/orders frontend is complete and awaiting review. Next is Step 9 tracking/support/policies, only after authorization. Finish remaining frontend steps before revisiting themes or building backend. Report current state and the next pending action before continuing. Update this handover at every milestone.
+Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 9 tracking/support/policies frontend is complete and awaiting review. Next is Step 10 admin product management, only after authorization. Finish remaining frontend steps before revisiting themes or building backend. Report current state and the next pending action before continuing. Update this handover at every milestone.
 
 ## Hosted preview setup (17 November)
 
@@ -128,3 +128,15 @@ User said ready after the Step 8 proposal. Keep the homepage theme unchanged and
 Example orders DEMO-1001/1002 explicitly show sample status/data; no order dates, prices, real transaction/shipment records or tracking events are fabricated. Totals are unavailable. Checkout simulation does not create these orders. Addresses are fictional/session-only and do not auto-fill checkout. Postal/address validation reuses checkout rules. Form validation in `src/accountValidation.ts` has 10 assertions under `npm run test:account` (`scripts/check-account.mjs`). Styles in `src/account.css`; static build now has 46 routes including `/account`.
 
 Validation: 10 account and 16 checkout assertions, TypeScript and build passed. Browser checked blank sign-in validation/error focus, registration mismatch/success, invalid/valid profile save, address empty validation/create/edit, deletion cancel/confirm and empty state, order details (2 sample lines)/back/list empty toggle, recovery message with no email, end-session profile reset and refresh clearing demo. Layout checked at 1280, 768 and 320 with no horizontal overflow; mobile menu exposes Account. Screenshot in visualization root as step8-account-preview.jpg. Publish using existing owner-private Sites project and push same source to GitHub. Step 9 not started.
+
+
+## Step 9 — tracking, support, policies and page recovery (17 November 2026)
+User explicitly authorized next step after discussing unchanged theme. Added `src/SupportPages.tsx`, `src/supportData.ts`, `src/support.css`; new routes `/support`, `/contact`, `/track-order`, `/policies`, `/policies/shipping`, `/policies/returns`, `/policies/privacy`, `/policies/terms`, `/404`. Static build now generates 55 route entries, including `404.html`. Unknown paths render NotFoundPage inside the app instead of the homepage; direct unknown URLs on a static host may still use its own HTTP error handling. Explicit `/404` is reviewable.
+
+Help hub has eight factual preview FAQs, all-word search, topic filters, expandable answers and no-result/reset. Contact has validated name/email/topic/optional order/message fields and a preview summary/edit/clear flow. No email is sent, no customer enquiry is persisted, and approved support email/phone/address/hours remain pending. Tracking has required reference/email validation, loading, two labelled fictional examples matching account DEMO-1001/1002, missing example, error demonstration and retry. No real order is looked up and no carrier/scan date/location/number is invented. Query `example` can prefill only known demo references; no email goes in the URL. Changing inputs cancels pending preview timers, and timers clean up on unmount. All tracking/contact details live only in page memory and clear on leave/refresh.
+
+Policy pages are clearly **draft content structures awaiting approved business policies**, not launch-ready legal text. No return window, delivery coverage, fees, customs responsibility, refund time or binding terms were invented. Privacy describes only actual app-preview behavior (browser cart/wishlist/region storage and ephemeral forms), and explicitly excludes hosting-platform handling. Approved business identity, contacts and policies are needed before launch. This is a frontend implementation, not legal advice.
+
+Customer-service links added to shared footer/mobile menu; account order details link to tracking examples and product Delivery & returns links to policy previews. Existing theme retained. `scripts/check-support.mjs` / `npm run test:support` adds 15 validation assertions. Existing 10 account and 16 checkout assertions still pass.
+
+Browser checked FAQ no-match/reset/topic count (8 all, 3 Delivery), expansion/link, blank tracking errors, Processing and Delivered examples, missing example, error/retry, blank/valid contact and no-send notice, edit retention and refresh clearing, all four policies/navigation, explicit and unknown-path recovery, mobile links/layout at 320px and desktop at 1280px with no horizontal overflow. Screenshot `step9-support-preview.jpg` in visualization root. TypeScript/production build and diff checks passed. Step 10 admin not started; backend remains deferred. Keep current private Sites audience and GitHub origin.
