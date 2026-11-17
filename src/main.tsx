@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import './styles.css';
 import './warm-theme.css';
 import './cart.css';
+import './checkout.css';
+import { CheckoutPage } from './Checkout';
 import { CommerceProvider } from './CommerceContext';
 import { CartPage, MiniCart, RegionControl } from './Cart';
 import { ObjectArt } from './ObjectArt';
@@ -43,7 +45,7 @@ function App() {
   return <div className={warmTheme ? 'theme-warm' : undefined}>
     <a className="skip-link" href="#main">Skip to content</a>
     <div id="home"><Header/></div>
-    <main id="main">{path === "/cart" ? <CartPage/> : path === "/search" ? <SearchPage/> : path === "/wishlist" ? <WishlistPage/> : path.startsWith("/product/") ? <ProductDetail id={path.slice("/product/".length)}/> : collection ? <Shop collection={collection}/> : path === "/shop" ? <Shop/> : collectionRoute ? <section className="section missing-collection"><div className="eyebrow">A NEW DIRECTION</div><h1>Collection not found</h1><p>This collection is not part of the preview. Explore the sample Shop to find another starting point.</p><a className="button" href="/shop">Browse all sample items <Arrow/></a></section> : <>
+    <main id="main">{path === "/checkout" ? <CheckoutPage/> : path === "/cart" ? <CartPage/> : path === "/search" ? <SearchPage/> : path === "/wishlist" ? <WishlistPage/> : path.startsWith("/product/") ? <ProductDetail id={path.slice("/product/".length)}/> : collection ? <Shop collection={collection}/> : path === "/shop" ? <Shop/> : collectionRoute ? <section className="section missing-collection"><div className="eyebrow">A NEW DIRECTION</div><h1>Collection not found</h1><p>This collection is not part of the preview. Explore the sample Shop to find another starting point.</p><a className="button" href="/shop">Browse all sample items <Arrow/></a></section> : <>
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-copy"><div className="eyebrow"><span className="small-line"/> OBJECTS WITH CHARACTER</div><h1 id="hero-title">A little character.<br/>A lasting <em>impression.</em></h1><p>Thoughtfully selected handicrafts and décor for the spaces you make your own.</p><a className="button" href="/shop">Explore the collections <Arrow/></a><div className="hero-footnote"><span>BRASS · COPPER · WOOD · MORE</span><span>Selected with intention</span></div></div>
         <ObjectArt kind="brass" hero/>

@@ -1,0 +1,77 @@
+.cart-summary>.checkout-preview-link{background:var(--green);color:white;cursor:pointer;justify-content:space-between}
+.checkout-page{padding:28px 6% 70px;min-height:65vh}
+.checkout-intro{padding:32px 0 25px}
+.checkout-intro h1{font-size:clamp(43px,4.8vw,66px);margin:18px 0}
+.checkout-intro p{font-size:12px;margin:0}
+.checkout-steps{display:flex;gap:30px;list-style:none;padding:20px 0;margin:0;border-top:1px solid #d4d9ca;border-bottom:1px solid #d4d9ca}
+.checkout-steps li{display:flex;align-items:center;gap:10px;color:#757a6b;font-size:12px}
+.checkout-steps li>span{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid #b9c1ae;border-radius:50%;font-size:11px;flex-shrink:0}
+.checkout-steps li[aria-current=step]{color:#30382e;font-weight:600}
+.checkout-steps li[aria-current=step]>span{background:var(--green);color:white;border-color:var(--green)}
+.checkout-preview-note{padding:14px 0 22px;margin:0;font-size:11px;max-width:850px}
+.checkout-notice{font-size:11px;background:#eeeee5;border-left:2px solid #8c987e;padding:14px;margin:0 0 22px}
+.checkout-layout{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:6%;align-items:start}
+.checkout-main{min-width:0}
+.checkout-step-title{font-size:38px;margin:4px 0 22px;scroll-margin-top:24px}
+.checkout-step-title:focus{outline:none}
+.checkout-form-note{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:20px}
+.checkout-form-note p{font-size:12px;margin:0}
+.checkout-fields{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.checkout-field{min-width:0;display:flex;flex-direction:column;gap:9px}
+.checkout-field-wide{grid-column:1/-1}
+.checkout-field label,.payment-demo label{font-size:12px}
+.checkout-field label>span{font-size:10px;color:var(--muted)}
+.checkout-field input,.checkout-field select,.payment-demo select{border:1px solid #b9c1ae;background:#fffdf8;border-radius:0;min-height:48px;padding:12px;width:100%;font-size:13px;color:#30382e}
+.checkout-field [aria-invalid=true]{border-color:#9b4e36}
+.checkout-field .field-error{font-size:11px;color:#8c3b29;margin:0;line-height:1.65}
+.checkout-field .field-help{font-size:10px;margin:0;line-height:1.7}
+.checkout-errors{background:#f6eade;border:1px solid #c49677;padding:18px;margin-bottom:24px;font-size:12px}
+.checkout-errors ul{margin:12px 0 0;padding-left:18px}
+.checkout-errors li{margin:8px 0}
+.checkout-errors a{text-decoration:underline;text-underline-offset:3px}
+.checkout-actions{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:28px;flex-wrap:wrap}
+.checkout-main .button{border:0;cursor:pointer;min-height:48px;font-size:12px}
+.checkout-main .text-button{min-height:44px}
+.checkout-summary{background:#eeeee5;border:1px solid #d4d9ca;padding:25px;min-width:0}
+.checkout-review-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}
+.checkout-review-heading h2{font-size:31px;margin:0}
+.checkout-review-heading h3{font-size:14px;font-weight:500;margin:0}
+.checkout-summary ul{list-style:none;padding:0;margin:0;max-height:380px;overflow:auto}
+.checkout-summary li{display:grid;grid-template-columns:67px minmax(0,1fr);gap:14px;border-top:1px solid #ccd3c1;padding:18px 0}
+.checkout-thumb{height:90px;position:relative;background:#eae8e0}
+.checkout-thumb .object-art{min-height:0}
+.checkout-thumb .photo-label{display:none}
+.checkout-thumb .photo-credit{bottom:3px;right:3px;padding:4px;font-size:6px}
+.checkout-summary li .eyebrow{font-size:7px;letter-spacing:1px}
+.checkout-summary li h3{font:23px 'Libre Caslon Display',Georgia,serif;margin:5px 0;line-height:1.1;overflow-wrap:anywhere}
+.checkout-summary li p{font-size:10px;line-height:1.6;margin:7px 0}
+.checkout-price-pending{font-size:10px;color:#707367}
+.checkout-summary dl{font-size:11px;margin:12px 0 0;border-top:1px solid #ccd3c1}
+.checkout-summary dl>div{display:flex;justify-content:space-between;gap:18px;margin:16px 0;line-height:1.7}
+.checkout-summary dd{text-align:right;margin:0;overflow-wrap:anywhere}
+.checkout-summary .checkout-total{font-weight:600;border-top:1px solid #ccd3c1;padding-top:18px}
+.checkout-summary>p{font-size:10px;line-height:1.8;margin-bottom:0}
+.checkout-review address{font-style:normal;font-size:13px;line-height:1.9;overflow-wrap:anywhere}
+.checkout-review>p{font-size:12px;overflow-wrap:anywhere}
+.checkout-delivery-pending{background:#f3f1e9;padding:23px;margin:24px 0}
+.checkout-delivery-pending h3,.payment-placeholder h3,.payment-demo h3,.payment-state h3{font:29px 'Libre Caslon Display',Georgia,serif;margin:0 0 14px;line-height:1.15}
+.checkout-delivery-pending p{font-size:12px;margin-bottom:0}
+.payment-placeholder{border:1px solid #d4d9ca;background:#f3f1e9;padding:28px}
+.payment-placeholder>span{font-size:42px;color:#80886e;display:block;margin-bottom:15px}
+.payment-placeholder p,.payment-demo p,.payment-state p{font-size:12px}
+.payment-placeholder>.button{background:#d7ddcf;color:#52604c;cursor:not-allowed;margin-top:8px}
+.payment-demo{border-top:1px solid #d4d9ca;padding-top:26px;margin:30px 0 15px}
+.payment-demo label{display:flex;flex-direction:column;gap:9px;max-width:300px;margin:20px 0}
+.payment-demo>.button{margin:0 0 15px}
+.payment-state{padding:32px;background:#f3f1e9;border:1px solid #d4d9ca}
+.payment-state>span{font:45px Georgia,serif;display:block;color:#7c825f;margin-bottom:20px}
+.payment-state .checkout-actions{justify-content:flex-start;gap:20px}
+.payment-success{background:#edf0e6}
+.payment-state>.payment-spinner{border:2px solid #c5cdba;border-top-color:#354b39;border-radius:50%;width:30px;height:30px;animation:payment-spin .8s linear infinite}
+@keyframes payment-spin{to{transform:rotate(360deg)}}
+.checkout-empty{padding:45px 25px;background:#f3f1e9;text-align:center}
+.checkout-empty h2{font-size:40px}
+.checkout-empty p{font-size:12px;margin:20px auto}
+@media(max-width:1000px){.checkout-layout{gap:30px;grid-template-columns:minmax(0,1fr) 290px}.checkout-summary{padding:20px}.checkout-fields{grid-template-columns:1fr}.checkout-field-wide{grid-column:auto}.checkout-review-heading h2{font-size:28px}}
+@media(max-width:700px){.checkout-page{padding-top:22px;padding-bottom:40px}.checkout-intro{padding:27px 0 22px}.checkout-intro h1{font-size:45px}.checkout-intro p{font-size:11px}.checkout-steps{gap:12px;justify-content:space-between;align-items:flex-start}.checkout-steps li{font-size:9px;gap:7px;flex:1;line-height:1.6}.checkout-steps li>span{width:23px;height:23px;font-size:10px}.checkout-layout{grid-template-columns:minmax(0,1fr);gap:32px}.checkout-fields{grid-template-columns:1fr;gap:20px}.checkout-step-title{font-size:34px}.checkout-preview-note{font-size:10px}.checkout-summary{padding:22px}.checkout-actions>.button{max-width:100%;gap:20px}.checkout-form-note{margin-bottom:22px}.checkout-form-note .text-button{padding-top:0}.payment-placeholder,.payment-state{padding:23px}.checkout-summary ul{max-height:none}.checkout-summary li{grid-template-columns:75px minmax(0,1fr)}.checkout-thumb{height:100px}.checkout-errors{padding:15px}.checkout-review-heading h2{font-size:32px}}
+@media(prefers-reduced-motion:reduce){.payment-state>.payment-spinner{animation:none}}

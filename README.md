@@ -1,6 +1,6 @@
 # SorviaGlobal frontend
 
-Steps 1–6: homepage, Shop, collections, product details, Search, Wishlist, preview cart and region controls, built with React, TypeScript and Vite. Step 6 is awaiting review.
+Steps 1–7: homepage, Shop, collections, product details, Search, Wishlist, preview cart, region controls and checkout preview, built with React, TypeScript and Vite. Step 7 is awaiting review.
 
 ## Run locally
 
@@ -24,8 +24,8 @@ Install Node.js, then run `npm install` and `npm run dev`. Open the local addres
 3. Category and collection templates — complete; user approved.
 4. Product detail — complete; user approved.
 5. Search and wishlist — complete.
-6. Cart and region selection — complete; awaiting review.
-7. Checkout and payment states.
+6. Cart and region selection — complete.
+7. Checkout and payment states — complete; awaiting review.
 8. Accounts and orders.
 9. Tracking and support/policies.
 10. Admin product management.
@@ -77,3 +77,11 @@ Open `/product/05`, choose a quantity and use **Add to preview cart**. Open the 
 Choose country/currency below the header, in the cart summary or in the footer. Example countries and INR/USD/GBP/EUR are review options only, not confirmed delivery/payment support. Browser language can suggest a country; no IP lookup runs. Country changes suggest a currency, which can be overridden. No exchange rates or prices are fabricated. Cart and preferences persist locally for this browser/origin, synchronize across tabs, and show write-failure notices. Backend configuration will replace preview options later.
 
 Theme changes are postponed until the remaining frontend steps are complete. Next: Step 7 checkout/payment-state interface, after review and authorization.
+
+
+## Step 7 review
+Add a sample from its product page, open `/cart`, then **Preview checkout**. `/checkout` contains delivery details, review/edit and payment-result previews. Use **Use fictional example details** to test without personal information. Empty or invalid fields show inline messages and a linked error summary. Country-specific postal formats support the configured example markets; Other country blocks preview progression.
+
+Try Success, Failure and Cancelled under **Try a payment result**. Processing, retry and edit states preserve the sample selection. These are local demonstrations: no payment is sent, no order is created and real Place order remains disabled. No card/bank information is collected. Shipping/taxes, payment currency and final amount await backend data. Contact/address fields stay only in memory; refresh or leaving clears them. Cart and region changes return you to delivery for another review. Run `npm run test:checkout` for 16 validation assertions; `npm run build` checks types, builds assets and generates 45 static routes.
+
+Next is Step 8 accounts and orders after review/authorization. Theme redesign stays postponed until the frontend steps are complete.

@@ -1,0 +1,107 @@
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { currencies, markets, useCommerce } from './CommerceContext';
+import { products } from './catalog';
+import { ObjectArt } from './ObjectArt';
+import { emptyDelivery, postalRules, validateDelivery, type Delivery, type DeliveryErrors } from './checkoutValidation';
+
+type PaymentState = 'idle' | 'processing' | 'success' | 'failure' | 'cancelled';
+type Outcome = 'success' | 'failure' | 'cancelled';
+const steps = ['Delivery details', 'Review selection', 'Payment preview'];
+
+export function CheckoutPage() {
+  const { lines, count, region, setRegion } = useCommerce();
+  const [step, setStep] = useState(0);
+  const [delivery, setDelivery] = useState<Delivery>({ ...emptyDelivery });
+  const [errors, setErrors] = useState<DeliveryErrors>({});
+  const [payment, setPayment] = useState<PaymentState>('idle');
+  const [outcome, setOutcome] = useState<Outcome>('success');
+  const [notice, setNotice] = useState('');
+  const heading = useRef<HTMLHeadingElement>(null);
+  const errorSummary = useRef<HTMLDivElement>(null);
+  const form = useRef<HTMLFormElement>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pending = useRef(false);
+  const country = region?.country || '';
+  const countryName = markets.find(m => m.code === country)?.name || 'Choose a country';
+  const selection = JSON.stringify({ lines, region });
+  const previousSelection = useRef(selection);
+  useEffect(() => { document.title = 'Checkout preview | SorviaGlobal'; }, []);
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
+  useEffect(() => {
+    if (previousSelection.current === selection) return;
+    previousSelection.current = selection;
+    if (timer.current) clearTimeout(timer.current);
+    pending.current = false;
+    setPayment('idle'); setStep(0); setErrors({});
+    setNotice('Your cart or region changed. Please review your delivery details again.');
+  }, [selection]);
+  useEffect(() => {
+    if (Object.keys(errors).length) errorSummary.current?.focus();
+  }, [errors]);
+  useEffect(() => { heading.current?.focus(); }, [step, payment]);
+
+  const update = (key: keyof Delivery, value: string) => {
+    setDelivery(current => ({ ...current, [key]: value }));
+    setErrors(current => { const next = { ...current }; delete next[key]; return next; });
+  };
+  const field = (key: keyof Delivery, label: string, autoComplete: string, options: { optional?: boolean; placeholder?: string; type?: string } = {}) => <div className={`checkout-field ${key === 'address' || key === 'apartment' ? 'checkout-field-wide' : ''}`} key={key}>
+    <label htmlFor={`delivery-${key}`}>{label}{options.optional && <span> (optional)</span>}</label>
+    <input id={`delivery-${key}`} name={key} type={options.type || 'text'} autoComplete={autoComplete} value={delivery[key]} maxLength={key === 'address' || key === 'apartment' ? 200 : 100} onChange={e => update(key, e.target.value)} required={!options.optional} placeholder={options.placeholder} aria-invalid={Boolean(errors[key])} aria-describedby={errors[key] ? `error-${key}` : undefined}/>
+    {errors[key] && <p className="field-error" id={`error-${key}`}>{errors[key]}</p>}
+  </div>;
+  const submitDelivery = (event: FormEvent) => {
+    event.preventDefault();
+    const next = validateDelivery(delivery, country);
+    setErrors(next);
+    if (!Object.keys(next).length) { setNotice(''); setStep(1); }
+  };
+  const simulate = () => {
+    if (pending.current || !count || !postalRules[country]) return;
+    pending.current = true; setPayment('processing');
+    timer.current = setTimeout(() => { pending.current = false; setPayment(outcome); }, 1100);
+  };
+  const resetPayment = () => { setPayment('idle'); };
+  const fillExample = () => {
+    setRegion({ country: 'IN', currency: 'INR' });
+    setDelivery({ email: 'alex@example.com', name: 'Alex Sample', phone: '+91 00000 00000', address: '12 Example Street', apartment: '', city: 'Mumbai', area: 'Maharashtra', postal: '400001' });
+    setErrors({}); setNotice('Fictional details filled for design review. Nothing is sent or saved.');
+  };
+
+  return <section className="checkout-page" aria-labelledby="checkout-title">
+    <nav className="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/cart">Cart</a><span aria-hidden="true">/</span><span aria-current="page">Checkout preview</span></nav>
+    <div className="checkout-intro"><div className="eyebrow">THE NEXT CHAPTER</div><h1 id="checkout-title">Make it <em>feel like home.</em></h1><p>Checkout design preview · No orders or payments are processed.</p></div>
+    {!count ? <div className="checkout-empty"><h2>Your cart comes first</h2><p>Add a sample from a product page to explore checkout.</p><a className="button" href="/shop">Explore the Shop <span aria-hidden="true">↗</span></a></div> : <>
+      <ol className="checkout-steps" aria-label="Checkout progress">{steps.map((label, index) => <li key={label} aria-current={step === index ? 'step' : undefined}><span>{index + 1}</span>{label}</li>)}</ol>
+      <p className="checkout-preview-note">Use fictional details to try this page. Delivery details stay in memory and are cleared when you leave or refresh. No card or bank information is collected.</p>
+      {notice && <p className="checkout-notice" role="status">{notice}</p>}
+      <div className="checkout-layout"><div className="checkout-main">
+        <h2 className="checkout-step-title" ref={heading} tabIndex={-1}>{payment === 'processing' ? 'Preparing the preview…' : payment === 'success' ? 'Success state preview' : payment === 'failure' ? 'Payment failure preview' : payment === 'cancelled' ? 'Payment cancellation preview' : steps[step]}</h2>
+        {step === 0 && <form ref={form} noValidate onSubmit={submitDelivery} className="checkout-form">
+          <div className="checkout-form-note"><p>Start with contact and delivery information.</p><button className="text-button" type="button" onClick={fillExample}>Use fictional example details</button></div>
+          {Object.keys(errors).length > 0 && <div className="checkout-errors" ref={errorSummary} tabIndex={-1} role="alert"><strong>Please check the highlighted fields.</strong><ul>{Object.entries(errors).map(([key, message]) => <li key={key}><a href={`#delivery-${key}`} onClick={e => { e.preventDefault(); form.current?.querySelector<HTMLElement>(`#delivery-${key}`)?.focus(); }}>{message}</a></li>)}</ul></div>}
+          <div className="checkout-fields">
+            {field('email', 'Email address', 'email', { type: 'email', placeholder: 'alex@example.com' })}
+            {field('name', 'Full name', 'shipping name')}
+            <div className="checkout-field"><label htmlFor="delivery-country">Delivery country</label><select id="delivery-country" autoComplete="shipping country" value={country} aria-invalid={Boolean(errors.country)} aria-describedby={errors.country ? 'error-country' : 'country-preview-note'} onChange={e => { const market = markets.find(m => m.code === e.target.value)!; setRegion({ country: market.code, currency: market.currency }); }} required><option value="" disabled>Choose a country</option>{markets.map(m => <option value={m.code} key={m.code}>{m.name}</option>)}</select>{errors.country ? <p id="error-country" className="field-error">{errors.country}</p> : <p id="country-preview-note" className="field-help">Example destinations only; delivery coverage is unconfirmed.</p>}</div>
+            {field('phone', 'Phone number', 'shipping tel', { type: 'tel', placeholder: country === 'IN' ? '+91 …' : country === 'US' ? '+1 …' : country === 'GB' ? '+44 …' : country === 'DE' ? '+49 …' : country === 'FR' ? '+33 …' : 'Include country code' })}
+            {field('address', 'Street address', 'shipping address-line1')}
+            {field('apartment', 'Apartment, suite, etc.', 'shipping address-line2', { optional: true })}
+            {field('city', 'City / town', 'shipping address-level2')}
+            {field('area', country === 'US' ? 'State' : country === 'IN' ? 'State / union territory' : 'State / province / region', 'shipping address-level1', { optional: !['IN', 'US'].includes(country) })}
+            {field('postal', postalRules[country]?.label || 'Postal code', 'shipping postal-code', { placeholder: postalRules[country]?.example })}
+            <div className="checkout-field"><label htmlFor="checkout-currency">Display currency</label><select id="checkout-currency" value={region?.currency || 'INR'} onChange={e => { if (region) setRegion({ ...region, currency: e.target.value as typeof currencies[number] }); }} disabled={!region}>{currencies.map(code => <option value={code} key={code}>{code}</option>)}</select><p className="field-help">A display preference; payment currency is not confirmed.</p></div>
+          </div>
+          {country === 'OTHER' && <p className="region-warning">Checkout for this destination is not configured. You can choose an example country to continue the design preview.</p>}
+          <div className="checkout-actions"><a className="text-button" href="/cart">← Back to cart</a><button className="button" type="submit">Review selection <span aria-hidden="true">→</span></button></div>
+        </form>}
+        {step === 1 && <div className="checkout-review"><div className="checkout-review-heading"><h3>Contact & delivery</h3><button className="text-button" onClick={() => setStep(0)}>Edit details</button></div><address>{delivery.name}<br/>{delivery.address}<br/>{delivery.apartment && <>{delivery.apartment}<br/></>}{delivery.city}{delivery.area ? `, ${delivery.area}` : ''} {delivery.postal}<br/>{countryName}</address><p>{delivery.email}<br/>{delivery.phone}</p><div className="checkout-delivery-pending"><h3>Delivery options</h3><p>Shipping methods, delivery dates, taxes and duties will appear here once the destination and product information are confirmed.</p></div><p>Review the sample selection and currency in your summary. No final payable amount is available yet.</p><div className="checkout-actions"><button className="text-button" onClick={() => setStep(0)}>← Delivery details</button><button className="button" onClick={() => setStep(2)}>Payment preview <span aria-hidden="true">→</span></button></div></div>}
+        {step === 2 && <div className="checkout-payment" aria-busy={payment === 'processing'}>
+          {payment === 'idle' && <><div className="payment-placeholder"><span aria-hidden="true">◇</span><h3>Payment will be connected later</h3><p>Actual payment methods and checkout currency will come from the payment provider. This preview does not collect payment details.</p><button className="button" disabled>Place order unavailable</button></div><div className="payment-demo"><h3>Try a payment result</h3><p>These controls demonstrate the design only. They do not contact a payment service.</p><label htmlFor="payment-outcome">Preview result<select id="payment-outcome" value={outcome} onChange={e => setOutcome(e.target.value as Outcome)}><option value="success">Success</option><option value="failure">Failure</option><option value="cancelled">Cancelled</option></select></label><button className="button" onClick={simulate}>Run payment preview <span aria-hidden="true">→</span></button></div><button className="text-button" onClick={() => setStep(1)}>← Review selection</button></>}
+          {payment === 'processing' && <div className="payment-state" role="status"><span className="payment-spinner" aria-hidden="true"/><h3>Showing the processing state</h3><p>Please wait a moment. No payment request is being sent.</p></div>}
+          {payment === 'success' && <div className="payment-state payment-success" role="status"><span aria-hidden="true">✓</span><h3>This is how success will look</h3><p>No order was placed and no payment was taken. Your sample cart is unchanged. Real order confirmation and tracking will be supplied by the backend.</p><div className="checkout-actions"><a className="button" href="/shop">Continue browsing <span aria-hidden="true">↗</span></a><button className="text-button" onClick={resetPayment}>Try another result</button></div></div>}
+          {(payment === 'failure' || payment === 'cancelled') && <div className="payment-state" role="status"><span aria-hidden="true">{payment === 'failure' ? '!' : '↶'}</span><h3>{payment === 'failure' ? 'The payment could not be completed' : 'The payment was cancelled'}</h3><p>Simulated result only. No payment was attempted. Your delivery details and sample cart are still here so you can retry.</p><div className="checkout-actions"><button className="button" onClick={resetPayment}>Try again <span aria-hidden="true">→</span></button><button className="text-button" onClick={() => { resetPayment(); setStep(1); }}>Review details</button></div></div>}
+        </div>}
+      </div><aside className="checkout-summary" aria-labelledby="checkout-summary-title"><div className="checkout-review-heading"><h2 id="checkout-summary-title">Your selection</h2><a className="text-button" href="/cart">Edit cart</a></div><ul>{lines.map(line => { const product = products.find(p => p.id === line.id)!; return <li key={line.id}><div className="checkout-thumb"><ObjectArt kind={product.kind} productId={product.id}/></div><div><span className="eyebrow">SAMPLE {line.id}</span><h3>{product.name}</h3><p>Quantity {line.quantity} · {product.material}</p><span className="checkout-price-pending">Price unavailable</span></div></li>; })}</ul><dl><div><dt>Sample items</dt><dd>{count}</dd></div><div><dt>Destination</dt><dd>{countryName}</dd></div><div><dt>Display currency</dt><dd>{region?.currency || 'Choose a region'}</dd></div><div><dt>Subtotal</dt><dd>Not available</dd></div><div><dt>Shipping / taxes / duties</dt><dd>Not calculated</dd></div><div className="checkout-total"><dt>Final payable amount</dt><dd>Not available</dd></div></dl><p>Prices and the actual payment currency must be confirmed before real checkout becomes available.</p></aside></div>
+    </>}
+  </section>;
+}

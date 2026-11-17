@@ -1,6 +1,6 @@
 # SorviaGlobal project handover
 
-Updated: 17 November 2026. Current milestone: Step 6 cart and region frontend complete, awaiting user review. Theme changes postponed until remaining frontend steps are finished. Do not start Step 7 without authorization.
+Updated: 17 November 2026. Current milestone: Step 7 checkout frontend complete, awaiting user review. Theme changes postponed until remaining frontend steps are finished. Do not start Step 8 without authorization.
 
 ## Working agreement
 
@@ -64,11 +64,11 @@ Git writes and host-visible preview previously required native permission escala
 
 ## Next
 
-Wait for Step 6 review. Apply requested adjustments if any. Next is Step 7 checkout/payment states, followed by accounts/orders, tracking/support/policies and admin. Real product photos, approved business copy, supported countries/prices, policies and API contracts are outstanding.
+Wait for Step 7 review. Apply requested adjustments if any. Next is Step 8 accounts/orders, followed by tracking/support/policies and admin. Real product photos, approved business copy, supported countries/prices, policies and API contracts are outstanding.
 
 ## Prompt for a new agent
 
-Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 6 cart/region frontend is complete and awaiting review. Next is Step 7 checkout/payment states, only after authorization. Finish remaining frontend steps before revisiting themes or building backend. Report current state and the next pending action before continuing. Update this handover at every milestone.
+Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 7 checkout frontend is complete and awaiting review. Next is Step 8 accounts/orders, only after authorization. Finish remaining frontend steps before revisiting themes or building backend. Report current state and the next pending action before continuing. Update this handover at every milestone.
 
 ## Hosted preview setup (17 November)
 
@@ -108,3 +108,13 @@ Added `CommerceContext.tsx`, `Cart.tsx` and `cart.css`. `/cart` has sample photo
 Local persistence keys `sorvia-cart-v1` and `sorvia-region-v1` are written synchronously in user actions, validated on load, guarded on write failures and synchronized via storage events. Cart merges repeated sample IDs, preserves positive integer quantities up to a UI-only maximum of 99, drops invalid IDs/duplicates/untrusted price fields. Samples are not purchasable and do not reserve stock. Currency changes never calculate prices. Country examples: IN/US/GB/DE/FR and Other, with INR/USD/GBP/EUR preferences; all are preview options, not confirmed shipping/payment coverage. Country change suggests a matching currency; visitors can override it. Optional first-visit suggestion uses browser language only, without external geolocation. Actual supported markets must come from backend configuration later.
 
 Validation: TypeScript and production build passed; 44 static routes now include `/cart` (both HTML alias and directory index). Browser checked empty state, US selection defaults USD, save across product/cart/refresh, add then immediate navigation, repeated add merges to one line, quantity updates/count/refresh, disabled min/max buttons, mini-cart Escape/removal and final-item empty recovery, Other-country notice, 1280px/390px/320px layouts, mobile menu and no horizontal overflow. Eight pure-data validation assertions passed for malformed carts, duplicate/unknown IDs, invalid quantities, removal of untrusted prices, invalid markets/currencies and manual currency override. No backend, payment, account or new theme work included. Preserve private Sites audience and push source to existing GitHub origin.
+
+
+## Step 7 — checkout preview (17 November 2026)
+User reviewed Step 6 and authorized the next step. Rechecked the hosted homepage, Shop (30), Brass collection (5), product-detail add control, brass-bowl Search (2), Wishlist empty recovery and Cart empty recovery before implementation. No theme changes applied. Temporary homepage development sections stay until pre-launch cleanup, as discussed with the user.
+
+Added `/checkout` in `src/Checkout.tsx` with delivery form, review/edit stage and payment-state demonstration. Cart links to **Preview checkout**; empty checkout routes back to Shop. Shared cart/region state feeds the item summary and display-currency preference. Shipping, taxes/duties, actual payment currency and payable amounts remain unavailable. Real Place order is disabled. Success/failure/cancelled outcomes are explicitly simulated, including processing and retry; no provider call, order number, transaction or inventory reservation is fabricated. Simulated success preserves the cart.
+
+Delivery form has labelled fields, inline errors and a focused error summary, optional apartment/region where applicable, country-specific postal patterns for example IN/US/GB/DE/FR markets, phone format/length checks and editable currency preference. Other/missing countries block progression with a message. Rules live in `src/checkoutValidation.ts`; production backend must still validate addresses/markets. Fictional-example button allows review without personal data. Contact/address values exist only in component memory (never localStorage, URL or API); refresh or leaving clears them. Back/edit/retry retain values within this page. No card/bank fields exist. Cart/region changes invalidate review, cancel the preview timer, and return to delivery. Timers are cleaned up on unmount and duplicate runs are guarded.
+
+Checks: 16 reusable validation assertions (`npm run test:checkout` or bundled Node + `scripts/check-checkout.mjs`), TypeScript and production build. Browser checked empty-cart entry, product -> cart -> checkout, blank errors/focus, fictional details, review/edit retention, all three simulated outcomes/processing/retry, disabled real ordering, region change -> postcode revalidation, quantity change through mini-cart -> review invalidation, and refresh clearing contact/address fields. Desktop 1280 and mobile 390/320 checked with no horizontal overflow. Static route helper generates 45 route entries including `/checkout`. Update hosted private preview using the existing Sites project; keep GitHub origin unchanged. No account/backend or Step 8 work started.
