@@ -1,6 +1,6 @@
 # SorviaGlobal project handover
 
-Updated: 17 November 2026. Current milestone: Step 5 Search and Wishlist complete, awaiting user review. Do not begin Step 6 until authorized.
+Updated: 17 November 2026. Current milestone: Step 5 complete; Shop modern-luxury design comparison awaiting user choice. Do not begin Step 6 until authorized.
 
 ## Working agreement
 
@@ -89,3 +89,9 @@ User explicitly authorized Search and Wishlist. Added `src/DiscoveryPages.tsx` (
 Validation: local UI verified brass bowl search = 2, add two favourites, navigate/refresh preserves 2, remove from product details returns to wishlist with 1, remove last gives empty state, no-result search = 0, reset = 30, Glass suggestion/filter = 5 and survives refresh. Checked narrow layout at 320px with no horizontal overflow. TypeScript and production build passed. Step 5 awaits review; Step 6 (cart/region) is next after approval. Previous milestone commit: `0b5389b`.
 
 Step 5 follow-up: hosted verification caught a navigation race with effect-based localStorage writes. Wishlist toggles now persist synchronously inside the click handler, with a ref holding current IDs. Local regression passed: save then immediately navigate -> item present; remove then immediately navigate -> item remains removed. Keep persistence inside the handler to avoid reintroducing this issue.
+
+## Shop modern luxury trial (17 November)
+
+User asked to try modern luxury for the SHOP page and compare it with the previous design. Scope is Shop only. `src/Shop.tsx` defaults to `.shop-luxury` unless `?design=classic`; collection/category routes continue using the existing layout. Added comparison links preserving query/filter state, editorial photo hero, larger type/spacing, understated material links, two-column desktop product grid and one-column mobile grid. A Refine selection button opens/closes the filters, with aria-expanded/controls and hidden state. Existing search, sort, wishlist and product-detail links remain. Classic style flag is retained in the URL and product return path. Styles are scoped to `.shop-luxury`. User has not yet chosen which design to retain. Before redesigning other pages or continuing Step 6, wait for their review. Also preserve the user’s explicit preference: finish frontend first; backend comes afterward.
+
+Checks: TypeScript; browser comparison retains Brass filter and A-Z (5 results), classic product navigation/back retains classic mode, favourites save/remove, mobile filter disclosure, empty search/reset, desktop two columns and mobile one column with no horizontal overflow. Previous design screenshot saved at visualization root as shop-before-luxury.jpg. Git baseline before trial: `25f95dd`.

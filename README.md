@@ -63,3 +63,7 @@ Open any product image/title from Shop or a collection, or visit `/product/05`. 
 ## Step 5 review
 
 Open `/search` from the header. Search matches all typed words against sample names, material and category; submit the form or use material suggestions. Search/filter state is stored in the URL. Save/remove a sample using the heart on any card or product-detail page; header count updates immediately. `/wishlist` shows saved items with removal and an empty-state recovery link. Favourites persist in localStorage for this browser and origin only, with cross-tab updates; they do not sync to accounts/devices, confirm availability or reserve stock. If browser storage is unavailable, the wishlist/detail views explain that favourites will not persist. Local and hosted previews have separate browser storage. Native route entries now include Search and Wishlist (43 static routes total).
+
+## Shop design comparison
+
+Modern luxury is the default Shop preview at `/shop`. Compare with `/shop?design=classic` or use the style links at the top. The trial adds an editorial photo introduction, a two-column large-photo grid on desktop, one column on mobile, and a collapsible filter area. Category/collection pages keep their existing design. Filters, search, sort and product return links preserve the selected style. This is a review trial awaiting the user’s choice, not approval to redesign other pages.

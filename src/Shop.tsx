@@ -12,6 +12,8 @@ const sorts = ['featured', 'az', 'za'];
 export function Shop({ collection }: { collection?: Collection }) {
   const basePath = collection?.path || '/shop';
   const [initial] = useState(() => new URLSearchParams(location.search));
+  const luxury = !collection && initial.get('design') !== 'classic';
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [query, setQuery] = useState(initial.get('q') || '');
   const [category, setCategory] = useState(collection?.category || (categories.includes(initial.get('category') || '') ? initial.get('category')! : ''));
   const [material, setMaterial] = useState(collection?.material || (materials.includes(initial.get('material') || '') ? initial.get('material')! : ''));
@@ -22,6 +24,7 @@ export function Shop({ collection }: { collection?: Collection }) {
   if (sort !== 'featured') results.sort((a, b) => sort === 'az' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
 
   const params = new URLSearchParams();
+  if (!collection && !luxury) params.set('design', 'classic');
   if (query) params.set('q', query);
   if (category && !collection?.category) params.set('category', category);
   if (material && !collection?.material) params.set('material', material);
@@ -32,15 +35,22 @@ export function Shop({ collection }: { collection?: Collection }) {
     document.title = `${collection?.name || 'Shop'} | SorviaGlobal`;
   }, [browsingPath, collection]);
 
-  return <>
+  const styleLink = (design: string) => {
+    const comparison = new URLSearchParams(params);
+    if (design === 'classic') comparison.set('design', 'classic'); else comparison.delete('design');
+    return `/shop${comparison.size ? `?${comparison}` : ''}`;
+  };
+  return <div className={luxury ? 'shop-luxury' : 'shop-classic'}>
+    {!collection && <div className="design-comparison"><span>COMPARE SHOP STYLES</span><nav aria-label="Shop design comparison"><a href={styleLink('luxury')} aria-current={luxury ? 'page' : undefined}>Modern luxury</a><a href={styleLink('classic')} aria-current={!luxury ? 'page' : undefined}>Previous design</a></nav></div>}
     <section className="shop-intro">
       <nav className="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span>{collection ? <><a href="/shop">Shop</a><span aria-hidden="true">/</span><span aria-current="page">{collection.name}</span></> : <span aria-current="page">Shop</span>}</nav>
-      {collection ? <div className="collection-hero"><div className="collection-copy"><div className="eyebrow">{collection.eyebrow}</div><h1>{collection.name}</h1><h2>{collection.description}</h2><p>{collection.detail}</p><a className="collection-jump" href="#browse">Explore this selection <span aria-hidden="true">↓</span></a></div><div className="collection-visual"><ObjectArt kind={collection.kind}/><span className="visual-label">MATERIAL & MOOD</span></div></div> : <div className="shop-heading"><div><div className="eyebrow">A CONSIDERED COLLECTION</div><h1>Objects for <em>everyday living.</em></h1></div><p>Discover warm metals, natural textures<br/>and little details with lasting character.</p></div>}
+      {collection ? <div className="collection-hero"><div className="collection-copy"><div className="eyebrow">{collection.eyebrow}</div><h1>{collection.name}</h1><h2>{collection.description}</h2><p>{collection.detail}</p><a className="collection-jump" href="#browse">Explore this selection <span aria-hidden="true">↓</span></a></div><div className="collection-visual"><ObjectArt kind={collection.kind}/><span className="visual-label">MATERIAL & MOOD</span></div></div> : luxury ? <div className="luxury-intro"><div className="luxury-intro-copy"><div className="eyebrow"><span className="small-line"/> THE SORVIA EDIT</div><h1>Objects of character.<br/><em>Spaces of your own.</em></h1><p>A considered selection of materials, textures and forms. Discover the details that make a space feel like yours.</p><a className="luxury-explore" href="#browse">Discover the collection <span aria-hidden="true">↓</span></a><span className="luxury-hero-note">SIX MATERIALS. MANY WAYS TO MAKE IT YOURS.</span></div><div className="luxury-intro-photo"><ObjectArt kind="brass"/><span className="luxury-photo-heading">A STUDY IN FORM</span></div></div> : <div className="shop-heading"><div><div className="eyebrow">A CONSIDERED COLLECTION</div><h1>Objects for <em>everyday living.</em></h1></div><p>Discover warm metals, natural textures<br/>and little details with lasting character.</p></div>}
       <p className="sample-notice"><span>DESIGN PREVIEW</span> Sample concepts with reference photographs, not our inventory. Photos may differ in design and material. Real products, prices and availability are still to come.</p>
     </section>
     {!collection && <nav className="collection-shortcuts" aria-label="Explore material collections"><span className="eyebrow">EXPLORE BY MATERIAL</span>{collections.filter(c => c.material).map(c => <a href={c.path} key={c.path}>{c.name} <span aria-hidden="true">↗</span></a>)}</nav>}
     <section className="shop-body" id="browse" aria-label="Browse sample collection">
-      <aside className="shop-filters" aria-label="Product filters">
+      {luxury && <div className="luxury-browse-heading"><div><div className="eyebrow">SELECTED WITH INTENTION</div><h2>The collection</h2></div><button className="filter-toggle" aria-expanded={filtersOpen} aria-controls="shop-filters" onClick={() => setFiltersOpen(!filtersOpen)}>Refine selection <span aria-hidden="true">{filtersOpen ? '−' : '+'}</span></button></div>}
+      <aside id="shop-filters" className="shop-filters" aria-label="Product filters" hidden={luxury && !filtersOpen}>
         <div className="filter-heading"><h2>Refine your selection</h2>{active && <button className="text-button" onClick={clear}>Reset all</button>}</div>
         {collection && <p className="collection-scope">Browsing {collection.name}<a href="/shop">View all sample items ↗</a></p>}
         {!collection?.category && <fieldset><legend>Category</legend>{['', ...categories].map(value => <label className="filter-option" key={value}><input type="radio" name="category" checked={category === value} onChange={() => setCategory(value)}/>{value || 'All categories'}</label>)}</fieldset>}
@@ -55,5 +65,5 @@ export function Shop({ collection }: { collection?: Collection }) {
       </div>
     </section>
     <section className="section related-collections" aria-labelledby="more-collections"><div className="section-heading"><div><div className="eyebrow">CONTINUE YOUR DISCOVERY</div><h2 id="more-collections">{collection ? 'A different point of view' : 'Explore by object'}</h2></div><a className="text-button" href={collection ? '/shop' : '/#collections'}>{collection ? 'Back to all items' : 'Explore materials on the homepage'} ↗</a></div><div className="collection-links">{collections.filter(c => collection ? c.path !== collection.path && Boolean(c.material) !== Boolean(collection.material) : c.category).map(c => <a href={c.path} key={c.path}><span>{c.name}</span><span aria-hidden="true">↗</span></a>)}</div></section>
-  </>;
+  </div>;
 }
