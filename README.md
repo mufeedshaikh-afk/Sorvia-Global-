@@ -67,3 +67,5 @@ Open `/search` from the header. Search matches all typed words against sample na
 ## Shop design comparison
 
 Modern luxury is the default Shop preview at `/shop`. Compare with `/shop?design=classic` or use the style links at the top. The trial adds an editorial photo introduction, a two-column large-photo grid on desktop, one column on mobile, and a collapsible filter area. Category/collection pages keep their existing design. Filters, search, sort and product return links preserve the selected style. This is a review trial awaiting the user’s choice, not approval to redesign other pages.
+
+Warm luxury theme trial: `/shop` now uses cream, chocolate brown and muted gold. Compare the earlier modern palette at `/shop?design=modern` and original layout at `/shop?design=classic`. The theme includes the Shop header/footer and is isolated in `src/warm-theme.css`; other pages await review.

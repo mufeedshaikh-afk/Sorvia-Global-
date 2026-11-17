@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
+import './warm-theme.css';
 import { ObjectArt } from './ObjectArt';
 import { Shop } from './Shop';
 import { ProductDetail } from './ProductDetail';
@@ -34,7 +35,8 @@ function App() {
   const path = location.pathname.replace(/\/$/, '') || '/';
   const collection = collections.find(item => item.path === path);
   const collectionRoute = path.startsWith('/collections/') || path.startsWith('/category/');
-  return <>
+  const warmTheme = path === '/shop' && !['classic', 'modern'].includes(new URLSearchParams(location.search).get('design') || '');
+  return <div className={warmTheme ? 'theme-warm' : undefined}>
     <a className="skip-link" href="#main">Skip to content</a>
     <div id="home"><Header/></div>
     <main id="main">{path === "/search" ? <SearchPage/> : path === "/wishlist" ? <WishlistPage/> : path.startsWith("/product/") ? <ProductDetail id={path.slice("/product/".length)}/> : collection ? <Shop collection={collection}/> : path === "/shop" ? <Shop/> : collectionRoute ? <section className="section missing-collection"><div className="eyebrow">A NEW DIRECTION</div><h1>Collection not found</h1><p>This collection is not part of the preview. Explore the sample Shop to find another starting point.</p><a className="button" href="/shop">Browse all sample items <Arrow/></a></section> : <>
@@ -51,7 +53,7 @@ function App() {
       <section className="preview-note section" id="project"><div><div className="eyebrow">BUILDING SORVIAGLOBAL, ONE PAGE AT A TIME</div><h2>Your first look.</h2><p>This is the homepage design preview. Reference photographs and draft copy are for design review. Photos show examples, not our actual inventory or confirmed product specifications. Try sample product browsing on the Shop page. Live products, prices, accounts and checkout will be added in later steps.</p></div><span className="step-badge">01<span>HOMEPAGE</span></span></section>
     </>}</main>
     <footer><div className="footer-top"><a className="wordmark" href="/">SORVIA<span>GLOBAL</span></a><p>Considered objects.<br/>Spaces with personality.</p><nav aria-label="Footer navigation"><a href="/shop">Shop</a><a href="/search">Search</a><a href="/wishlist">Wishlist</a><a href="/#collections">Collections</a><a href="/#approach">Our approach</a><a href="/images/reference/credits.html" target="_blank" rel="noopener noreferrer">Photo credits</a></nav></div><div className="footer-bottom"><span>© {new Date().getFullYear()} SorviaGlobal</span><span>Design preview · Not yet accepting orders</span><a href="#home">Back to top ↑</a></div></footer>
-  </>;
+  </div>;
 }
 
 createRoot(document.getElementById('root')!).render(<React.StrictMode><WishlistProvider><App/></WishlistProvider></React.StrictMode>);

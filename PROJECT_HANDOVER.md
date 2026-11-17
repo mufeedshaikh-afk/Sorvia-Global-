@@ -1,6 +1,6 @@
 # SorviaGlobal project handover
 
-Updated: 17 November 2026. Current milestone: Step 5 complete; Shop modern-luxury design comparison awaiting user choice. Do not begin Step 6 until authorized.
+Updated: 17 November 2026. Current milestone: Step 5 complete; Shop warm-luxury theme trial awaiting user review; modern and classic comparisons retained. Do not begin Step 6 until authorized.
 
 ## Working agreement
 
@@ -95,3 +95,7 @@ Step 5 follow-up: hosted verification caught a navigation race with effect-based
 User asked to try modern luxury for the SHOP page and compare it with the previous design. Scope is Shop only. `src/Shop.tsx` defaults to `.shop-luxury` unless `?design=classic`; collection/category routes continue using the existing layout. Added comparison links preserving query/filter state, editorial photo hero, larger type/spacing, understated material links, two-column desktop product grid and one-column mobile grid. A Refine selection button opens/closes the filters, with aria-expanded/controls and hidden state. Existing search, sort, wishlist and product-detail links remain. Classic style flag is retained in the URL and product return path. Styles are scoped to `.shop-luxury`. User has not yet chosen which design to retain. Before redesigning other pages or continuing Step 6, wait for their review. Also preserve the user’s explicit preference: finish frontend first; backend comes afterward.
 
 Checks: TypeScript; browser comparison retains Brass filter and A-Z (5 results), classic product navigation/back retains classic mode, favourites save/remove, mobile filter disclosure, empty search/reset, desktop two columns and mobile one column with no horizontal overflow. Previous design screenshot saved at visualization root as shop-before-luxury.jpg. Git baseline before trial: `25f95dd`.
+
+## Warm luxury Shop theme — 17 November 2026
+User selected warm luxury after clarifying they wanted a theme change. Default /shop now uses cream, chocolate brown and muted gold, including its shared header/footer. Modern palette remains /shop?design=modern and original layout remains /shop?design=classic. Comparison links retain filters/sort; product return links preserve the selected design. Other routes retain the existing theme pending review. Theme styles live in src/warm-theme.css and are scoped by the App wrapper. No backend work or Step 6 started.
+Validation: TypeScript, Vite build and all 43 static routes passed. Browser verified warm theme presence, Brass filter = 5, switching modern/warm preserves selection, clearing restores 30, and 390px mobile viewport has no horizontal overflow. Browser screenshot capture was unavailable during local QA. No dependencies changed; direct build tools used because pnpm's automatic store registration hit a sandbox symlink restriction.

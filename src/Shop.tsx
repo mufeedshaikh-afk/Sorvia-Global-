@@ -13,6 +13,7 @@ export function Shop({ collection }: { collection?: Collection }) {
   const basePath = collection?.path || '/shop';
   const [initial] = useState(() => new URLSearchParams(location.search));
   const luxury = !collection && initial.get('design') !== 'classic';
+  const warm = luxury && initial.get('design') !== 'modern';
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [query, setQuery] = useState(initial.get('q') || '');
   const [category, setCategory] = useState(collection?.category || (categories.includes(initial.get('category') || '') ? initial.get('category')! : ''));
@@ -25,6 +26,7 @@ export function Shop({ collection }: { collection?: Collection }) {
 
   const params = new URLSearchParams();
   if (!collection && !luxury) params.set('design', 'classic');
+  if (!collection && luxury && !warm) params.set('design', 'modern');
   if (query) params.set('q', query);
   if (category && !collection?.category) params.set('category', category);
   if (material && !collection?.material) params.set('material', material);
@@ -37,11 +39,11 @@ export function Shop({ collection }: { collection?: Collection }) {
 
   const styleLink = (design: string) => {
     const comparison = new URLSearchParams(params);
-    if (design === 'classic') comparison.set('design', 'classic'); else comparison.delete('design');
+    if (design === 'warm') comparison.delete('design'); else comparison.set('design', design);
     return `/shop${comparison.size ? `?${comparison}` : ''}`;
   };
   return <div className={luxury ? 'shop-luxury' : 'shop-classic'}>
-    {!collection && <div className="design-comparison"><span>COMPARE SHOP STYLES</span><nav aria-label="Shop design comparison"><a href={styleLink('luxury')} aria-current={luxury ? 'page' : undefined}>Modern luxury</a><a href={styleLink('classic')} aria-current={!luxury ? 'page' : undefined}>Previous design</a></nav></div>}
+    {!collection && <div className="design-comparison"><span>COMPARE SHOP STYLES</span><nav aria-label="Shop design comparison"><a href={styleLink('warm')} aria-current={warm ? 'page' : undefined}>Warm luxury</a><a href={styleLink('modern')} aria-current={luxury && !warm ? 'page' : undefined}>Modern luxury</a><a href={styleLink('classic')} aria-current={!luxury ? 'page' : undefined}>Previous design</a></nav></div>}
     <section className="shop-intro">
       <nav className="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span>{collection ? <><a href="/shop">Shop</a><span aria-hidden="true">/</span><span aria-current="page">{collection.name}</span></> : <span aria-current="page">Shop</span>}</nav>
       {collection ? <div className="collection-hero"><div className="collection-copy"><div className="eyebrow">{collection.eyebrow}</div><h1>{collection.name}</h1><h2>{collection.description}</h2><p>{collection.detail}</p><a className="collection-jump" href="#browse">Explore this selection <span aria-hidden="true">↓</span></a></div><div className="collection-visual"><ObjectArt kind={collection.kind}/><span className="visual-label">MATERIAL & MOOD</span></div></div> : luxury ? <div className="luxury-intro"><div className="luxury-intro-copy"><div className="eyebrow"><span className="small-line"/> THE SORVIA EDIT</div><h1>Objects of character.<br/><em>Spaces of your own.</em></h1><p>A considered selection of materials, textures and forms. Discover the details that make a space feel like yours.</p><a className="luxury-explore" href="#browse">Discover the collection <span aria-hidden="true">↓</span></a><span className="luxury-hero-note">SIX MATERIALS. MANY WAYS TO MAKE IT YOURS.</span></div><div className="luxury-intro-photo"><ObjectArt kind="brass"/><span className="luxury-photo-heading">A STUDY IN FORM</span></div></div> : <div className="shop-heading"><div><div className="eyebrow">A CONSIDERED COLLECTION</div><h1>Objects for <em>everyday living.</em></h1></div><p>Discover warm metals, natural textures<br/>and little details with lasting character.</p></div>}

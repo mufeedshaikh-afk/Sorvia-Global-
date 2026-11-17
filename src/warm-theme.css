@@ -1,0 +1,72 @@
+/* Shop theme trial. Other routes and comparison designs retain their palette. */
+.theme-warm {
+  --green: #543729;
+  --muted: #786251;
+  --cream: #fbf4e8;
+  --chocolate: #3f291f;
+  --gold: #94703e;
+  --warm-line: #d8c3a8;
+  color: var(--chocolate);
+  background: var(--cream);
+}
+.theme-warm p { color: #705b4c; }
+.theme-warm em { color: var(--gold); }
+.theme-warm .announcement { background: #3f291f; color: #f8ead4; }
+.theme-warm .header { background: var(--cream); border-color: var(--warm-line); }
+.theme-warm .wordmark { color: #543729; }
+.theme-warm .desktop-nav a[aria-current=page] { text-decoration-color: var(--gold); }
+.theme-warm .header-actions .wishlist-count { background: #ead9bd; color: #543729; }
+.theme-warm .menu-button { color: var(--chocolate); border-color: #b79b76; }
+.theme-warm .mobile-nav { background: #f0e1cb; }
+.theme-warm .mobile-nav a { border-color: var(--warm-line); }
+.theme-warm .design-comparison { background: #eadac1; border-color: #d2b992; }
+.theme-warm .design-comparison a { color: #70533c; }
+.theme-warm .design-comparison a[aria-current=page] { color: #3f291f; text-decoration-color: #916936; }
+.theme-warm .shop-luxury { background: var(--cream); }
+.theme-warm .shop-luxury .shop-intro { background: #f1e2cd; }
+.theme-warm .eyebrow { color: #79562f; }
+.theme-warm .small-line { background: #9a7542; }
+.theme-warm .luxury-intro h1 { color: #432b20; }
+.theme-warm .luxury-intro h1 em { color: #8b6338; }
+.theme-warm .luxury-intro-copy > p { color: #70543f; }
+.theme-warm .luxury-explore { background: #543729; color: #fff5e6; border: 1px solid #543729; padding: 16px 23px; }
+.theme-warm .luxury-explore:hover { background: #3f291f; color: #fff5e6; }
+.theme-warm .luxury-hero-note { color: #7d6045; }
+.theme-warm .luxury-intro-photo { border: 1px solid #c6a573; padding: 10px; background: #e4ceb0; }
+.theme-warm .luxury-intro-photo .object-art { background: #e6d5bd; }
+.theme-warm .luxury-photo-heading { color: #624426; background: #fff5e6ed; }
+.theme-warm .shop-luxury .sample-notice { color: #755d46; border-color: var(--warm-line); }
+.theme-warm .sample-notice > span { color: #79562f; }
+.theme-warm .collection-shortcuts { border-color: var(--warm-line); }
+.theme-warm .shop-luxury .collection-shortcuts > a { border-color: #cdb28e; }
+.theme-warm .shop-luxury .collection-shortcuts > a:hover { color: #79562f; border-color: #79562f; }
+.theme-warm .filter-toggle { background: #f7ebda; color: #543729; border-color: #b7976d; }
+.theme-warm .filter-toggle:hover { background: #ead8bb; }
+.theme-warm .shop-luxury .shop-filters { background: #f0e1cb; border-color: var(--warm-line); }
+.theme-warm .shop-luxury .shop-tools { border-color: var(--warm-line); }
+.theme-warm .shop-luxury .shop-tools input,
+.theme-warm .shop-luxury .shop-tools select { background: #fbf4e8; color: #543729; border-color: #b79b76; }
+.theme-warm input::placeholder { color: #856e5b; }
+.theme-warm .shop-luxury .product-art { border: 1px solid #e1ceb4; background: #ede0cb; }
+.theme-warm .shop-luxury .product-art .object-art { background: #ede0cb; }
+.theme-warm .photo-label, .theme-warm .photo-credit,
+.theme-warm .sample-tag { background: #fff6e9ed; color: #644a33; }
+.theme-warm .save-compact { border-color: #c7a87b; background: #fff6e9ed; color: #68462c; }
+.theme-warm .save-compact[aria-pressed=true] { background: #543729; color: #fff5e6; }
+.theme-warm .product-meta { color: #786251; }
+.theme-warm .shop-luxury .product-detail-link { color: #79562f; }
+.theme-warm .shop-endnote { border-color: var(--warm-line); }
+.theme-warm .shop-luxury .related-collections { background: #f0e1cb; border-color: var(--warm-line); }
+.theme-warm .collection-links a { border-color: #c4a882; }
+.theme-warm .collection-links a:hover { background: #e7d3b4; }
+.theme-warm .empty-results { background: #f0e1cb; }
+.theme-warm .button { background: #543729; color: #fff5e6; }
+.theme-warm footer { background: #3f291f; color: #f8ead4; }
+.theme-warm footer .wordmark { color: #f8ead4; }
+.theme-warm footer p, .theme-warm .footer-bottom { color: #dfcbb0; }
+.theme-warm .footer-bottom { border-color: #765b43; }
+.theme-warm :is(a,button,input,select):focus-visible { outline-color: #94652d; }
+@media (max-width:700px) {
+  .theme-warm .design-comparison nav { flex-wrap: wrap; gap: 8px 18px; }
+  .theme-warm .luxury-intro-photo .object-art { min-height: 310px; }
+}
