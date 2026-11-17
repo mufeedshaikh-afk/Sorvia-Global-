@@ -69,6 +69,53 @@
 .theme-warm footer p, .theme-warm .footer-bottom { color: #dfcbb0; }
 .theme-warm .footer-bottom { border-color: #765b43; }
 .theme-warm :is(a,button,input,select):focus-visible { outline-color: #94652d; }
+
+/* Shared warm-artisan surface for every storefront and preview page. */
+.theme-warm { min-height: 100vh; background: #faf4ea; }
+.theme-warm main { background: #faf4ea; }
+.theme-warm :is(.hero-copy, .story, .preview-note, .values-strip, .discovery-intro, .cart-empty, .account-empty, .support-empty, .not-found, .admin-shell) { background-color: #f5e9d8; }
+.theme-warm :is(.section-heading, .detail-copy, .cart-page, .account-page, .support-page, .contact-page, .tracking-page, .policies-page, .checkout-page, .discovery-results) .eyebrow { color: #79562f; }
+.theme-warm :is(.button, .account-page .button, .checkout-page .button, .support-page .button, .contact-page .button, .tracking-page .button, .admin-shell .button) { background: #543729; color: #fff5e6; }
+.theme-warm :is(.button:hover, .account-page .button:hover, .checkout-page .button:hover, .support-page .button:hover, .contact-page .button:hover, .tracking-page .button:hover, .admin-shell .button:hover) { background: #3f291f; }
+.theme-warm :is(.commerce-dialog, .photo-dialog) { border-color: #bd9364; background: #fff8ed; color: #432b20; }
+.theme-warm :is(.commerce-dialog, .photo-dialog) p { color: #70543f; }
+.theme-warm :is(.region-dialog select, .quantity-control, .account-field input, .account-field select, .search-form input, .discovery-tools select, .admin-filters input, .admin-filters select, .admin-field input, .admin-field select, .admin-field textarea) { border-color: #c9a77d; background: #fff9f0; color: #432b20; }
+.theme-warm :is(.cart-summary, .account-auth-aside, .account-overview-grid>button, .account-overview-grid>a, .address-list li, .order-detail-grid, .support-card, .faq-panel, .contact-form, .tracking-form, .policy-card, .checkout-summary, .checkout-form, .admin-preview-note, .admin-notice, .admin-empty, .admin-form-section) { background: #f3e3ce; border-color: #d5b890; }
+.theme-warm :is(.cart-preview-note, .account-preview-note, .support-preview-note, .contact-preview-note, .tracking-preview-note, .policy-preview-note, .detail-accordions details, .cart-line, .orders-list li, .order-items li, .faq-item, .policy-section) { border-color: #d5b890; }
+.theme-warm :is(.cart-feedback:not(:empty), .account-notice, .order-status, .admin-status, .region-suggestion) { background: #ead7b9; color: #5f412d; }
+.theme-warm :is(.cart-image, .order-thumb, .admin-product-cell img) { background: #ead8c0; }
+
+/* Product page: an editorial image frame and quieter product information hierarchy. */
+.theme-warm .detail-breadcrumb { background: #f5e9d8; }
+.theme-warm .detail-breadcrumb .breadcrumb { color: #765944; }
+.theme-warm .product-detail { background: linear-gradient(110deg, #f8eddf 0%, #faf4ea 57%); }
+.theme-warm .detail-photo { position: relative; border: 1px solid #bd9364; background: #e8cfad; padding: 10px; box-shadow: 14px 14px 0 #ddc19a; }
+.theme-warm .detail-photo .object-art { background: #e6d5bd; }
+.theme-warm .artisan-detail-mark { position: absolute; right: 27px; bottom: 25px; display: grid; place-items: center; width: 54px; height: 54px; border: 1px solid #68452d; border-radius: 50%; background: #fff3e1e8; color: #543729; font: 9px/1.1 'Libre Caslon Display', Georgia, serif; letter-spacing: 1px; text-align: center; }
+.theme-warm .gallery-caption { border-bottom: 1px solid #dcc19c; padding-bottom: 10px; }
+.theme-warm .gallery-caption>span, .theme-warm .reference-explanation { color: #755a45; }
+.theme-warm .detail-back, .theme-warm .detail-save .text-button, .theme-warm .detail-accordions a { color: #79562f; }
+.theme-warm .detail-copy h1 { color: #432b20; }
+.theme-warm .detail-intro { color: #604534; }
+.theme-warm .artisan-detail-note { border-left: 2px solid #ae7946; padding-left: 14px; color: #7b5b43; font-size: 10px; letter-spacing: .3px; }
+.theme-warm .detail-tags a { border-color: #c9a77d; color: #68452d; background: #fff7eb; }
+.theme-warm .detail-tags a:hover { background: #ead5b5; }
+.theme-warm .purchase-preview { background: #f1dfc6; border: 1px solid #d1ad7c; }
+.theme-warm .purchase-preview h2 { color: #432b20; }
+.theme-warm .purchase-preview .button { background: #543729; color: #fff5e6; }
+.theme-warm .purchase-note { color: #765942; }
+.theme-warm .detail-accordions summary { color: #543729; }
+.theme-warm .detail-related { background: #f2e2cd; border-color: #d5b890; }
+.theme-warm .detail-related .product-art { box-shadow: none; }
+
+/* Warm dashboard finish: colour only, with all demo/admin functionality unchanged. */
+.theme-warm .admin-shell { color: #432b20; }
+.theme-warm .admin-header, .theme-warm .admin-sidebar { background: #f3e3ce; border-color: #d5b890; }
+.theme-warm .admin-sidebar>button { color: #68452d; border-color: #bd9364; }
+.theme-warm .admin-table-wrap, .theme-warm .admin-stats>span, .theme-warm .admin-form-section { border-color: #d5b890; }
+.theme-warm .admin-table th { background: #eddbc0; }
+.theme-warm .admin-table td { border-color: #e0c6a3; }
+.theme-warm .admin-pagination button, .theme-warm .dialog-close, .theme-warm .photo-dialog-header button { border-color: #bd9364; color: #543729; }
 @media (min-width:1180px) {
   .theme-warm .shop-luxury .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px 24px; }
   .theme-warm .shop-luxury .product-card h2 { font-size: 29px; }
@@ -78,4 +125,6 @@
   .theme-warm .luxury-intro-photo .object-art { min-height: 310px; }
   .theme-warm .artisan-hero-meta { padding-top: 28px; gap: 10px 13px; font-size: 7px; }
   .theme-warm .luxury-intro-photo { box-shadow: 7px 7px 0 #cba979; }
+  .theme-warm .detail-photo { box-shadow: 8px 8px 0 #ddc19a; }
+  .theme-warm .artisan-detail-mark { right: 20px; bottom: 20px; }
 }

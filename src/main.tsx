@@ -45,10 +45,10 @@ function Header() {
 
 function App() {
   const path = location.pathname.replace(/\/$/, '') || '/';
-  if (path === '/admin' || path.startsWith('/admin/')) return <AdminPage/>;
+  if (path === '/admin' || path.startsWith('/admin/')) return <div className="theme-warm"><AdminPage/></div>;
   const collection = collections.find(item => item.path === path);
   const collectionRoute = path.startsWith('/collections/') || path.startsWith('/category/');
-  const warmTheme = path === '/shop' && !['classic', 'modern'].includes(new URLSearchParams(location.search).get('design') || '');
+  const warmTheme = true;
   return <div className={warmTheme ? 'theme-warm' : undefined}>
     <a className="skip-link" href="#main">Skip to content</a>
     <div id="home"><Header/></div>
