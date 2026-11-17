@@ -1,6 +1,6 @@
 # SorviaGlobal frontend
 
-Steps 1–3: homepage, Shop and category/collection previews, built with React, TypeScript and Vite. Step 3 is awaiting review.
+Steps 1–4: homepage, Shop, collections and product-detail previews, built with React, TypeScript and Vite. Step 4 is awaiting review.
 
 ## Run locally
 
@@ -21,8 +21,8 @@ Install Node.js, then run `npm install` and `npm run dev`. Open the local addres
 
 1. Homepage and shared header/footer — complete; user authorized Step 2.
 2. Shop listing, filters and sorting — complete; user authorized Step 3.
-3. Category and collection templates — complete; awaiting review.
-4. Product detail.
+3. Category and collection templates — complete; user approved.
+4. Product detail — complete; awaiting review.
 5. Search and wishlist.
 6. Cart and region selection.
 7. Checkout and payment states.
@@ -55,3 +55,7 @@ Brass, Wood, Copper, Ceramic, Glass and Stone each contain five samples (30 tota
 Hosting target: https://sorvia-global-preview.cozycondor32.chatgpt.site . The preview is private to the owner and may require ChatGPT sign-in. Hosting identity is preserved in `.openai/hosting.json`; reuse it for future deployments. Vite output is served from `dist`; `public/_redirects` supports direct Shop and collection links. Local edits must be rebuilt and published before they appear at the hosted link. GitHub remains the project backup.
 
 Hosting route note: the host did not apply the SPA rewrite alone. The production build now runs `scripts/prepare-static-routes.mjs` to generate HTML entries and directory indexes for Shop and every collection/category route. Add any future routes to this build preparation. Keep asset URLs absolute.
+
+## Step 4 review
+
+Open any product image/title from Shop or a collection, or visit `/product/05`. All 30 sample IDs have detail pages with a larger reference photo, accessible enlargement dialog, material/category links, expandable details and three related samples. Back to browsing preserves supported filter/search/sort query state. Exact dimensions, materials, pricing, stock, delivery and ordering remain pending actual catalog/backend data. There is one photo per sample; no alternative product views are invented. Ordering is disabled. Direct product routes are generated during the production build. Unknown IDs show a recovery screen locally; `/product/not-found` is also an explicit hosted route.

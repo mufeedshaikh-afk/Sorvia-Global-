@@ -4,7 +4,8 @@ import path from 'node:path';
 // Give each React route an HTML entry on static hosts without SPA rewrites.
 const html = await readFile('dist/index.html', 'utf8');
 const definitions = await readFile('src/collections.ts', 'utf8');
-const routes = ['/shop', ...Array.from(definitions.matchAll(/path: '([^']+)'/g), match => match[1])];
+const catalog = JSON.parse((await readFile('src/catalog.ts', 'utf8')).split('export const products = ')[1].trim().replace(/;$/, ''));
+const routes = ['/shop', '/product/not-found', ...catalog.map(product => `/product/${product.id}`), ...Array.from(definitions.matchAll(/path: '([^']+)'/g), match => match[1])];
 for (const route of routes) {
   const destination = path.join('dist', route.slice(1));
   await mkdir(destination, { recursive: true });

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ObjectArt } from './ObjectArt';
 import { products } from './catalog';
+import { ProductCard } from './ProductCard';
 import { collections, type Collection } from './collections';
 
 
@@ -20,15 +21,16 @@ export function Shop({ collection }: { collection?: Collection }) {
   const results = products.filter(p => (!category || p.category === category) && (!material || p.material === material) && `${p.name} ${p.category} ${p.material}`.toLowerCase().includes(query.trim().toLowerCase()));
   if (sort !== 'featured') results.sort((a, b) => sort === 'az' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
 
+  const params = new URLSearchParams();
+  if (query) params.set('q', query);
+  if (category && !collection?.category) params.set('category', category);
+  if (material && !collection?.material) params.set('material', material);
+  if (sort !== 'featured') params.set('sort', sort);
+  const browsingPath = `${basePath}${params.size ? `?${params}` : ''}`;
   useEffect(() => {
-    const params = new URLSearchParams();
-    if (query) params.set('q', query);
-    if (category && !collection?.category) params.set('category', category);
-    if (material && !collection?.material) params.set('material', material);
-    if (sort !== 'featured') params.set('sort', sort);
-    history.replaceState(null, '', `${basePath}${params.size ? `?${params}` : ''}${location.hash}`);
+    history.replaceState(null, '', `${browsingPath}${location.hash}`);
     document.title = `${collection?.name || 'Shop'} | SorviaGlobal`;
-  }, [query, category, material, sort, basePath, collection]);
+  }, [browsingPath, collection]);
 
   return <>
     <section className="shop-intro">
@@ -48,8 +50,8 @@ export function Shop({ collection }: { collection?: Collection }) {
       <div className="shop-results">
         <div className="shop-tools"><label className="search-label" htmlFor="product-search">Search the sample collection<input id="product-search" type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Try brass, vessels, chess…"/></label><label className="sort-label" htmlFor="product-sort">Sort by<select id="product-sort" value={sort} onChange={e => setSort(e.target.value)}><option value="featured">Featured samples</option><option value="az">Name: A–Z</option><option value="za">Name: Z–A</option></select></label></div>
         <div className="results-summary"><p role="status" aria-live="polite" aria-atomic="true">{results.length} sample {results.length === 1 ? 'item' : 'items'}{active ? ' matching your selection' : ' to explore'}</p>{active && <button className="text-button" onClick={clear}>Clear selection ×</button>}</div>
-        {results.length ? <div className="product-grid">{results.map(product => <article className="product-card" key={product.id}><div className="product-art"><ObjectArt kind={product.kind} productId={product.id}/><span className="sample-tag">SAMPLE {product.id}</span></div><div className="product-meta">{product.material}<span>{product.category}</span></div><h2>{product.name}</h2><p>Product details & pricing to follow</p></article>)}</div> : <div className="empty-results"><span className="eyebrow">ROOM FOR A DIFFERENT DISCOVERY</span><h2>No samples found</h2><p>Try a different search or clear your filters to explore {collection ? 'this collection' : 'the full sample collection'}.</p><button className="button" onClick={clear}>{collection ? 'Reset this collection' : 'Show all sample items'} <span aria-hidden="true">↗</span></button></div>}
-        <div className="shop-endnote"><span className="eyebrow">SELECTED WITH INTENTION</span><p>Product pages are the next part of our journey. This preview is for exploring the shop layout and browsing controls.</p></div>
+        {results.length ? <div className="product-grid">{results.map(product => <ProductCard key={product.id} product={product} from={browsingPath}/>)}</div> : <div className="empty-results"><span className="eyebrow">ROOM FOR A DIFFERENT DISCOVERY</span><h2>No samples found</h2><p>Try a different search or clear your filters to explore {collection ? 'this collection' : 'the full sample collection'}.</p><button className="button" onClick={clear}>{collection ? 'Reset this collection' : 'Show all sample items'} <span aria-hidden="true">↗</span></button></div>}
+        <div className="shop-endnote"><span className="eyebrow">SELECTED WITH INTENTION</span><p>Open a sample to explore its photograph and concept details. Real inventory, prices and ordering are still to come.</p></div>
       </div>
     </section>
     <section className="section related-collections" aria-labelledby="more-collections"><div className="section-heading"><div><div className="eyebrow">CONTINUE YOUR DISCOVERY</div><h2 id="more-collections">{collection ? 'A different point of view' : 'Explore by object'}</h2></div><a className="text-button" href={collection ? '/shop' : '/#collections'}>{collection ? 'Back to all items' : 'Explore materials on the homepage'} ↗</a></div><div className="collection-links">{collections.filter(c => collection ? c.path !== collection.path && Boolean(c.material) !== Boolean(collection.material) : c.category).map(c => <a href={c.path} key={c.path}><span>{c.name}</span><span aria-hidden="true">↗</span></a>)}</div></section>
