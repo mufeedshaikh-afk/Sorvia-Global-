@@ -22,19 +22,22 @@
 .theme-warm .design-comparison { background: #eadac1; border-color: #d2b992; }
 .theme-warm .design-comparison a { color: #70533c; }
 .theme-warm .design-comparison a[aria-current=page] { color: #3f291f; text-decoration-color: #916936; }
-.theme-warm .shop-luxury { background: var(--cream); }
-.theme-warm .shop-luxury .shop-intro { background: #f1e2cd; }
+.theme-warm .shop-luxury { background: #faf4ea; }
+.theme-warm .shop-luxury .shop-intro { background: linear-gradient(115deg, #f4e7d4 0%, #f8efe3 58%, #ead7bf 100%); }
 .theme-warm .eyebrow { color: #79562f; }
 .theme-warm .small-line { background: #9a7542; }
-.theme-warm .luxury-intro h1 { color: #432b20; }
-.theme-warm .luxury-intro h1 em { color: #8b6338; }
-.theme-warm .luxury-intro-copy > p { color: #70543f; }
-.theme-warm .luxury-explore { background: #543729; color: #fff5e6; border: 1px solid #543729; padding: 16px 23px; }
+.theme-warm .luxury-intro h1 { color: #3f291f; max-width: 620px; }
+.theme-warm .luxury-intro h1 em { color: #9a653a; }
+.theme-warm .luxury-intro-copy > p { color: #654837; max-width: 410px; }
+.theme-warm .luxury-explore { background: #543729; color: #fff5e6; border: 1px solid #543729; padding: 16px 23px; box-shadow: 5px 5px 0 #c89962; }
 .theme-warm .luxury-explore:hover { background: #3f291f; color: #fff5e6; }
-.theme-warm .luxury-hero-note { color: #7d6045; }
-.theme-warm .luxury-intro-photo { border: 1px solid #c6a573; padding: 10px; background: #e4ceb0; }
+.theme-warm .artisan-hero-meta { display: flex; flex-wrap: wrap; gap: 9px 20px; margin-top: auto; padding-top: 38px; color: #75543b; font-size: 8px; font-weight: 600; letter-spacing: 1.25px; }
+.theme-warm .artisan-hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
+.theme-warm .artisan-hero-meta span::before { content: '✦'; color: #a36f37; font-size: 10px; }
+.theme-warm .luxury-intro-photo { border: 1px solid #b98a55; padding: 10px; background: #d8b98e; box-shadow: 13px 13px 0 #cba979; }
 .theme-warm .luxury-intro-photo .object-art { background: #e6d5bd; }
 .theme-warm .luxury-photo-heading { color: #624426; background: #fff5e6ed; }
+.theme-warm .artisan-photo-mark { position: absolute; right: 25px; bottom: 22px; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #68452d; border-radius: 50%; color: #543729; background: #fbeedbd9; font: 10px/1.05 'Libre Caslon Display', Georgia, serif; letter-spacing: 1px; text-align: center; }
 .theme-warm .shop-luxury .sample-notice { color: #755d46; border-color: var(--warm-line); }
 .theme-warm .sample-notice > span { color: #79562f; }
 .theme-warm .collection-shortcuts { border-color: var(--warm-line); }
@@ -47,7 +50,7 @@
 .theme-warm .shop-luxury .shop-tools input,
 .theme-warm .shop-luxury .shop-tools select { background: #fbf4e8; color: #543729; border-color: #b79b76; }
 .theme-warm input::placeholder { color: #856e5b; }
-.theme-warm .shop-luxury .product-art { border: 1px solid #e1ceb4; background: #ede0cb; }
+.theme-warm .shop-luxury .product-art { border: 1px solid #e1ceb4; background: #ede0cb; box-shadow: 0 10px 24px #51362412; }
 .theme-warm .shop-luxury .product-art .object-art { background: #ede0cb; }
 .theme-warm .photo-label, .theme-warm .photo-credit,
 .theme-warm .sample-tag { background: #fff6e9ed; color: #644a33; }
@@ -66,7 +69,13 @@
 .theme-warm footer p, .theme-warm .footer-bottom { color: #dfcbb0; }
 .theme-warm .footer-bottom { border-color: #765b43; }
 .theme-warm :is(a,button,input,select):focus-visible { outline-color: #94652d; }
+@media (min-width:1180px) {
+  .theme-warm .shop-luxury .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px 24px; }
+  .theme-warm .shop-luxury .product-card h2 { font-size: 29px; }
+}
 @media (max-width:700px) {
   .theme-warm .design-comparison nav { flex-wrap: wrap; gap: 8px 18px; }
   .theme-warm .luxury-intro-photo .object-art { min-height: 310px; }
+  .theme-warm .artisan-hero-meta { padding-top: 28px; gap: 10px 13px; font-size: 7px; }
+  .theme-warm .luxury-intro-photo { box-shadow: 7px 7px 0 #cba979; }
 }
