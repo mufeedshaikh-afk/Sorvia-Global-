@@ -6,6 +6,8 @@ import './cart.css';
 import './checkout.css';
 import './account.css';
 import './support.css';
+import './admin.css';
+import { AdminPage } from './Admin';
 import { ContactPage, NotFoundPage, PoliciesPage, SupportPage, TrackingPage } from './SupportPages';
 import { AccountPage } from './Account';
 import { CheckoutPage } from './Checkout';
@@ -43,6 +45,7 @@ function Header() {
 
 function App() {
   const path = location.pathname.replace(/\/$/, '') || '/';
+  if (path === '/admin' || path.startsWith('/admin/')) return <AdminPage/>;
   const collection = collections.find(item => item.path === path);
   const collectionRoute = path.startsWith('/collections/') || path.startsWith('/category/');
   const warmTheme = path === '/shop' && !['classic', 'modern'].includes(new URLSearchParams(location.search).get('design') || '');

@@ -1,6 +1,6 @@
 # SorviaGlobal frontend
 
-Steps 1–9: homepage, Shop, collections, product details, Search, Wishlist, preview cart, region controls checkout preview, account/orders preview, and support/tracking/policy pages, built with React, TypeScript and Vite. Step 9 is awaiting review.
+Steps 1–10 are implemented as React, TypeScript and Vite frontend previews, including storefront browsing, checkout, accounts, support and admin catalog management. Step 10 is awaiting review; backend integration and final frontend/design review remain pending.
 
 ## Run locally
 
@@ -27,8 +27,8 @@ Install Node.js, then run `npm install` and `npm run dev`. Open the local addres
 6. Cart and region selection — complete.
 7. Checkout and payment states — complete.
 8. Accounts and orders — complete.
-9. Tracking and support/policies — complete; awaiting review.
-10. Admin product management.
+9. Tracking and support/policies — complete.
+10. Admin product management — complete; awaiting review.
 
 Review each page before proceeding. Confirm backend API contracts before production integration. Real product assets, supported markets, prices, contact details and policies must be provided by the business.
 
@@ -101,3 +101,13 @@ Open `/support` for searchable, topic-filtered FAQs and links to tracking, conta
 `/contact` validates an enquiry and displays a local preview summary; edit or clear it afterward. No message is sent. Contact and tracking values stay in memory and clear on refresh/leave. Business contact information and response hours are not invented.
 
 `/policies` links draft shipping, returns/refunds/cancellations, privacy and terms pages. These require approved business content before launch; no commercial promises or final legal terms are supplied. Privacy text describes only current application behavior. `/404` demonstrates page recovery; unknown routes recover inside the app, while direct unknown-host URL handling depends on the static host. Build generates 55 static routes. Run `npm run test:support` for 15 assertions, alongside existing account/checkout tests. Next: Step 10 admin product management after review, then final frontend review before backend integration.
+
+
+## Step 10 review
+Visit `/admin` (not linked in the public navigation). Choose **Explore demo admin without credentials** or validate the sign-in form with fictional details. This is a frontend demonstration, not real authentication or a protected production admin service.
+
+The separate demo catalog supports search, category/material/availability filters, 10-row pagination, add/edit, a product preview dialog and confirmed deletion. Required fields, duplicate SKUs, currency/price formats and image accessibility text are validated. Optional unconfirmed prices stay blank. Forms include catalog descriptions/specs, care/contents/shipping notes, variant labels and collection membership. A primary JPEG/PNG/WebP image up to 5 MB can be selected and previewed locally. No file is uploaded; gallery/server integration remains pending.
+
+Admin changes and images live only in memory. Refresh, leaving or **End admin demo** clears them. Public Shop samples, browser cart and wishlist remain unchanged. Backend authentication/permissions, persistent products/uploads and reflecting catalog changes to all visitors are future integration work. Run `npm run test:admin` for 27 assertions; all four validation scripts total 68 assertions. Build generates 59 static routes.
+
+Next is a final frontend/design review and gap check. The ten planned preview milestones are built, but this is not a production-ready store. Real data, approved business content, API/security/payment/shipping integrations and final validation are still required. Homepage theme stays unchanged until requested.

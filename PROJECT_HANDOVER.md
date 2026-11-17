@@ -1,6 +1,6 @@
 # SorviaGlobal project handover
 
-Updated: 17 November 2026. Current milestone: Step 9 tracking/support/policies frontend complete, awaiting user review. Theme changes postponed until remaining frontend steps are finished. Do not start Step 10 without authorization.
+Updated: 17 November 2026. Current milestone: Step 10 admin product-management frontend complete, awaiting user review. Homepage theme remains unchanged; design changes await final review. Backend remains deferred.
 
 ## Working agreement
 
@@ -64,11 +64,11 @@ Git writes and host-visible preview previously required native permission escala
 
 ## Next
 
-Wait for Step 9 review. Apply requested adjustments if any. Next is Step 10 admin product management. Real product photos, approved business copy, supported countries/prices, policies and API contracts are outstanding.
+Wait for Step 10 review. Next is a final frontend/design review and gap check; do not start backend integration without explicit authorization. Real product photos, approved business copy, supported countries/prices, policies and API contracts are outstanding.
 
 ## Prompt for a new agent
 
-Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 9 tracking/support/policies frontend is complete and awaiting review. Next is Step 10 admin product management, only after authorization. Finish remaining frontend steps before revisiting themes or building backend. Report current state and the next pending action before continuing. Update this handover at every milestone.
+Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 10 admin frontend is complete and awaiting review. Next is a final frontend/design review; backend integration requires explicit authorization. Finish remaining frontend steps before revisiting themes or building backend. Report current state and the next pending action before continuing. Update this handover at every milestone.
 
 ## Hosted preview setup (17 November)
 
@@ -140,3 +140,18 @@ Policy pages are clearly **draft content structures awaiting approved business p
 Customer-service links added to shared footer/mobile menu; account order details link to tracking examples and product Delivery & returns links to policy previews. Existing theme retained. `scripts/check-support.mjs` / `npm run test:support` adds 15 validation assertions. Existing 10 account and 16 checkout assertions still pass.
 
 Browser checked FAQ no-match/reset/topic count (8 all, 3 Delivery), expansion/link, blank tracking errors, Processing and Delivered examples, missing example, error/retry, blank/valid contact and no-send notice, edit retention and refresh clearing, all four policies/navigation, explicit and unknown-path recovery, mobile links/layout at 320px and desktop at 1280px with no horizontal overflow. Screenshot `step9-support-preview.jpg` in visualization root. TypeScript/production build and diff checks passed. Step 10 admin not started; backend remains deferred. Keep current private Sites audience and GitHub origin.
+
+
+## Step 10 — admin product-management preview (17 November 2026)
+User explicitly authorized Step 10. Added a separate admin UI at `/admin` with `/admin/login`, `/admin/products` and `/admin/products/edit` static entries (59 routes total). It is intentionally not linked in public storefront navigation. App routes admin before rendering storefront header/footer. It uses the existing ivory/sage theme; homepage theme unchanged.
+
+Files: `src/Admin.tsx`, `src/adminData.ts`, `src/admin.css`; tests `scripts/check-admin.mjs` / `npm run test:admin`. Separate sign-in form validates fictional inputs and clears credentials when entering the demo; a direct Explore demo admin action is available. **This is not real authentication or a security boundary.** Refresh/direct admin URLs start at the sign-in preview. No private records, customer information, API requests or real permission checks exist. Backend authorization is required before live admin use.
+
+Demo catalog is an independent in-memory clone of the 30 public samples. Features: name/SKU/material/category all-word search, category/material/availability filters, 10-row pagination, summary counts, empty reset, Add/Edit/Preview and confirmed deletion. Save checks required fields, duplicate SKU (case-insensitive excluding same ID), valid price/currency/availability, image and image description. Price is optional/unconfirmed by default; user-entered test values never become public prices. Forms include description, material/category, dimensions/weight/units guidance, finish, care, package contents, variant labels, shipping notes and collection membership. Current UI handles a single primary image; galleries, variant-specific prices and server uploads remain backend/integration work.
+
+Image selector accepts JPEG/PNG/WebP up to 5 MB, previews via browser object URLs and checks actual decode through image load/error. Files are not uploaded or persisted. Object URLs are revoked on end/unmount. Alt text is required. Unsaved editing has discard/keep confirmation; deleting requires confirmation. Product preview dialog shows local edits. Save/delete provide feedback; table is focusable and scrollable on narrow screens. Admin changes do not update public Shop or other visitors. Real catalog reflection will require the shared backend product source, as originally planned.
+
+Validation: 27 admin assertions, 15 support, 10 account and 16 checkout = 68 assertions passed; TypeScript/build/diff checks passed. Browser checked blank and valid admin sign-in, 30 rows/10 visible/3 pages, next page, no-result/reset, Brass=5, duplicate SKU, negative-price rejection, valid edit/preview, new required-field errors, real local JPEG selection/decode, successful Add (31 and 4 pages), edit discard/keep, delete keep/confirm (back to 30), end-demo discard and reset, refresh clears password/session, 320px/768px no page overflow and desktop1280 visual check. Product table scrolls horizontally within its container on mobile. A screenshot was synchronized with getAXStateAndScreenshot after an initially stale capture; saved final file step10-admin-preview.jpg. Preserve existing private Sites audience and GitHub origin.
+
+## Final frontend review still pending
+The ten planned frontend milestones now have working preview interfaces. Do not call the site production-ready: real catalog/images/prices, approved contacts/policies, backend authentication/authorization, shared catalog persistence, payments, shipping/tracking and integration validation remain outstanding. User wants frontend first. Theme work was postponed; user earlier preferred modern luxury but found photos too large and considered warm artisan, then explicitly stopped theme work. Keep homepage unchanged until a new design request. Remove temporary development sections/notes only in the pre-launch cleanup or if asked. Next: user review of admin, then final frontend/design review and gap check before authorized backend work.
