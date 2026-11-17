@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { products } from './catalog';
 
 const key = 'sorvia-wishlist-v1';
@@ -12,17 +12,28 @@ const WishlistContext = createContext<{ ids: string[]; toggle: (id: string) => v
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
   const [ids, setIds] = useState(readSaved);
+  const currentIds = useRef(ids);
   const [storageError, setStorageError] = useState(false);
   useEffect(() => {
-    try { localStorage.setItem(key, JSON.stringify(ids)); setStorageError(false); }
-    catch { setStorageError(true); }
-  }, [ids]);
-  useEffect(() => {
-    const sync = (event: StorageEvent) => { if (event.key === key || event.key === null) setIds(readSaved()); };
+    const sync = (event: StorageEvent) => {
+      if (event.key === key || event.key === null) {
+        const next = readSaved();
+        currentIds.current = next;
+        setIds(next);
+      }
+    };
     window.addEventListener('storage', sync);
     return () => window.removeEventListener('storage', sync);
   }, []);
-  const toggle = (id: string) => setIds(current => current.includes(id) ? current.filter(saved => saved !== id) : [...current, id]);
+  const toggle = (id: string) => {
+    const current = currentIds.current;
+    const next = current.includes(id) ? current.filter(saved => saved !== id) : [...current, id];
+    // Persist within the click so immediate navigation cannot race a later effect.
+    try { localStorage.setItem(key, JSON.stringify(next)); setStorageError(false); }
+    catch { setStorageError(true); }
+    currentIds.current = next;
+    setIds(next);
+  };
   return <WishlistContext.Provider value={{ ids, toggle, storageError }}>{children}</WishlistContext.Provider>;
 }
 
