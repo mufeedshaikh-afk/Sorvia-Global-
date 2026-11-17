@@ -5,7 +5,7 @@ import path from 'node:path';
 const html = await readFile('dist/index.html', 'utf8');
 const definitions = await readFile('src/collections.ts', 'utf8');
 const catalog = JSON.parse((await readFile('src/catalog.ts', 'utf8')).split('export const products = ')[1].trim().replace(/;$/, ''));
-const routes = ['/shop', '/search', '/wishlist', '/cart', '/checkout', '/product/not-found', ...catalog.map(product => `/product/${product.id}`), ...Array.from(definitions.matchAll(/path: '([^']+)'/g), match => match[1])];
+const routes = ['/shop', '/search', '/wishlist', '/cart', '/checkout', '/account', '/product/not-found', ...catalog.map(product => `/product/${product.id}`), ...Array.from(definitions.matchAll(/path: '([^']+)'/g), match => match[1])];
 for (const route of routes) {
   const destination = path.join('dist', route.slice(1));
   await mkdir(destination, { recursive: true });

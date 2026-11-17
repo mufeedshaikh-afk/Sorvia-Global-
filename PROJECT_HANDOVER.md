@@ -1,6 +1,6 @@
 # SorviaGlobal project handover
 
-Updated: 17 November 2026. Current milestone: Step 7 checkout frontend complete, awaiting user review. Theme changes postponed until remaining frontend steps are finished. Do not start Step 8 without authorization.
+Updated: 17 November 2026. Current milestone: Step 8 account/orders frontend complete, awaiting user review. Theme changes postponed until remaining frontend steps are finished. Do not start Step 9 without authorization.
 
 ## Working agreement
 
@@ -64,11 +64,11 @@ Git writes and host-visible preview previously required native permission escala
 
 ## Next
 
-Wait for Step 7 review. Apply requested adjustments if any. Next is Step 8 accounts/orders, followed by tracking/support/policies and admin. Real product photos, approved business copy, supported countries/prices, policies and API contracts are outstanding.
+Wait for Step 8 review. Apply requested adjustments if any. Next is Step 9 tracking/support/policies, followed by admin. Real product photos, approved business copy, supported countries/prices, policies and API contracts are outstanding.
 
 ## Prompt for a new agent
 
-Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 7 checkout frontend is complete and awaiting review. Next is Step 8 accounts/orders, only after authorization. Finish remaining frontend steps before revisiting themes or building backend. Report current state and the next pending action before continuing. Update this handover at every milestone.
+Continue SorviaGlobal in the existing workspace. Read PROJECT_HANDOVER.md and README.md first, inspect files and Git status/log, and preserve completed work. Build one page at a time, explain in simple language, upload completed milestones to the existing GitHub repository, and wait for my review before starting the next page. Step 8 account/orders frontend is complete and awaiting review. Next is Step 9 tracking/support/policies, only after authorization. Finish remaining frontend steps before revisiting themes or building backend. Report current state and the next pending action before continuing. Update this handover at every milestone.
 
 ## Hosted preview setup (17 November)
 
@@ -118,3 +118,13 @@ Added `/checkout` in `src/Checkout.tsx` with delivery form, review/edit stage an
 Delivery form has labelled fields, inline errors and a focused error summary, optional apartment/region where applicable, country-specific postal patterns for example IN/US/GB/DE/FR markets, phone format/length checks and editable currency preference. Other/missing countries block progression with a message. Rules live in `src/checkoutValidation.ts`; production backend must still validate addresses/markets. Fictional-example button allows review without personal data. Contact/address values exist only in component memory (never localStorage, URL or API); refresh or leaving clears them. Back/edit/retry retain values within this page. No card/bank fields exist. Cart/region changes invalidate review, cancel the preview timer, and return to delivery. Timers are cleaned up on unmount and duplicate runs are guarded.
 
 Checks: 16 reusable validation assertions (`npm run test:checkout` or bundled Node + `scripts/check-checkout.mjs`), TypeScript and production build. Browser checked empty-cart entry, product -> cart -> checkout, blank errors/focus, fictional details, review/edit retention, all three simulated outcomes/processing/retry, disabled real ordering, region change -> postcode revalidation, quantity change through mini-cart -> review invalidation, and refresh clearing contact/address fields. Desktop 1280 and mobile 390/320 checked with no horizontal overflow. Static route helper generates 45 route entries including `/checkout`. Update hosted private preview using the existing Sites project; keep GitHub origin unchanged. No account/backend or Step 8 work started.
+
+
+## Step 8 — account and orders frontend (17 November 2026)
+User said ready after the Step 8 proposal. Keep the homepage theme unchanged and defer further theme work. Added `/account` with internal query views (signin/register/reset/overview/profile/addresses/orders), avoiding separate page reloads while exploring the demo. Header/mobile menu/footer link Account. At tablet widths the existing mobile menu pattern avoids crowding the extra header link; homepage colors/theme remain unchanged.
+
+`src/Account.tsx` contains validated sign-in/registration/recovery forms, direct demo access, overview, editable demo profile, an address book with add/edit/cancel/delete-confirmation, and a fictional order list/detail/empty state. Form success opens only the clearly labelled demo account; no authentication request or real registration occurs. Reset preview states that no email was sent. Password inputs clear on mode changes, successful preview and ending the demo. Account/profile/address data lives in component memory only and clears on leave/refresh/end demo. No credentials/customer data are stored in localStorage/sessionStorage or sent to an API. This is not an authentication/security boundary; backend authentication and authorization remain future work. Wishlist link opens the existing browser-local list and is not account sync.
+
+Example orders DEMO-1001/1002 explicitly show sample status/data; no order dates, prices, real transaction/shipment records or tracking events are fabricated. Totals are unavailable. Checkout simulation does not create these orders. Addresses are fictional/session-only and do not auto-fill checkout. Postal/address validation reuses checkout rules. Form validation in `src/accountValidation.ts` has 10 assertions under `npm run test:account` (`scripts/check-account.mjs`). Styles in `src/account.css`; static build now has 46 routes including `/account`.
+
+Validation: 10 account and 16 checkout assertions, TypeScript and build passed. Browser checked blank sign-in validation/error focus, registration mismatch/success, invalid/valid profile save, address empty validation/create/edit, deletion cancel/confirm and empty state, order details (2 sample lines)/back/list empty toggle, recovery message with no email, end-session profile reset and refresh clearing demo. Layout checked at 1280, 768 and 320 with no horizontal overflow; mobile menu exposes Account. Screenshot in visualization root as step8-account-preview.jpg. Publish using existing owner-private Sites project and push same source to GitHub. Step 9 not started.

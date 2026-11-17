@@ -1,6 +1,6 @@
 # SorviaGlobal frontend
 
-Steps 1–7: homepage, Shop, collections, product details, Search, Wishlist, preview cart, region controls and checkout preview, built with React, TypeScript and Vite. Step 7 is awaiting review.
+Steps 1–8: homepage, Shop, collections, product details, Search, Wishlist, preview cart, region controls checkout preview, and account/orders preview, built with React, TypeScript and Vite. Step 8 is awaiting review.
 
 ## Run locally
 
@@ -25,8 +25,8 @@ Install Node.js, then run `npm install` and `npm run dev`. Open the local addres
 4. Product detail — complete; user approved.
 5. Search and wishlist — complete.
 6. Cart and region selection — complete.
-7. Checkout and payment states — complete; awaiting review.
-8. Accounts and orders.
+7. Checkout and payment states — complete.
+8. Accounts and orders — complete; awaiting review.
 9. Tracking and support/policies.
 10. Admin product management.
 
@@ -85,3 +85,11 @@ Add a sample from its product page, open `/cart`, then **Preview checkout**. `/c
 Try Success, Failure and Cancelled under **Try a payment result**. Processing, retry and edit states preserve the sample selection. These are local demonstrations: no payment is sent, no order is created and real Place order remains disabled. No card/bank information is collected. Shipping/taxes, payment currency and final amount await backend data. Contact/address fields stay only in memory; refresh or leaving clears them. Cart and region changes return you to delivery for another review. Run `npm run test:checkout` for 16 validation assertions; `npm run build` checks types, builds assets and generates 45 static routes.
 
 Next is Step 8 accounts and orders after review/authorization. Theme redesign stays postponed until the frontend steps are complete.
+
+
+## Step 8 review
+Open `/account` through the header, mobile menu or footer. Try sign-in, registration and password recovery with fictional details, or choose **Explore demo account**. These are local design demonstrations; no real account, authentication request or reset email is created. Entering a demo clears password fields.
+
+Account sections include overview, profile edits, an address book (add/edit/cancel/confirmed deletion), fictional example order history/detail, and the existing browser-local wishlist link. Example orders are labelled Demo, have unavailable totals, and are separate from checkout simulations. Account edits and addresses exist only in memory and clear on leave/refresh or **End demo session**; cart, currency and wishlist remain independent. Real authentication, profile/address persistence and account orders await the backend. Do not enter actual credentials/customer information into this preview.
+
+Run `npm run test:account` for 10 account validation assertions and `npm run test:checkout` for 16 checkout assertions. Build generates 46 static routes. Homepage theme is retained; next is Step 9 tracking/support/policies after review.
