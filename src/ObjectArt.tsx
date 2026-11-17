@@ -19,7 +19,7 @@ export function ObjectArt({ kind, hero = false, productId, productHref }: { kind
   const photoImage = photo && <img className="reference-image" src={`/images/reference/${photo.file}.jpg`} alt={`${photo.alt}. Reference photo, not SorviaGlobal inventory.`} loading={hero ? 'eager' : 'lazy'} decoding="async" onError={() => setFailedFile(photo.file)}/>;
   if (photo && failedFile !== photo.file) return <div className={`object-art reference-photo ${hero ? 'hero-art' : ''}`}>
     {productHref ? <a className="photo-product-link" href={productHref} aria-label={`View ${product?.name || 'sample'} details`}>{photoImage}</a> : photoImage}
-    <span className="photo-label">REFERENCE PHOTO</span>
+    <span className="photo-label">CURATED REFERENCE</span>
     <a className="photo-credit" href={`/images/reference/credits.html#${photo.file}`} target="_blank" rel="noopener noreferrer" aria-label={`Photo credit for ${photo.alt} (opens in a new tab)`}>Photo credit ↗</a>
   </div>;
   return <ConceptArt kind={kind} hero={hero}/>;
