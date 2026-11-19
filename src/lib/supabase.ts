@@ -148,3 +148,139 @@ export async function getProductById(id: string): Promise<StorefrontProduct | nu
     return local ? toStorefrontProduct(local) : null;
   }
 }
+
+export type Profile = {
+  id: string;
+  email: string;
+  full_name: string | null;
+  phone: string | null;
+  role: 'customer' | 'admin';
+  created_at?: string;
+  updated_at?: string;
+};
+
+export type DatabaseAddress = {
+  id: string;
+  user_id: string;
+  full_name: string;
+  street: string;
+  apartment?: string | null;
+  city: string;
+  state?: string | null;
+  postal_code: string;
+  country: string;
+  phone: string;
+  is_default: boolean;
+  created_at?: string;
+};
+
+export async function signUpWithEmail(email: string, password: string, fullName: string) {
+  if (!supabase) throw new Error('Supabase is not configured');
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullName,
+      },
+    },
+  });
+  if (error) throw error;
+  return data;
+}
+
+export async function signInWithEmail(email: string, password: string) {
+  if (!supabase) throw new Error('Supabase is not configured');
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+  if (error) throw error;
+  return data;
+}
+
+export async function signOutUser() {
+  if (!supabase) return;
+  await supabase.auth.signOut();
+}
+
+export async function sendPasswordResetEmail(email: string) {
+  if (!supabase) throw new Error('Supabase is not configured');
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/account?view=reset` : undefined,
+  });
+  if (error) throw error;
+  return data;
+}
+
+export async function getSessionUser() {
+  if (!supabase) return null;
+  const { data: { session } } = await supabase.auth.getSession();
+  return session?.user ?? null;
+}
+
+export async function getProfile(userId: string): Promise<Profile | null> {
+  if (!supabase) return null;
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', userId)
+    .maybeSingle();
+  if (error || !data) return null;
+  return data as Profile;
+}
+
+export async function updateProfile(userId: string, updates: { full_name?: string; phone?: string }): Promise<Profile | null> {
+  if (!supabase) return null;
+  const { data, error } = await supabase
+    .from('profiles')
+    .update({ ...updates, updated_at: new Date().toISOString() })
+    .eq('id', userId)
+    .select()
+    .single();
+  if (error || !data) return null;
+  return data as Profile;
+}
+
+export async function getAddresses(userId: string): Promise<DatabaseAddress[]> {
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from('addresses')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
+  if (error || !data) return [];
+  return data as DatabaseAddress[];
+}
+
+export async function createAddress(userId: string, address: Omit<DatabaseAddress, 'id' | 'user_id' | 'created_at'>): Promise<DatabaseAddress | null> {
+  if (!supabase) return null;
+  const { data, error } = await supabase
+    .from('addresses')
+    .insert([{ ...address, user_id: userId }])
+    .select()
+    .single();
+  if (error || !data) return null;
+  return data as DatabaseAddress;
+}
+
+export async function updateAddress(addressId: string, address: Partial<DatabaseAddress>): Promise<DatabaseAddress | null> {
+  if (!supabase) return null;
+  const { data, error } = await supabase
+    .from('addresses')
+    .update(address)
+    .eq('id', addressId)
+    .select()
+    .single();
+  if (error || !data) return null;
+  return data as DatabaseAddress;
+}
+
+export async function deleteAddress(addressId: string): Promise<boolean> {
+  if (!supabase) return false;
+  const { error } = await supabase
+    .from('addresses')
+    .delete()
+    .eq('id', addressId);
+  return !error;
+}
