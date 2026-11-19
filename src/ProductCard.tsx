@@ -1,8 +1,20 @@
-import { products } from './catalog';
 import { ObjectArt } from './ObjectArt';
 import { SaveButton } from './WishlistContext';
 
-export function ProductCard({ product, from }: { product: typeof products[number]; from?: string }) {
+export type ProductCardItem = {
+  id: string;
+  name: string;
+  category: string;
+  material: string;
+  kind: string;
+  image: string;
+  alt: string;
+  price?: number | null;
+  currency?: string;
+  availability?: string;
+};
+
+export function ProductCard({ product, from }: { product: ProductCardItem; from?: string }) {
   const href = `/product/${product.id}${from ? `?from=${encodeURIComponent(from)}` : ''}`;
   return <article className="product-card">
     <div className="product-art"><ObjectArt kind={product.kind} productId={product.id} productHref={href}/><span className="sample-tag">OBJECT · {product.id}</span><SaveButton id={product.id} name={product.name} compact/></div>

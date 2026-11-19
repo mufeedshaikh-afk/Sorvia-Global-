@@ -1,8 +1,9 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { products } from './catalog';
+import { products as localCatalog } from './catalog';
 import { ProductCard } from './ProductCard';
 import { collections } from './collections';
 import { useWishlist } from './WishlistContext';
+import { getProducts, toStorefrontProduct, type StorefrontProduct } from './lib/supabase';
 
 export function SearchPage() {
   const [query, setQuery] = useState(() => new URLSearchParams(location.search).get('q') || '');
@@ -11,8 +12,20 @@ export function SearchPage() {
     const value = new URLSearchParams(location.search).get('material') || '';
     return collections.some(item => item.material === value) ? value : '';
   });
+  const [catalog, setCatalog] = useState<StorefrontProduct[]>(() => localCatalog.map(toStorefrontProduct));
+
+  useEffect(() => {
+    let mounted = true;
+    getProducts().then(items => {
+      if (mounted && items && items.length > 0) {
+        setCatalog(items);
+      }
+    }).catch(() => {});
+    return () => { mounted = false; };
+  }, []);
+
   const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  const matches = products.filter(product => (!material || product.material === material) && terms.every(term => `${product.name} ${product.material} ${product.category}`.toLowerCase().includes(term)));
+  const matches = catalog.filter(product => (!material || product.material === material) && terms.every(term => `${product.name} ${product.material} ${product.category}`.toLowerCase().includes(term)));
   const params = new URLSearchParams();
   if (query) params.set('q', query);
   if (material) params.set('material', material);
@@ -34,7 +47,19 @@ export function SearchPage() {
 
 export function WishlistPage() {
   const { ids, storageError } = useWishlist();
-  const saved = ids.flatMap(id => { const product = products.find(item => item.id === id); return product ? [product] : []; });
+  const [catalog, setCatalog] = useState<StorefrontProduct[]>(() => localCatalog.map(toStorefrontProduct));
+
+  useEffect(() => {
+    let mounted = true;
+    getProducts().then(items => {
+      if (mounted && items && items.length > 0) {
+        setCatalog(items);
+      }
+    }).catch(() => {});
+    return () => { mounted = false; };
+  }, []);
+
+  const saved = ids.flatMap(id => { const product = catalog.find(item => item.id === id); return product ? [product] : []; });
   useEffect(() => { document.title = 'Wishlist | SorviaGlobal'; }, []);
   return <><section className="discovery-intro"><nav className="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Wishlist</span></nav><div className="eyebrow">KEEP WHAT CATCHES YOUR EYE</div><h1>Your <em>favourites.</em></h1><p>A little collection of objects you would like to come back to.</p><p className="wishlist-local-note">Saved in this browser only. Your list does not sync to an account or another device. Saving an item does not reserve stock.</p></section><section className="section discovery-results" id="browse"><div className="results-summary"><p role="status" aria-live="polite">{saved.length} saved {saved.length === 1 ? 'object' : 'objects'}</p><a className="text-button" href="/shop">Continue browsing ↗</a></div>{storageError && <p className="storage-notice" role="status">Your browser cannot save favourites right now. This list will be lost when you leave or refresh the page.</p>}{saved.length ? <div className="product-grid">{saved.map(product => <ProductCard key={product.id} product={product} from="/wishlist"/>)}</div> : <div className="empty-results"><div className="empty-heart" aria-hidden="true">♡</div><h2>A space for your favourites</h2><p>Tap a heart on an object to save it here. Explore the collection and see what catches your eye.</p><a className="button" href="/shop">Explore the Shop ↗</a></div>}</section></>;
 }

@@ -1,10 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { products } from './catalog';
 import { collections } from './collections';
 import { ObjectArt } from './ObjectArt';
 import { ProductCard } from './ProductCard';
 import { SaveButton } from './WishlistContext';
 import { AddToPreviewCart } from './Cart';
+import { getProductById, toStorefrontProduct, type StorefrontProduct } from './lib/supabase';
 
 const introductions: Record<string, string> = {
   Brass: 'An exploration of warm metallic tones and expressive form, selected as a starting point for the brass collection.',
@@ -27,7 +28,23 @@ function browsingLink(fallback: string) {
 }
 
 export function ProductDetail({ id }: { id: string }) {
-  const product = products.find(item => item.id === id);
+  const [product, setProduct] = useState<StorefrontProduct | null>(() => {
+    const local = products.find(item => item.id === id);
+    return local ? toStorefrontProduct(local) : null;
+  });
+
+  useEffect(() => {
+    let mounted = true;
+    getProductById(id).then(item => {
+      if (mounted && item) {
+        setProduct(item);
+      }
+    }).catch(err => {
+      console.warn('Could not fetch live product:', err);
+    });
+    return () => { mounted = false; };
+  }, [id]);
+
   const dialog = useRef<HTMLDialogElement>(null);
   const collection = collections.find(item => item.material === product?.material);
   const category = collections.find(item => item.category === product?.category);
@@ -41,14 +58,14 @@ export function ProductDetail({ id }: { id: string }) {
     <div className="detail-breadcrumb"><nav className="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/shop">Shop</a><span aria-hidden="true">/</span><a href={collection?.path || '/shop'}>{collection?.name || product.material}</a><span aria-hidden="true">/</span><span aria-current="page">{product.name}</span></nav></div>
     <section className="product-detail" aria-labelledby="product-title">
       <div className="detail-gallery"><div className="detail-photo"><ObjectArt kind={product.kind} productId={product.id} hero/><span className="artisan-detail-mark" aria-hidden="true">SG<br/>OBJECT<br/>{product.id}</span></div><div className="gallery-caption"><span>01 / 01 · Collection image</span><button className="text-button" onClick={() => dialog.current?.showModal()}>Enlarge photo <span aria-hidden="true">↗</span></button></div><p className="reference-explanation">An image chosen to express the material and mood of this edit. Final product details will be confirmed with the live catalog.</p></div>
-      <div className="detail-copy"><a className="detail-back" href={back}>← Back to browsing</a><div className="eyebrow">THE {product.material.toUpperCase()} COLLECTION · OBJECT {product.id}</div><h1 id="product-title">{product.name}</h1><p className="detail-intro">{introductions[product.material]}</p><p className="artisan-detail-note">A material-led study, selected for its form, finish and sense of place.</p>
+      <div className="detail-copy"><a className="detail-back" href={back}>← Back to browsing</a><div className="eyebrow">THE {product.material.toUpperCase()} COLLECTION · OBJECT {product.id}</div><h1 id="product-title">{product.name}</h1><p className="detail-intro">{introductions[product.material] || introductions.Brass}</p><p className="artisan-detail-note">A material-led study, selected for its form, finish and sense of place.</p>
         <div className="detail-tags"><a href={collection?.path || '/shop'}>{product.material}</a><a href={category?.path || '/shop'}>{product.category}</a></div>
-        <div className="purchase-preview"><span className="eyebrow">THE SORVIA EDIT</span><h2>Catalog details coming soon</h2><p>Price and availability will appear here once the product is confirmed.</p><AddToPreviewCart id={product.id} name={product.name}/><span className="purchase-note">Ordering will open with the live catalog.</span></div>
+        <div className="purchase-preview"><span className="eyebrow">THE SORVIA EDIT</span><h2>{product.price !== null ? `₹${product.price.toLocaleString()}` : 'Catalog details coming soon'}</h2><p>{product.availability === 'In stock' ? 'In stock · Ready to dispatch' : product.availability === 'Out of stock' ? 'Currently out of stock' : 'Price and availability will appear here once the product is confirmed.'}</p><AddToPreviewCart id={product.id} name={product.name}/><span className="purchase-note">Ordering will open with the live catalog.</span></div>
         <div className="detail-save"><SaveButton id={product.id} name={product.name}/><a className="text-button" href="/wishlist">View wishlist ↗</a></div><div className="detail-accordions">
-          <details open><summary>About this object</summary><p>{product.alt}. Full specifications will be added with the approved catalog.</p><dl><div><dt>Object code</dt><dd>SG-{product.id}</dd></div><div><dt>Collection</dt><dd>{product.material} · concept</dd></div><div><dt>Category</dt><dd>{product.category}</dd></div></dl></details>
-          <details><summary>Dimensions & materials</summary><p>Exact materials, finish, dimensions, weight, variants and included pieces are awaiting the real product information. Material filters currently group design concepts.</p></details>
-          <details><summary>Care information</summary><p>Product-specific care instructions will be supplied with the confirmed materials and finish.</p></details>
-          <details><summary>Delivery & returns</summary><p>Supported destinations, shipping costs, delivery estimates and return terms will be shown once business policies and country settings are confirmed. <a className="text-button" href="/policies/shipping">Shipping information ↗</a> <a className="text-button" href="/policies/returns">Returns policy ↗</a></p></details>
+          <details open><summary>About this object</summary><p>{product.description || `${product.alt}. Full specifications will be added with the approved catalog.`}</p><dl><div><dt>Object code</dt><dd>{product.sku || `SG-${product.id}`}</dd></div><div><dt>Collection</dt><dd>{product.material} · concept</dd></div><div><dt>Category</dt><dd>{product.category}</dd></div></dl></details>
+          <details><summary>Dimensions & materials</summary><p>{product.dimensions || 'Exact materials, finish, dimensions, weight, variants and included pieces are awaiting the real product information. Material filters currently group design concepts.'}</p></details>
+          <details><summary>Care information</summary><p>{product.care || 'Product-specific care instructions will be supplied with the confirmed materials and finish.'}</p></details>
+          <details><summary>Delivery & returns</summary><p>{product.shipping || 'Supported destinations, shipping costs, delivery estimates and return terms will be shown once business policies and country settings are confirmed.'} <a className="text-button" href="/policies/shipping">Shipping information ↗</a> <a className="text-button" href="/policies/returns">Returns policy ↗</a></p></details>
         </div>
       </div>
     </section>

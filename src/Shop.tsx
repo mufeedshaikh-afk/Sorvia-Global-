@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { ObjectArt } from './ObjectArt';
-import { products } from './catalog';
+import { products as localCatalog } from './catalog';
 import { ProductCard } from './ProductCard';
 import { collections, type Collection } from './collections';
+import { getProducts, toStorefrontProduct, type StorefrontProduct } from './lib/supabase';
 
 
 const categories = ['Decorative objects', 'Vases & vessels', 'Decorative chess'];
@@ -19,9 +20,23 @@ export function Shop({ collection }: { collection?: Collection }) {
   const [category, setCategory] = useState(collection?.category || (categories.includes(initial.get('category') || '') ? initial.get('category')! : ''));
   const [material, setMaterial] = useState(collection?.material || (materials.includes(initial.get('material') || '') ? initial.get('material')! : ''));
   const [sort, setSort] = useState(sorts.includes(initial.get('sort') || '') ? initial.get('sort')! : 'featured');
+  const [items, setItems] = useState<StorefrontProduct[]>(() => localCatalog.map(toStorefrontProduct));
+
+  useEffect(() => {
+    let mounted = true;
+    getProducts().then(data => {
+      if (mounted && data && data.length > 0) {
+        setItems(data);
+      }
+    }).catch(err => {
+      console.warn('Could not load live products in Shop:', err);
+    });
+    return () => { mounted = false; };
+  }, []);
+
   const active = Boolean(query || (!collection?.category && category) || (!collection?.material && material) || sort !== 'featured');
   const clear = () => { setQuery(''); setCategory(collection?.category || ''); setMaterial(collection?.material || ''); setSort('featured'); };
-  const results = products.filter(p => (!category || p.category === category) && (!material || p.material === material) && `${p.name} ${p.category} ${p.material}`.toLowerCase().includes(query.trim().toLowerCase()));
+  const results = items.filter(p => (!category || p.category === category) && (!material || p.material === material) && `${p.name} ${p.category} ${p.material}`.toLowerCase().includes(query.trim().toLowerCase()));
   if (sort !== 'featured') results.sort((a, b) => sort === 'az' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
 
   const params = new URLSearchParams();
