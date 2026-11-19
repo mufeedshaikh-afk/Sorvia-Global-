@@ -15,6 +15,11 @@
 .account-field{display:flex;flex-direction:column;gap:9px;margin-bottom:21px;min-width:0}
 .account-field label{font-size:12px}
 .account-field input,.account-field select{border:1px solid #b9c1ae;background:#fffdf8;color:#30382e;min-height:48px;border-radius:0;padding:12px;font-size:13px;width:100%}
+.password-input-wrap{position:relative;display:flex;align-items:center;width:100%}
+.password-input-wrap input{padding-right:75px!important}
+.password-toggle-btn{position:absolute;right:8px;background:transparent;border:0;color:#556052;font-family:inherit;font-size:11px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;padding:6px 8px;display:inline-flex;align-items:center;gap:5px;border-radius:2px;transition:color .15s ease,background .15s ease;user-select:none}
+.password-toggle-btn:hover{color:#1e3524;background:rgba(30,53,36,.06)}
+.password-toggle-btn:focus-visible{outline:2px solid #9e7d44;outline-offset:1px}
 .account-field [aria-invalid=true]{border-color:#9b4e36}
 .account-field .field-error{color:#8c3b29;font-size:11px;margin:0;line-height:1.65}
 .account-errors{border:1px solid #c49677;background:#f6eade;font-size:12px;padding:16px;margin-bottom:24px}

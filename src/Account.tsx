@@ -37,6 +37,8 @@ export function AccountPage() {
   const [demo, setDemo] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [draft, setDraft] = useState<AuthDraft>({ name: '', email: '', password: '', confirm: '' });
   const [authErrors, setAuthErrors] = useState<AuthErrors>({});
   const [profile, setProfile] = useState({ ...exampleProfile });
@@ -203,7 +205,63 @@ export function AccountPage() {
     }
   };
 
-  const authField = (key: keyof AuthDraft, label: string, type = 'text') => <div className="account-field" key={key}><label htmlFor={`account-${key}`}>{label}</label><input id={`account-${key}`} type={type} autoComplete="off" maxLength={key === 'password' || key === 'confirm' ? 128 : 100} value={draft[key]} onChange={e => { setDraft(current => ({ ...current, [key]: e.target.value })); setAuthErrors(current => ({ ...current, [key]: undefined })); }} aria-invalid={Boolean(authErrors[key])} aria-describedby={authErrors[key] ? `account-error-${key}` : undefined}/>{authErrors[key] && <p className="field-error" id={`account-error-${key}`}>{authErrors[key]}</p>}</div>;
+  const authField = (key: keyof AuthDraft, label: string, type = 'text') => {
+    const isPass = key === 'password' || key === 'confirm';
+    const isVisible = key === 'password' ? showPassword : key === 'confirm' ? showConfirm : false;
+    const inputType = isPass ? (isVisible ? 'text' : 'password') : type;
+    const toggle = () => {
+      if (key === 'password') setShowPassword(v => !v);
+      else if (key === 'confirm') setShowConfirm(v => !v);
+    };
+
+    return (
+      <div className="account-field" key={key}>
+        <label htmlFor={`account-${key}`}>{label}</label>
+        <div className={isPass ? 'password-input-wrap' : undefined}>
+          <input
+            id={`account-${key}`}
+            type={inputType}
+            autoComplete="off"
+            maxLength={isPass ? 128 : 100}
+            value={draft[key]}
+            onChange={e => {
+              setDraft(current => ({ ...current, [key]: e.target.value }));
+              setAuthErrors(current => ({ ...current, [key]: undefined }));
+            }}
+            aria-invalid={Boolean(authErrors[key])}
+            aria-describedby={authErrors[key] ? `account-error-${key}` : undefined}
+          />
+          {isPass && (
+            <button
+              type="button"
+              className="password-toggle-btn"
+              onClick={toggle}
+              aria-label={isVisible ? `Hide ${label.toLowerCase()}` : `Show ${label.toLowerCase()}`}
+            >
+              {isVisible ? (
+                <>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                    <line x1="1" y1="1" x2="23" y2="23"/>
+                  </svg>
+                  <span>Hide</span>
+                </>
+              ) : (
+                <>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                  <span>Show</span>
+                </>
+              )}
+            </button>
+          )}
+        </div>
+        {authErrors[key] && <p className="field-error" id={`account-error-${key}`}>{authErrors[key]}</p>}
+      </div>
+    );
+  };
   const beginAddress = (address?: Address) => { setEditing(address?.id || 'new'); setAddressDraft(address ? { ...address.details } : { ...emptyDelivery, ...profile }); setAddressCountry(address?.country || 'IN'); setAddressErrors({}); setNotice(''); };
 
   const saveAddress = async (event: FormEvent) => {
