@@ -232,8 +232,10 @@
 
 .theme-warm .luxury-photo-heading {
   position: absolute;
-  bottom: 18px;
-  left: 18px;
+  top: 18px !important;
+  left: 18px !important;
+  bottom: auto !important;
+  height: auto !important;
   background: rgba(251, 249, 245, 0.95);
   border: 1px solid #c9bcab;
   color: #1e3524;
@@ -249,8 +251,10 @@
 .theme-warm .artisan-photo-mark,
 .theme-warm .artisan-detail-mark {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: 18px !important;
+  right: 18px !important;
+  bottom: auto !important;
+  height: auto !important;
   background: rgba(251, 249, 245, 0.95);
   border: 1px solid #c9bcab;
   color: #1e3524;
