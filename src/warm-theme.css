@@ -329,6 +329,78 @@
   box-shadow: 0 4px 14px rgba(30, 45, 33, 0.04);
 }
 
+.theme-warm .shop-luxury .shop-filters {
+  background: #f5f0e6;
+  border: 1px solid #ded6c5;
+  border-radius: 4px;
+  padding: 24px 28px;
+  margin-bottom: 32px;
+}
+
+.theme-warm .shop-luxury .shop-filters fieldset {
+  border: 0;
+  border-top: 1px solid #dfd7c7;
+  padding: 14px 0 0;
+  margin: 18px 0 0;
+}
+
+.theme-warm .shop-luxury .shop-filters legend {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #74511d;
+  padding: 0 8px 0 0;
+}
+
+.theme-warm .filter-options-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.theme-warm .filter-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 15px;
+  background: #faf7f0;
+  border: 1px solid #c8beac;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #242d22;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.theme-warm .filter-chip:hover {
+  background: #eee7d8;
+  border-color: #8c6527;
+  color: #152217;
+}
+
+.theme-warm .filter-chip.is-active {
+  background: #1e3524;
+  color: #ffffff;
+  border-color: #142419;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(30, 53, 36, 0.22);
+}
+
+.theme-warm .sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border-width: 0 !important;
+}
+
 .theme-warm .shop-luxury .shop-tools {
   border-color: #ded6c5;
 }
@@ -369,6 +441,16 @@
   box-shadow: 0 6px 18px rgba(30, 45, 33, 0.05);
   overflow: hidden;
   border-radius: 2px;
+}
+
+.theme-warm .product-card .reference-image,
+.theme-warm .product-card .object-art {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-warm .product-card:hover .reference-image,
+.theme-warm .product-card:hover .object-art {
+  transform: scale(1.045);
 }
 
 .theme-warm .sample-tag {
