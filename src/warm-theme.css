@@ -174,10 +174,11 @@
 
 .theme-warm .values-strip {
   background: #f1ece1;
-  border-top: 1px solid #e2dad0;
-  border-bottom: 1px solid #e2dad0;
-  color: #424d40;
+  border-top: 1px solid #ded6c5;
+  border-bottom: 1px solid #ded6c5;
+  color: #242d22;
   letter-spacing: 1.3px;
+  font-weight: 500;
 }
 
 .theme-warm .values-strip span::before {
@@ -186,39 +187,72 @@
 
 .theme-warm .category-card {
   color: #242b23;
+  transition: transform 0.25s ease;
 }
 
 .theme-warm .category-art {
   border: 1px solid #ded5c3;
   background: #eee8dc;
   box-shadow: 0 6px 18px rgba(30, 45, 33, 0.05);
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.theme-warm .category-art .reference-image,
+.theme-warm .category-art .object-art {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-warm .category-card:hover .category-art .reference-image,
+.theme-warm .category-card:hover .category-art .object-art {
+  transform: scale(1.05);
 }
 
 .theme-warm .category-number {
-  background: #f9f7f2f2;
-  color: #3b453a;
+  background: rgba(249, 247, 242, 0.95);
+  color: #242d22;
   border: 1px solid #d5cbba;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 .theme-warm .coming-soon {
-  color: #8c6e3b;
+  color: #74511d;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.theme-warm .coming-soon:hover {
+  color: #1e3524;
+  gap: 10px;
 }
 
 .theme-warm .story {
   background: #f3eee4;
   border: 1px solid #ded6c5;
   box-shadow: 0 8px 24px rgba(30, 45, 33, 0.05);
+  border-radius: 2px;
 }
 
 .theme-warm .visual-label {
-  background: #fbf9f4f2;
-  color: #3b453a;
+  background: rgba(251, 249, 244, 0.95);
+  color: #242d22;
   border: 1px solid #d5cbba;
+  font-weight: 600;
 }
 
 .theme-warm .editorial-note {
-  color: #727a6f;
+  color: #4a5447;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  padding: 6px 14px;
+  background: #eae3d4;
+  border: 1px solid #dcd1bf;
+  border-radius: 2px;
 }
 
 /* Shop and Collection Browsing */
