@@ -52,25 +52,100 @@
 
 /* Header, Navigation & Announcement */
 .theme-warm .announcement {
-  background: #192a1d;
-  color: #f5f2e9;
+  background: #181512;
+  color: #f7eedf;
   letter-spacing: 1.5px;
-  border-bottom: 1px solid #2b3e30;
+  border-bottom: 1px solid #302923;
+  font-size: 11px;
 }
 
 .theme-warm .header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(250, 248, 244, 0.94);
+  background: rgba(250, 248, 244, 0.96);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid #e5ded0;
-  box-shadow: 0 1px 4px rgba(30, 45, 33, 0.04);
+  box-shadow: 0 1px 6px rgba(26, 23, 20, 0.05);
+}
+
+.theme-warm .wordmark {
+  color: #1a1714;
+  text-decoration: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.theme-warm .wordmark span {
+  color: #a87836;
+}
+
+.theme-warm .wordmark-tagline {
+  display: block;
+  font: 700 7.5px/1 'DM Sans', sans-serif !important;
+  letter-spacing: 2.2px !important;
+  text-transform: uppercase;
+  color: #8c5b23 !important;
+  margin-top: 5px;
+}
+
+/* Dedicated Promotional Banner */
+.theme-warm .promo-banner {
+  background: linear-gradient(90deg, #f4eee2 0%, #ece2ce 50%, #f4eee2 100%);
+  border-bottom: 1px solid #dfd6c4;
+  padding: 10px 6%;
+}
+
+.theme-warm .promo-banner-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  text-align: center;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.theme-warm .promo-badge {
+  background: #1a1714;
+  color: #fcfbf8;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.theme-warm .promo-copy {
+  color: #26211c;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+}
+
+.theme-warm .promo-link {
+  color: #8c5b23;
+  font-weight: 700;
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+
+.theme-warm .promo-link:hover {
+  color: #1a1714;
+  gap: 7px;
 }
 
 .theme-warm .sample-notice {
-  color: #323c30;
+  color: #2e2822;
   font-weight: 500;
   border-top: 1px solid #ded6c5;
   padding: 16px 0;
@@ -78,7 +153,7 @@
 }
 
 .theme-warm .sample-notice > span {
-  color: #1e3524;
+  color: #1a1714;
   font-weight: 700;
   background: #ebe4d4;
   padding: 3px 9px;
@@ -88,33 +163,25 @@
   letter-spacing: 1px;
 }
 
-.theme-warm .wordmark {
-  color: #1a271d;
-}
-
-.theme-warm .wordmark span {
-  color: #9e7d44;
-}
-
 .theme-warm .desktop-nav a,
 .theme-warm .header-actions a {
-  color: #2e382d;
+  color: #2b2520;
   letter-spacing: .4px;
 }
 
 .theme-warm .desktop-nav a[aria-current=page] {
-  text-decoration-color: #9e7d44;
+  text-decoration-color: #a87836;
 }
 
 .theme-warm .header-actions .wishlist-count,
 .theme-warm .cart-count {
   background: #e6ddce;
-  color: #1a261d;
+  color: #1a1714;
   border-color: #c9bcab;
 }
 
 .theme-warm .menu-button {
-  color: #1a261d;
+  color: #1a1714;
   border-color: #c5bba8;
   background: #f4efe5;
 }
@@ -126,36 +193,41 @@
 
 .theme-warm .mobile-nav a {
   border-color: var(--warm-line);
-  color: #1a261d;
+  color: #1a1714;
 }
 
 .theme-warm .region-bar {
   background: #f2eee5;
   border-color: #e2dbce;
-  color: #4b5449;
+  color: #3e3731;
 }
 
 .theme-warm .region-bar > span {
-  color: #6a7368;
+  color: #5d544c;
 }
 
-/* Deep Forest & Brass Buttons */
+/* Deep Espresso & Antique Brass Buttons */
 .theme-warm :is(.button, .luxury-explore, .account-page .button, .checkout-page .button, .support-page .button, .contact-page .button, .tracking-page .button, .admin-shell .button, .region-dialog .button) {
-  background: #1e3524;
-  color: #fbf9f5;
-  border: 1px solid #16281b;
-  box-shadow: 0 2px 6px rgba(22, 40, 27, 0.12);
-  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+  background: #1a1714;
+  color: #fcfbf8;
+  border: 1px solid #2d2621;
+  box-shadow: 0 2px 8px rgba(26, 23, 20, 0.15);
+  transition: all 0.18s ease;
 }
 
 .theme-warm :is(.button:hover, .luxury-explore:hover, .account-page .button:hover, .checkout-page .button:hover, .support-page .button:hover, .contact-page .button:hover, .tracking-page .button:hover, .admin-shell .button:hover, .region-dialog .button:hover) {
-  background: #142419;
+  background: #2d2621;
+  border-color: #a87836;
   color: #ffffff;
-  box-shadow: 0 4px 10px rgba(20, 36, 25, 0.2);
+  box-shadow: 0 4px 14px rgba(26, 23, 20, 0.25);
 }
 
 .theme-warm .text-button {
-  color: #8c6e3b;
+  color: #8c5b23;
+}
+
+.theme-warm .text-button:hover {
+  color: #1a1714;
 }
 
 /* Homepage Sections */
@@ -411,16 +483,16 @@
 
 .theme-warm .filter-chip:hover {
   background: #eee7d8;
-  border-color: #8c6527;
-  color: #152217;
+  border-color: #a87836;
+  color: #141210;
 }
 
 .theme-warm .filter-chip.is-active {
-  background: #1e3524;
+  background: #1a1714;
   color: #ffffff;
-  border-color: #142419;
+  border-color: #a87836;
   font-weight: 600;
-  box-shadow: 0 2px 6px rgba(30, 53, 36, 0.22);
+  box-shadow: 0 2px 8px rgba(26, 23, 20, 0.25);
 }
 
 .theme-warm .sr-only {
@@ -836,10 +908,10 @@
   color: #636d60 !important;
 }
 
-/* Footer in Deep Heritage Forest */
+/* Footer in Deep Charcoal Espresso & Antique Brass */
 .theme-warm footer {
-  background: #152519;
-  border-top: 2px solid #9e7d44;
+  background: #141210;
+  border-top: 2px solid #a87836;
   color: #f2ede2;
 }
 
@@ -849,11 +921,11 @@
 
 .theme-warm footer p,
 .theme-warm .footer-bottom {
-  color: #c2cabb;
+  color: #c9c0b3;
 }
 
 .theme-warm .footer-bottom {
-  border-color: #273b2c;
+  border-color: #2b2622;
 }
 
 /* Admin Preview Shell */
@@ -869,20 +941,20 @@
 }
 
 .theme-warm .admin-sidebar > button {
-  color: #2b392d;
+  color: #2b2520;
   border-color: #cfc2ad;
 }
 
 .theme-warm .admin-sidebar > button:hover,
 .theme-warm .admin-sidebar > button.is-active {
-  background: #1e3524;
+  background: #1a1714;
   color: #fbf9f5;
-  border-color: #142419;
+  border-color: #a87836;
 }
 
 .theme-warm .admin-table th {
   background: #ebe4d2;
-  color: #1d291f;
+  color: #1d1b18;
 }
 
 .theme-warm .admin-table td,
@@ -907,20 +979,63 @@
 }
 
 @media (max-width: 700px) {
+  .theme-warm .header {
+    height: auto;
+    min-height: 84px;
+    padding: 12px 5%;
+  }
+
+  .theme-warm .wordmark {
+    font-size: 24px;
+  }
+
+  .theme-warm .wordmark-tagline {
+    font-size: 6.5px !important;
+    letter-spacing: 1.6px !important;
+  }
+
+  .theme-warm .header-actions {
+    gap: 10px;
+    font-size: 11px;
+  }
+
+  .theme-warm .promo-banner {
+    padding: 10px 4%;
+  }
+
+  .theme-warm .promo-banner-inner {
+    gap: 8px 12px;
+  }
+
+  .theme-warm .promo-copy {
+    font-size: 12px;
+  }
+
+  .theme-warm .values-strip {
+    flex-direction: column;
+    gap: 12px;
+    padding: 18px 5%;
+    text-align: center;
+  }
+
   .theme-warm .luxury-intro-photo .object-art {
     min-height: 310px;
   }
+
   .theme-warm .artisan-hero-meta {
     padding-top: 28px;
     gap: 10px 13px;
     font-size: 7px;
   }
+
   .theme-warm .luxury-intro-photo {
     box-shadow: 0 6px 18px rgba(30, 45, 33, 0.08);
   }
+
   .theme-warm .detail-photo {
     box-shadow: 0 8px 20px rgba(30, 45, 33, 0.08);
   }
+
   .theme-warm .artisan-detail-mark {
     right: 20px;
     bottom: 20px;
