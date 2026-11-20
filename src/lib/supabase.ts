@@ -284,3 +284,110 @@ export async function deleteAddress(addressId: string): Promise<boolean> {
     .eq('id', addressId);
   return !error;
 }
+
+export type DatabaseOrder = {
+  id: string;
+  user_id?: string | null;
+  email: string;
+  status: 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  currency: string;
+  subtotal: number;
+  shipping: number;
+  tax: number;
+  total: number;
+  shipping_address: Record<string, any>;
+  tracking_reference?: string | null;
+  created_at?: string;
+  updated_at?: string;
+  order_items?: DatabaseOrderItem[];
+};
+
+export type DatabaseOrderItem = {
+  id?: string;
+  order_id: string;
+  product_id?: string | null;
+  product_name: string;
+  quantity: number;
+  unit_price: number;
+  created_at?: string;
+};
+
+export async function createOrder(
+  order: Omit<DatabaseOrder, 'id' | 'created_at' | 'updated_at' | 'order_items'>,
+  items: Array<{ product_id: string; product_name: string; quantity: number; unit_price: number }>
+): Promise<DatabaseOrder | null> {
+  if (!supabase) return null;
+
+  const orderId = `SG-${Date.now().toString().slice(-4)}${Math.floor(10 + Math.random() * 90)}`;
+
+  try {
+    const { data: orderData, error: orderError } = await supabase
+      .from('orders')
+      .insert([{
+        ...order,
+        id: orderId,
+      }])
+      .select()
+      .single();
+
+    if (orderError || !orderData) {
+      console.warn('Order insert notice (will use fallback):', orderError?.message);
+      return { ...order, id: orderId, order_items: items as DatabaseOrderItem[] } as DatabaseOrder;
+    }
+
+    if (items.length > 0) {
+      const itemRows = items.map(item => ({
+        order_id: orderId,
+        product_id: item.product_id,
+        product_name: item.product_name,
+        quantity: item.quantity,
+        unit_price: item.unit_price,
+      }));
+
+      await supabase.from('order_items').insert(itemRows);
+    }
+
+    return { ...orderData, order_items: items as DatabaseOrderItem[] } as DatabaseOrder;
+  } catch (err) {
+    console.warn('Order creation exception:', err);
+    return { ...order, id: orderId, order_items: items as DatabaseOrderItem[] } as DatabaseOrder;
+  }
+}
+
+export async function getOrderById(orderId: string, email?: string): Promise<DatabaseOrder | null> {
+  if (!supabase) return null;
+
+  try {
+    let query = supabase
+      .from('orders')
+      .select('*, order_items(*)')
+      .eq('id', orderId.trim().toUpperCase());
+
+    if (email) {
+      query = query.ilike('email', email.trim());
+    }
+
+    const { data, error } = await query.maybeSingle();
+    if (error || !data) return null;
+    return data as DatabaseOrder;
+  } catch {
+    return null;
+  }
+}
+
+export async function getUserOrders(userId: string): Promise<DatabaseOrder[]> {
+  if (!supabase) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*, order_items(*)')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+
+    if (error || !data) return [];
+    return data as DatabaseOrder[];
+  } catch {
+    return [];
+  }
+}

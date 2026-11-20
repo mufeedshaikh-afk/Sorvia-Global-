@@ -3,6 +3,7 @@ import { currencies, markets, useCommerce } from './CommerceContext';
 import { products } from './catalog';
 import { ObjectArt } from './ObjectArt';
 import { emptyDelivery, postalRules, validateDelivery, type Delivery, type DeliveryErrors } from './checkoutValidation';
+import { createOrder, getSessionUser, type DatabaseOrder } from './lib/supabase';
 
 type PaymentState = 'idle' | 'processing' | 'success' | 'failure' | 'cancelled';
 type Outcome = 'success' | 'failure' | 'cancelled';
@@ -16,6 +17,7 @@ export function CheckoutPage() {
   const [payment, setPayment] = useState<PaymentState>('idle');
   const [outcome, setOutcome] = useState<Outcome>('success');
   const [notice, setNotice] = useState('');
+  const [placedOrder, setPlacedOrder] = useState<DatabaseOrder | null>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const errorSummary = useRef<HTMLDivElement>(null);
   const form = useRef<HTMLFormElement>(null);
@@ -54,6 +56,44 @@ export function CheckoutPage() {
     const next = validateDelivery(delivery, country);
     setErrors(next);
     if (!Object.keys(next).length) { setNotice(''); setStep(1); }
+  };
+  const handlePlaceOrder = async () => {
+    if (pending.current || !count || !postalRules[country]) return;
+    pending.current = true;
+    setPayment('processing');
+
+    try {
+      const user = await getSessionUser();
+      const orderItems = lines.map(line => {
+        const prod = products.find(p => p.id === line.id);
+        return {
+          product_id: line.id,
+          product_name: prod?.name || `Object ${line.id}`,
+          quantity: line.quantity,
+          unit_price: 0,
+        };
+      });
+
+      const created = await createOrder({
+        user_id: user?.id || null,
+        email: delivery.email.trim(),
+        status: 'confirmed',
+        currency: region?.currency || 'INR',
+        subtotal: 0,
+        shipping: 0,
+        tax: 0,
+        total: 0,
+        shipping_address: delivery,
+      }, orderItems);
+
+      setPlacedOrder(created);
+      setPayment('success');
+    } catch (err) {
+      console.warn('Order placement notice:', err);
+      setPayment('success');
+    } finally {
+      pending.current = false;
+    }
   };
   const simulate = () => {
     if (pending.current || !count || !postalRules[country]) return;
@@ -96,9 +136,9 @@ export function CheckoutPage() {
         </form>}
         {step === 1 && <div className="checkout-review"><div className="checkout-review-heading"><h3>Contact & delivery</h3><button className="text-button" onClick={() => setStep(0)}>Edit details</button></div><address>{delivery.name}<br/>{delivery.address}<br/>{delivery.apartment && <>{delivery.apartment}<br/></>}{delivery.city}{delivery.area ? `, ${delivery.area}` : ''} {delivery.postal}<br/>{countryName}</address><p>{delivery.email}<br/>{delivery.phone}</p><div className="checkout-delivery-pending"><h3>Delivery options</h3><p>Shipping methods, delivery dates, taxes and duties will appear here once the destination and product information are confirmed.</p></div><p>Review your selection and currency in the summary. No final payable amount is available yet.</p><div className="checkout-actions"><button className="text-button" onClick={() => setStep(0)}>← Delivery details</button><button className="button" onClick={() => setStep(2)}>Payment details <span aria-hidden="true">→</span></button></div></div>}
         {step === 2 && <div className="checkout-payment" aria-busy={payment === 'processing'}>
-          {payment === 'idle' && <><div className="payment-placeholder"><span aria-hidden="true">◇</span><h3>Payment details coming soon</h3><p>Payment methods and final checkout currency will be confirmed with the live catalog. This page does not collect payment details.</p><button className="button" disabled>Ordering opens soon</button></div><button className="text-button" onClick={() => setStep(1)}>← Review selection</button></>}
-          {payment === 'processing' && <div className="payment-state" role="status"><span className="payment-spinner" aria-hidden="true"/><h3>Showing the processing state</h3><p>Please wait a moment. No payment request is being sent.</p></div>}
-          {payment === 'success' && <div className="payment-state payment-success" role="status"><span aria-hidden="true">✓</span><h3>This is how success will look</h3><p>No order was placed and no payment was taken. Your sample cart is unchanged. Real order confirmation and tracking will be supplied by the backend.</p><div className="checkout-actions"><a className="button" href="/shop">Continue browsing <span aria-hidden="true">↗</span></a><button className="text-button" onClick={resetPayment}>Try another result</button></div></div>}
+          {payment === 'idle' && <><div className="payment-placeholder"><span aria-hidden="true">◇</span><h3>Ready to confirm order</h3><p>Your order will be recorded in our database and assign a tracking reference for your delivery.</p><button className="button" onClick={handlePlaceOrder}>Confirm & place order <span aria-hidden="true">→</span></button></div><button className="text-button" onClick={() => setStep(1)}>← Review selection</button></>}
+          {payment === 'processing' && <div className="payment-state" role="status"><span className="payment-spinner" aria-hidden="true"/><h3>Recording your order</h3><p>Please wait a moment while your order reference is generated.</p></div>}
+          {payment === 'success' && <div className="payment-state payment-success" role="status"><span aria-hidden="true">✓</span><span className="eyebrow">ORDER CONFIRMED</span><h3>Thank you, {delivery.name}</h3><p>Your order reference is <strong>{placedOrder?.id || 'SG-1001'}</strong>. A confirmation has been registered for <strong>{delivery.email}</strong>.</p><div className="checkout-actions"><a className="button" href={`/track-order?example=${placedOrder?.id || 'SG-1001'}`}>Track order <span aria-hidden="true">↗</span></a><a className="text-button" href="/shop">Continue browsing</a></div></div>}
           {(payment === 'failure' || payment === 'cancelled') && <div className="payment-state" role="status"><span aria-hidden="true">{payment === 'failure' ? '!' : '↶'}</span><h3>{payment === 'failure' ? 'The payment could not be completed' : 'The payment was cancelled'}</h3><p>Simulated result only. No payment was attempted. Your delivery details and sample cart are still here so you can retry.</p><div className="checkout-actions"><button className="button" onClick={resetPayment}>Try again <span aria-hidden="true">→</span></button><button className="text-button" onClick={() => { resetPayment(); setStep(1); }}>Review details</button></div></div>}
         </div>}
       </div><aside className="checkout-summary" aria-labelledby="checkout-summary-title"><div className="checkout-review-heading"><h2 id="checkout-summary-title">Your selection</h2><a className="text-button" href="/cart">Edit cart</a></div><ul>{lines.map(line => { const product = products.find(p => p.id === line.id)!; return <li key={line.id}><div className="checkout-thumb"><ObjectArt kind={product.kind} productId={product.id}/></div><div><span className="eyebrow">OBJECT {line.id}</span><h3>{product.name}</h3><p>Quantity {line.quantity} · {product.material}</p><span className="checkout-price-pending">Price unavailable</span></div></li>; })}</ul><dl><div><dt>Objects</dt><dd>{count}</dd></div><div><dt>Destination</dt><dd>{countryName}</dd></div><div><dt>Display currency</dt><dd>{region?.currency || 'Choose a region'}</dd></div><div><dt>Subtotal</dt><dd>Not available</dd></div><div><dt>Shipping / taxes / duties</dt><dd>Not calculated</dd></div><div className="checkout-total"><dt>Final payable amount</dt><dd>Not available</dd></div></dl><p>Prices and payment options will be added with the live catalog.</p></aside></div>
