@@ -507,6 +507,52 @@
   border-width: 0 !important;
 }
 
+/* Quick Material Filter Pill Bar */
+.theme-warm .shop-material-quickbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 12px 0 20px;
+  border-bottom: 1px solid #ded6c5;
+  margin-bottom: 20px;
+}
+
+.theme-warm .quick-material-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #fbf9f4;
+  border: 1px solid #c8beac;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #242d22;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.theme-warm .quick-material-pill:hover {
+  background: #eee7d8;
+  border-color: #a87836;
+  color: #141210;
+}
+
+.theme-warm .quick-material-pill.is-active {
+  background: #1a1714;
+  color: #ffffff;
+  border-color: #a87836;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(26, 23, 20, 0.22);
+}
+
+.theme-warm .quick-material-pill .chip-count {
+  font-size: 10.5px;
+  opacity: 0.85;
+}
+
 .theme-warm .shop-luxury .shop-tools {
   border-color: #ded6c5;
 }
