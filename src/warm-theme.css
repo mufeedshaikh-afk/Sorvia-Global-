@@ -73,49 +73,72 @@
 .theme-warm .wordmark {
   color: #1a1714;
   text-decoration: none;
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
   gap: 12px;
 }
 
 .theme-warm .brand-logo-emblem {
-  height: 44px;
+  height: 48px;
   width: auto;
-  max-width: 62px;
+  aspect-ratio: 446 / 481;
   object-fit: contain;
   display: block;
   flex-shrink: 0;
 }
 
 .theme-warm .wordmark-text-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
 }
 
 .theme-warm .wordmark-title {
-  font-family: 'Libre Caslon Display', Georgia, serif;
-  font-size: 24px;
-  letter-spacing: 2px;
-  line-height: 1;
-  font-weight: 700;
-  color: #1a1714;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: baseline !important;
+  font-family: 'Libre Caslon Display', Georgia, serif !important;
+  font-size: 24px !important;
+  letter-spacing: 2px !important;
+  line-height: 1 !important;
+  font-weight: 700 !important;
+  color: #1a1714 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
 }
 
 .theme-warm .wordmark-title span,
 .theme-warm .wordmark-gold {
-  color: #a87836;
-  font-weight: 400;
+  display: inline !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  letter-spacing: inherit !important;
+  color: #a87836 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+  text-align: left !important;
 }
 
 .theme-warm .wordmark-tagline {
-  display: block;
+  display: block !important;
   font: 700 7.5px/1 'DM Sans', sans-serif !important;
   letter-spacing: 2px !important;
-  text-transform: uppercase;
+  text-transform: uppercase !important;
   color: #8c5b23 !important;
-  margin-top: 4px;
+  margin-top: 4px !important;
+  margin-bottom: 0 !important;
+  text-align: left !important;
+}
+
+.theme-warm footer .wordmark {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 12px;
 }
 
 /* Dedicated Promotional Banner */
