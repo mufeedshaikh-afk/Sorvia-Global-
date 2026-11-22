@@ -769,6 +769,171 @@
   line-height: 1.7;
 }
 
+/* Modern High-Converting Product Buy Box */
+.theme-warm .product-buy-box {
+  background: #f7f3ec;
+  border: 1px solid #dcd1be;
+  border-radius: 4px;
+  padding: 24px 28px;
+  margin: 28px 0;
+  box-shadow: 0 4px 18px rgba(26, 23, 20, 0.05);
+}
+
+.theme-warm .buy-box-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e2dac9;
+}
+
+.theme-warm .product-price {
+  font-family: 'Libre Caslon Display', Georgia, serif;
+  font-size: 36px;
+  color: #141210;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.theme-warm .price-tax-note {
+  display: block;
+  font-size: 11px;
+  color: #6a6054;
+  margin-top: 4px;
+}
+
+.theme-warm .stock-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.theme-warm .stock-pill.in-stock {
+  background: #ebf3eb;
+  color: #215c2d;
+  border: 1px solid #bcdabc;
+}
+
+.theme-warm .stock-dot {
+  color: #2e8b3e;
+  font-size: 10px;
+}
+
+.theme-warm .buy-box-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.theme-warm .quantity-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #241f1a;
+}
+
+.theme-warm .buy-box-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.theme-warm .button.add-cart-action {
+  background: #1a1714;
+  color: #ffffff;
+  border: 1px solid #1a1714;
+  justify-content: center;
+  padding: 15px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.18s ease;
+}
+
+.theme-warm .button.add-cart-action:hover {
+  background: #2b2520;
+  border-color: #a87836;
+}
+
+.theme-warm .button.buy-now-action {
+  background: #a87836;
+  color: #ffffff;
+  border: 1px solid #8e6229;
+  justify-content: center;
+  padding: 15px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.18s ease;
+}
+
+.theme-warm .button.buy-now-action:hover {
+  background: #8e6229;
+  box-shadow: 0 4px 12px rgba(142, 98, 41, 0.25);
+}
+
+.theme-warm .cart-feedback-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 10px 16px;
+  background: #eef5ee;
+  border: 1px solid #b7dbb8;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #1f5027;
+  font-weight: 500;
+}
+
+.theme-warm .feedback-cart-link {
+  color: #15381b;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.theme-warm .trust-strip-compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px dashed #ded4c0;
+}
+
+.theme-warm .trust-pill {
+  font-size: 11px;
+  color: #4a4136;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.theme-warm .trust-pill span {
+  color: #a87836;
+  font-size: 12px;
+}
+
 .theme-warm .purchase-preview {
   background: #f4efe4;
   border: 1px solid #dcd1be;
