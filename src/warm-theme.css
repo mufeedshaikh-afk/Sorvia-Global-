@@ -1185,6 +1185,125 @@
   border-color: #a87836;
 }
 
+/* Modernized Admin Panel Navigation & Metrics */
+.theme-warm .admin-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 20px 0 28px;
+}
+
+.theme-warm .admin-nav-group button,
+.theme-warm .admin-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 14px;
+  background: #fbf9f4;
+  border: 1px solid #dcd1be;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #241f1a;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.theme-warm .admin-nav-group button:hover,
+.theme-warm .admin-nav-link:hover {
+  background: #eee6d6;
+  border-color: #a87836;
+  color: #141210;
+}
+
+.theme-warm .admin-nav-group button.is-active {
+  background: #1a1714;
+  color: #ffffff;
+  border-color: #a87836;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(26, 23, 20, 0.22);
+}
+
+.theme-warm .nav-badge {
+  background: rgba(168, 120, 54, 0.2);
+  color: #a87836;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.theme-warm .admin-nav-group button.is-active .nav-badge {
+  background: #a87836;
+  color: #ffffff;
+}
+
+.theme-warm .admin-sidebar-footer {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid #dcd1be;
+}
+
+.theme-warm .admin-sidebar-footer p {
+  font-size: 11px;
+  color: #5d5347;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.theme-warm .admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 20px 0 32px;
+}
+
+.theme-warm .admin-stat-card {
+  background: #fdfbf8;
+  border: 1px solid #dcd1be;
+  border-radius: 4px;
+  padding: 20px 22px;
+  box-shadow: 0 2px 8px rgba(26, 23, 20, 0.04);
+}
+
+.theme-warm .admin-stat-card .stat-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #8c5b23;
+  margin-bottom: 6px;
+}
+
+.theme-warm .admin-stat-card strong {
+  display: block;
+  font-family: 'Libre Caslon Display', Georgia, serif;
+  font-size: 32px;
+  color: #141210;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.theme-warm .admin-stat-card strong.status-live {
+  color: #215c2d;
+  font-size: 24px;
+}
+
+.theme-warm .admin-stat-card .stat-sub {
+  display: block;
+  font-size: 11px;
+  color: #6a6054;
+}
+
+@media (max-width: 900px) {
+  .theme-warm .admin-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .theme-warm .admin-table th {
   background: #ebe4d2;
   color: #1d1b18;
