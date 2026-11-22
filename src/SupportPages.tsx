@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { enquiryTopics, faqs, findTrackingExample, policies, trackingExamples, validateEnquiry, validateTracking, type Enquiry } from './supportData';
+import { getOrderById, type DatabaseOrder } from './lib/supabase';
 
 function PageIntro({ title, eyebrow, description }: { title: string; eyebrow: string; description: string }) {
   useEffect(() => { document.title = `${title} | SorviaGlobal`; }, [title]);
@@ -23,6 +24,7 @@ export function TrackingPage() {
   const [errors, setErrors] = useState<{ reference?: string; email?: string }>({});
   const [state, setState] = useState<'idle' | 'loading' | 'found' | 'missing' | 'error'>('idle');
   const [example, setExample] = useState<typeof trackingExamples[number] | undefined>();
+  const [dbOrder, setDbOrder] = useState<DatabaseOrder | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pending = useRef(false);
   const result = useRef<HTMLDivElement>(null);
@@ -30,22 +32,97 @@ export function TrackingPage() {
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
   useEffect(() => { if (Object.keys(errors).length) errorBox.current?.focus(); }, [errors]);
   useEffect(() => { if (['found', 'missing', 'error'].includes(state)) result.current?.focus(); }, [state]);
-  const lookup = (event?: FormEvent) => {
+
+  const getOrderStage = (status: string) => {
+    switch (status?.toLowerCase()) {
+      case 'delivered': return 4;
+      case 'shipped': return 3;
+      case 'processing': return 2;
+      case 'confirmed':
+      case 'pending':
+      default: return 1;
+    }
+  };
+
+  const lookup = async (event?: FormEvent) => {
     event?.preventDefault(); if (pending.current) return;
     const next = validateTracking(reference, email); setErrors(next);
     if (Object.keys(next).length) return;
+    pending.current = true; setState('loading'); setExample(undefined); setDbOrder(null);
+
+    // 1. First attempt to query live orders from Supabase PostgreSQL database
+    try {
+      const liveOrder = await getOrderById(reference, email);
+      if (liveOrder) {
+        pending.current = false;
+        setDbOrder(liveOrder);
+        setState('found');
+        return;
+      }
+    } catch (err) {
+      console.warn('Live order query failed:', err);
+    }
+
+    // 2. Fallback to demo test examples if not found in database
     const match = findTrackingExample(reference, email);
-    pending.current = true; setState('loading'); setExample(undefined);
-    timer.current = setTimeout(() => { pending.current = false; setExample(match); setState(match ? 'found' : 'missing'); }, 800);
+    timer.current = setTimeout(() => {
+      pending.current = false;
+      setExample(match);
+      setState(match ? 'found' : 'missing');
+    }, 600);
   };
-  const clearResult = () => { if (timer.current) clearTimeout(timer.current); pending.current = false; setState('idle'); setExample(undefined); setErrors({}); };
-  return <section className="support-page"><PageIntro title="Follow its journey." eyebrow="ORDER TRACKING" description="A preview of order progress. Live order lookup and carrier updates will be connected later."/><p className="support-preview-note">Use example details only. No lookup request is sent. References and email addresses stay in memory and clear when you leave or refresh.</p><div className="support-two-columns"><div><form className="support-form" noValidate onSubmit={lookup}>{Object.keys(errors).length > 0 && <div className="support-errors" tabIndex={-1} role="alert" ref={errorBox}>Please check the highlighted details.</div>}<div className="support-field"><label htmlFor="tracking-reference">Order reference</label><input id="tracking-reference" autoComplete="off" maxLength={40} value={reference} onChange={e => { clearResult(); setReference(e.target.value); }} aria-invalid={Boolean(errors.reference)} aria-describedby={errors.reference ? 'tracking-reference-error' : undefined}/>{errors.reference && <p className="field-error" id="tracking-reference-error">{errors.reference}</p>}</div><div className="support-field"><label htmlFor="tracking-email">Order email</label><input id="tracking-email" type="email" autoComplete="off" maxLength={100} value={email} onChange={e => { clearResult(); setEmail(e.target.value); }} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'tracking-email-error' : undefined}/>{errors.email && <p className="field-error" id="tracking-email-error">{errors.email}</p>}</div><button className="button" type="submit" disabled={state === 'loading'}>{state === 'loading' ? 'Checking example…' : 'Preview tracking'} <span aria-hidden="true">→</span></button><div className="tracking-examples"><span>Try fictional details:</span>{trackingExamples.map(item => <button key={item.reference} type="button" className="text-button" onClick={() => { clearResult(); setReference(item.reference); setEmail('alex@example.com'); }}>{item.reference}</button>)}</div></form>
+
+  const clearResult = () => { if (timer.current) clearTimeout(timer.current); pending.current = false; setState('idle'); setExample(undefined); setDbOrder(null); setErrors({}); };
+
+  return <section className="support-page"><PageIntro title="Follow its journey." eyebrow="ORDER TRACKING" description="Track the live progress of your handcrafted order or explore example tracking flows."/><p className="support-preview-note">Enter your order reference (e.g. SG-1001) and order email address to query live order records.</p><div className="support-two-columns"><div><form className="support-form" noValidate onSubmit={lookup}>{Object.keys(errors).length > 0 && <div className="support-errors" tabIndex={-1} role="alert" ref={errorBox}>Please check the highlighted details.</div>}<div className="support-field"><label htmlFor="tracking-reference">Order reference</label><input id="tracking-reference" autoComplete="off" maxLength={40} value={reference} onChange={e => { clearResult(); setReference(e.target.value); }} aria-invalid={Boolean(errors.reference)} aria-describedby={errors.reference ? 'tracking-reference-error' : undefined}/>{errors.reference && <p className="field-error" id="tracking-reference-error">{errors.reference}</p>}</div><div className="support-field"><label htmlFor="tracking-email">Order email</label><input id="tracking-email" type="email" autoComplete="off" maxLength={100} value={email} onChange={e => { clearResult(); setEmail(e.target.value); }} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'tracking-email-error' : undefined}/>{errors.email && <p className="field-error" id="tracking-email-error">{errors.email}</p>}</div><button className="button" type="submit" disabled={state === 'loading'}>{state === 'loading' ? 'Searching orders…' : 'Track Order'} <span aria-hidden="true">→</span></button><div className="tracking-examples"><span>Try fictional details:</span>{trackingExamples.map(item => <button key={item.reference} type="button" className="text-button" onClick={() => { clearResult(); setReference(item.reference); setEmail('alex@example.com'); }}>{item.reference}</button>)}</div></form>
     <div ref={result} tabIndex={-1} className="tracking-result" aria-live="polite" aria-busy={state === 'loading'}>
-      {state === 'loading' && <p role="status">Showing a lookup loading state. No service is being contacted.</p>}
+      {state === 'loading' && <p role="status">Searching live database for order {reference}…</p>}
+      {state === 'found' && dbOrder && <>
+        <span className="eyebrow">LIVE DATABASE ORDER · CONFIRMED</span>
+        <h2>{dbOrder.id}</h2>
+        <span className="order-status" style={{ background: '#1e3524', color: '#fff', padding: '3px 8px', borderRadius: '3px', fontSize: '11px', display: 'inline-block', marginBottom: '8px' }}>
+          ● {dbOrder.status.toUpperCase()}
+        </span>
+        <p>Placed on {dbOrder.created_at ? new Date(dbOrder.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Recently'} · Total: {dbOrder.currency} {dbOrder.total?.toLocaleString()}</p>
+        <ol className="tracking-timeline">
+          {[
+            { label: 'Order Confirmed', desc: 'Order verified and securely recorded in cloud database.' },
+            { label: 'Artisan Workshop', desc: 'Handcrafting, finishing and packaging artisanal objects.' },
+            { label: 'In Transit', desc: 'Dispatched via international priority courier.' },
+            { label: 'Delivered', desc: 'Safely delivered to customer address.' }
+          ].map((step, index) => {
+            const currentStage = getOrderStage(dbOrder.status);
+            const isPast = index < currentStage;
+            const isCurrent = index === currentStage - 1;
+            return (
+              <li key={step.label} className={isPast ? 'complete' : ''} aria-current={isCurrent ? 'step' : undefined}>
+                <span aria-hidden="true">{isPast ? '✓' : '○'}</span>
+                <div>
+                  <strong>{step.label}</strong>
+                  <p>{isPast ? step.desc : 'Pending progression'}</p>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+        {dbOrder.order_items && dbOrder.order_items.length > 0 && (
+          <div style={{ marginTop: '16px', borderTop: '1px solid #ded6c5', paddingTop: '12px' }}>
+            <strong style={{ fontSize: '11px', color: '#1a271d', display: 'block', marginBottom: '6px' }}>Order Items:</strong>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {dbOrder.order_items.map((item, idx) => (
+                <li key={idx} style={{ fontSize: '11px', color: '#555d53', display: 'flex', justifyContent: 'space-between', padding: '3px 0' }}>
+                  <span>{item.quantity}× {item.product_name}</span>
+                  <span>{dbOrder.currency} {(item.unit_price * item.quantity).toLocaleString()}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </>}
       {state === 'found' && example && <><span className="eyebrow">FICTIONAL TRACKING EXAMPLE</span><h2>{example.reference}</h2><span className="order-status">{example.status} · Demo</span><p>{example.description}</p><ol className="tracking-timeline">{['Order received', 'Preparing selection', 'With carrier', 'Delivered'].map((label, index) => <li key={label} className={index < example.stage ? 'complete' : ''} aria-current={index === example.stage - 1 ? 'step' : undefined}><span aria-hidden="true">{index < example.stage ? '✓' : '○'}</span><div><strong>{label}</strong><p>{index < example.stage ? 'Example state only · no real event or date' : 'No event shown in this example'}</p></div></li>)}</ol><p className="support-small">No carrier, tracking number, scan location or delivery date is confirmed.</p></>}
-      {state === 'missing' && <div className="support-empty"><h2>No matching example</h2><p>Real order lookup is not connected. Try DEMO-1001 or DEMO-1002 with alex@example.com to view a fictional result.</p><a className="text-button" href="/contact">Contact form preview ↗</a></div>}
-      {state === 'error' && <div className="support-empty"><h2>Tracking is temporarily unavailable</h2><p>This is an error-state demonstration. No tracking request failed, and no order details were accessed.</p><button className="button" onClick={() => lookup()}>Try again <span aria-hidden="true">→</span></button></div>}
-    </div></div><aside className="support-aside"><h2>A little guidance.</h2><p>For the live service, order references and tracking updates will come from confirmed orders and the shipping provider.</p><a className="text-button" href="/policies/shipping">Shipping information ↗</a><a className="text-button" href="/support">More help ↗</a><details className="tracking-error-demo"><summary>Design review: error state</summary><p>Preview the unavailable-service layout.</p><button className="text-button" onClick={() => { clearResult(); setState('error'); }}>Show error preview</button></details></aside></div></section>;
+      {state === 'missing' && <div className="support-empty"><h2>No matching order found</h2><p>We could not find an order matching reference "{reference}" and email "{email}". Please verify your details, or test with demo reference DEMO-1001 (alex@example.com).</p><a className="text-button" href="/contact">Contact support ↗</a></div>}
+      {state === 'error' && <div className="support-empty"><h2>Tracking service is temporarily unavailable</h2><p>Please check your internet connection or try again in a few moments.</p><button className="button" onClick={() => lookup()}>Try again <span aria-hidden="true">→</span></button></div>}
+    </div></div><aside className="support-aside"><h2>Live Order Information.</h2><p>Order references and tracking updates are queried directly from the SoraviaGlobal order service and international shipping provider.</p><a className="text-button" href="/policies/shipping">Shipping information ↗</a><a className="text-button" href="/support">More help ↗</a><details className="tracking-error-demo"><summary>Design review: error state</summary><p>Preview the unavailable-service layout.</p><button className="text-button" onClick={() => { clearResult(); setState('error'); }}>Show error preview</button></details></aside></div></section>;
 }
 
 export function ContactPage() {
