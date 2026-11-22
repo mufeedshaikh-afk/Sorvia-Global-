@@ -16,6 +16,22 @@ const cartKey = 'sorvia-cart-v1';
 const regionKey = 'sorvia-region-v1';
 export const maxQuantity = 99; // Preview UI limit, not a stock figure.
 
+export const currencyRates: Record<typeof currencies[number], { rate: number; symbol: string }> = {
+  INR: { rate: 1, symbol: '₹' },
+  USD: { rate: 0.012, symbol: '$' },
+  GBP: { rate: 0.0093, symbol: '£' },
+  EUR: { rate: 0.011, symbol: '€' },
+};
+
+export function formatPrice(amountInINR: number, currency: typeof currencies[number] = 'INR'): string {
+  const meta = currencyRates[currency] || currencyRates.INR;
+  const converted = amountInINR * meta.rate;
+  if (currency === 'INR') {
+    return `${meta.symbol}${Math.round(converted).toLocaleString('en-IN')}`;
+  }
+  return `${meta.symbol}${converted.toFixed(2)}`;
+}
+
 export function validateCart(value: unknown): CartLine[] {
   if (!Array.isArray(value)) return [];
   const seen = new Set<string>();
@@ -35,15 +51,26 @@ export function validateRegion(value: unknown): Region | null {
 function read(key: string): unknown {
   try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch { return null; }
 }
+
+const defaultRegion: Region = { country: 'IN', currency: 'INR' };
+
 const CommerceContext = createContext<{
-  lines: CartLine[]; region: Region | null; count: number; cartStorageError: boolean; regionStorageError: boolean;
-  add: (id: string, quantity: number) => void; setQuantity: (id: string, quantity: number) => void;
-  remove: (id: string) => void; setRegion: (region: Region) => void;
+  lines: CartLine[];
+  region: Region;
+  count: number;
+  currency: typeof currencies[number];
+  formatPrice: (amountInINR: number) => string;
+  cartStorageError: boolean;
+  regionStorageError: boolean;
+  add: (id: string, quantity: number) => void;
+  setQuantity: (id: string, quantity: number) => void;
+  remove: (id: string) => void;
+  setRegion: (region: Region) => void;
 } | null>(null);
 
 export function CommerceProvider({ children }: { children: ReactNode }) {
   const [lines, updateLines] = useState(() => validateCart(read(cartKey)));
-  const [region, updateRegion] = useState(() => validateRegion(read(regionKey)));
+  const [region, updateRegion] = useState<Region>(() => validateRegion(read(regionKey)) || defaultRegion);
   const current = useRef(lines);
   const [cartStorageError, setCartStorageError] = useState(false);
   const [regionStorageError, setRegionStorageError] = useState(false);
@@ -62,7 +89,10 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
       if (event.key === cartKey || event.key === null) {
         const next = validateCart(read(cartKey)); current.current = next; updateLines(next);
       }
-      if (event.key === regionKey || event.key === null) updateRegion(validateRegion(read(regionKey)));
+      if (event.key === regionKey || event.key === null) {
+        const next = validateRegion(read(regionKey));
+        if (next) updateRegion(next);
+      }
     };
     window.addEventListener('storage', sync);
     return () => window.removeEventListener('storage', sync);
@@ -81,7 +111,23 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
     const next = validateRegion(value);
     if (next) { persist(regionKey, next, setRegionStorageError); updateRegion(next); }
   };
-  return <CommerceContext.Provider value={{ lines, region, count: lines.reduce((total, line) => total + line.quantity, 0), cartStorageError, regionStorageError, add, setQuantity, remove, setRegion }}>{children}</CommerceContext.Provider>;
+
+  const currency = region.currency;
+  const formatPriceCurried = (amountInINR: number) => formatPrice(amountInINR, currency);
+
+  return <CommerceContext.Provider value={{
+    lines,
+    region,
+    count: lines.reduce((total, line) => total + line.quantity, 0),
+    currency,
+    formatPrice: formatPriceCurried,
+    cartStorageError,
+    regionStorageError,
+    add,
+    setQuantity,
+    remove,
+    setRegion
+  }}>{children}</CommerceContext.Provider>;
 }
 export function useCommerce() {
   const context = useContext(CommerceContext);

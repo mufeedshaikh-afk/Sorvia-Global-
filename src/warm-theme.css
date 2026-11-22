@@ -559,6 +559,28 @@
   transform: scale(1.045);
 }
 
+.theme-warm .product-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.theme-warm .product-card-price {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #141210;
+  letter-spacing: -0.2px;
+}
+
+.theme-warm .checkout-price-amount {
+  font-weight: 700;
+  color: #141210;
+  font-size: 13px;
+}
+
 .theme-warm .sample-tag {
   position: absolute;
   top: 14px;

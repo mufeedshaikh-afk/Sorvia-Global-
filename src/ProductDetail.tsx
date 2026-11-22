@@ -20,10 +20,10 @@ function browsingLink(fallback: string) {
 }
 
 function ProductBuyBox({ product }: { product: StorefrontProduct }) {
-  const { add } = useCommerce();
+  const { add, formatPrice } = useCommerce();
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
-  const priceDisplay = product.price !== null ? `₹${product.price.toLocaleString('en-IN')}` : '₹3,850';
+  const priceDisplay = formatPrice(product.price ?? 3850);
 
   const handleAddToCart = () => {
     add(product.id, quantity);
