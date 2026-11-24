@@ -6,6 +6,7 @@ export const products = [
     "category": "Decorative objects",
     "material": "Brass",
     "kind": "brass",
+    "price": 6400,
     "image": "brass-vessels",
     "alt": "Sculptural, durian-shaped brass vessel in a museum display"
   },
@@ -15,6 +16,7 @@ export const products = [
     "category": "Decorative objects",
     "material": "Wood",
     "kind": "wood",
+    "price": 3600,
     "image": "wood-accents",
     "alt": "Carved wooden bowl with a patterned lid on a white background"
   },
@@ -24,6 +26,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Copper",
     "kind": "copper",
+    "price": 4200,
     "image": "copper-vessel",
     "alt": "Copper bottle and its lid on a wooden surface"
   },
@@ -33,6 +36,7 @@ export const products = [
     "category": "Decorative chess",
     "material": "Wood",
     "kind": "chess",
+    "price": 8900,
     "image": "wood-chess",
     "alt": "Carved wooden chess pieces arranged on a chessboard"
   },
@@ -42,6 +46,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Brass",
     "kind": "brass",
+    "price": 5800,
     "image": "brass-vase",
     "alt": "Engraved brass vase with a rounded body, photographed in a museum"
   },
@@ -51,6 +56,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Wood",
     "kind": "wood",
+    "price": 4100,
     "image": "wood-vase",
     "alt": "Carved dark wooden vessel with a decorative lid"
   },
@@ -60,6 +66,7 @@ export const products = [
     "category": "Decorative objects",
     "material": "Copper",
     "kind": "copper",
+    "price": 3200,
     "image": "copper-bowl",
     "alt": "Historic copper bowl with a dark patina in a museum display"
   },
@@ -69,6 +76,7 @@ export const products = [
     "category": "Decorative chess",
     "material": "Brass",
     "kind": "chess",
+    "price": 12500,
     "image": "metal-chess",
     "alt": "Historic metal chess pieces, used as a reference for the brass chess concept"
   },
@@ -78,6 +86,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Ceramic",
     "kind": "ceramic",
+    "price": 2800,
     "image": "ceramic-vase",
     "alt": "Decorative ceramic flower vase"
   },
@@ -87,6 +96,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Glass",
     "kind": "glass",
+    "price": 2400,
     "image": "glass-vase",
     "alt": "Decorative glass vase photographed against a plain background"
   },
@@ -96,6 +106,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Stone",
     "kind": "stone",
+    "price": 4900,
     "image": "stone-vase",
     "alt": "Historic marble vase with a high foot and four lug handles"
   },
@@ -105,6 +116,7 @@ export const products = [
     "category": "Decorative objects",
     "material": "Brass",
     "kind": "brass",
+    "price": 3850,
     "image": "brass-bowl",
     "alt": "Round brass bowl with a warm metal finish"
   },
@@ -114,6 +126,7 @@ export const products = [
     "category": "Decorative objects",
     "material": "Brass",
     "kind": "brass",
+    "price": 4600,
     "image": "brass-traditional-bowl",
     "alt": "Traditional Indian brass bowl"
   },
@@ -123,6 +136,7 @@ export const products = [
     "category": "Decorative objects",
     "material": "Wood",
     "kind": "wood",
+    "price": 2900,
     "image": "wood-bowl",
     "alt": "Historic wooden bowl with a natural wood finish"
   },
@@ -132,6 +146,7 @@ export const products = [
     "category": "Decorative objects",
     "material": "Wood",
     "kind": "wood",
+    "price": 3700,
     "image": "wood-box",
     "alt": "Ornamented wooden box in a museum display"
   },
@@ -141,6 +156,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Copper",
     "kind": "copper",
+    "price": 4500,
     "image": "copper-jug",
     "alt": "Historic copper jug from Bangladesh"
   },
@@ -150,6 +166,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Copper",
     "kind": "copper",
+    "price": 5200,
     "image": "copper-bamboo-vase",
     "alt": "Hanging copper-alloy vase in the form of a bamboo shoot"
   },
@@ -159,6 +176,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Copper",
     "kind": "copper",
+    "price": 4800,
     "image": "copper-enamel-vase",
     "alt": "Vase with enamel decoration on copper"
   },
@@ -168,6 +186,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Ceramic",
     "kind": "ceramic",
+    "price": 3400,
     "image": "ceramic-jaguar-vase",
     "alt": "Historic ceramic vase with jaguar decoration"
   },
@@ -177,6 +196,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Ceramic",
     "kind": "ceramic",
+    "price": 3100,
     "image": "ceramic-painted-vase",
     "alt": "Historic Maya polychrome ceramic vessel"
   },
@@ -186,6 +206,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Ceramic",
     "kind": "ceramic",
+    "price": 2950,
     "image": "ceramic-footed-vase",
     "alt": "Historic polychrome ceramic vessel in an animal form"
   },
@@ -195,6 +216,7 @@ export const products = [
     "category": "Decorative objects",
     "material": "Ceramic",
     "kind": "ceramic",
+    "price": 2600,
     "image": "ceramic-bowl",
     "alt": "Historic ceramic bowl"
   },
@@ -204,6 +226,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Glass",
     "kind": "glass",
+    "price": 2750,
     "image": "glass-floriform-vase",
     "alt": "Iridescent glass vase with a flower-inspired silhouette"
   },
@@ -213,6 +236,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Glass",
     "kind": "glass",
+    "price": 3200,
     "image": "glass-overlay-vase",
     "alt": "Glass vase with red overlay decoration"
   },
@@ -222,6 +246,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Glass",
     "kind": "glass",
+    "price": 2900,
     "image": "glass-cobalt-vase",
     "alt": "Cobalt blue glass vase"
   },
@@ -231,6 +256,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Glass",
     "kind": "glass",
+    "price": 3600,
     "image": "glass-art-vase",
     "alt": "Decorated glass vase by Emile Galle"
   },
@@ -240,6 +266,7 @@ export const products = [
     "category": "Decorative objects",
     "material": "Stone",
     "kind": "stone",
+    "price": 4100,
     "image": "stone-bowl",
     "alt": "Historic marble bowl"
   },
@@ -249,6 +276,7 @@ export const products = [
     "category": "Decorative objects",
     "material": "Stone",
     "kind": "stone",
+    "price": 4700,
     "image": "stone-spouted-bowl",
     "alt": "Historic marble bowl with a pouring spout"
   },
@@ -258,6 +286,7 @@ export const products = [
     "category": "Vases & vessels",
     "material": "Stone",
     "kind": "stone",
+    "price": 5400,
     "image": "stone-amphora",
     "alt": "Historic miniature alabaster amphora with handles"
   },
@@ -267,6 +296,7 @@ export const products = [
     "category": "Decorative objects",
     "material": "Stone",
     "kind": "stone",
+    "price": 3900,
     "image": "stone-rounded-bowl",
     "alt": "Historic rounded marble bowl"
   }

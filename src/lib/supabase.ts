@@ -79,7 +79,7 @@ export function toStorefrontProduct(item: any): StorefrontProduct {
     image,
     alt: item.image_alt || item.alt || local?.alt || item.name,
     description: item.description || (local ? `${local.alt}. An artisanal study selected for form, material and finish.` : ''),
-    price: item.price !== undefined && item.price !== null ? Number(item.price) : null,
+    price: item.price !== undefined && item.price !== null ? Number(item.price) : (local && (local as any).price ? Number((local as any).price) : 3850),
     currency: item.currency || 'INR',
     availability: item.availability || 'Unconfirmed',
     dimensions: item.dimensions || null,
