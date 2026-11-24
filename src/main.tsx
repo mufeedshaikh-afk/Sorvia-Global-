@@ -19,6 +19,9 @@ import { ProductDetail } from './ProductDetail';
 import { collections } from './collections';
 import { SearchPage, WishlistPage } from './DiscoveryPages';
 import { WishlistProvider, useWishlist } from './WishlistContext';
+import { ProductCard } from './ProductCard';
+import { products as localCatalog } from './catalog';
+import { toStorefrontProduct } from './lib/supabase';
 
 const categories = collections
   .filter(collection => collection.material || collection.kind === 'chess')
@@ -86,6 +89,181 @@ function Header() {
 }
 
 
+const heroSlides = [
+  {
+    tag: 'HAND-BEATEN BRASSWARE',
+    title: 'A little character. A lasting impression.',
+    subtitle: 'Thoughtfully selected Moradabad brass vessels, urli bowls and decorative accents.',
+    kind: 'brass',
+    path: '/collections/brass',
+    btn: 'Explore Brassware',
+  },
+  {
+    tag: 'SAHARANPUR WOODCRAFT',
+    title: 'Natural warmth. Distinctive grain.',
+    subtitle: 'Hand-carved wooden vessels, sculptural trays and statement chess sets.',
+    kind: 'wood',
+    path: '/collections/wood',
+    btn: 'Explore Woodcraft',
+  },
+  {
+    tag: 'PURE HAMMERED COPPER',
+    title: 'Luminous warmth for modern living.',
+    subtitle: 'Hammered copper jugs, carafes and timeless tabletop objects for considered spaces.',
+    kind: 'copper',
+    path: '/collections/copper',
+    btn: 'Explore Copperware',
+  },
+];
+
+function HomePage() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const slide = heroSlides[activeSlide];
+  const featured = localCatalog.slice(0, 4).map(toStorefrontProduct);
+
+  return (
+    <>
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <div className="eyebrow"><span className="small-line"/> {slide.tag}</div>
+          <h1 id="hero-title">{slide.title}</h1>
+          <p>{slide.subtitle}</p>
+          <div className="hero-actions">
+            <a className="button" href={slide.path}>{slide.btn} <Arrow/></a>
+            <a className="hero-secondary-btn" href="/shop">Browse Full Catalog →</a>
+          </div>
+          <div className="hero-slide-nav" role="tablist" aria-label="Featured craft spotlights">
+            {heroSlides.map((s, idx) => (
+              <button
+                key={s.tag}
+                type="button"
+                role="tab"
+                aria-selected={activeSlide === idx}
+                className={`hero-slide-pill ${activeSlide === idx ? 'is-active' : ''}`}
+                onClick={() => setActiveSlide(idx)}
+              >
+                0{idx + 1} · {s.tag.split(' ')[1] || s.tag.split(' ')[0]}
+              </button>
+            ))}
+          </div>
+          <div className="hero-footnote">
+            <span>AUTHENTIC REGIONAL CRAFT CLUSTERS</span>
+            <span>DIRECT ARTISAN EXPORT</span>
+          </div>
+        </div>
+        <ObjectArt kind={slide.kind} hero key={slide.kind} />
+      </section>
+
+      {/* Trust & Craft Standards Banner */}
+      <section className="artisan-trust-strip" aria-label="Craft standards">
+        <div className="trust-item">
+          <span className="trust-icon" aria-hidden="true">✦</span>
+          <div>
+            <strong>100% Master Artisan Made</strong>
+            <p>Moradabad brass, Saharanpur wood &amp; Jaipur ceramics</p>
+          </div>
+        </div>
+        <div className="trust-item">
+          <span className="trust-icon" aria-hidden="true">✈</span>
+          <div>
+            <strong>Insured Global Air Freight</strong>
+            <p>Direct doorstep export delivery with real-time tracking</p>
+          </div>
+        </div>
+        <div className="trust-item">
+          <span className="trust-icon" aria-hidden="true">◎</span>
+          <div>
+            <strong>Multi-Currency Settlement</strong>
+            <p>Transparent pricing in INR, USD, GBP, and EUR</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Direct Material Discovery Pills */}
+      <section className="home-discovery" aria-label="Discover by material">
+        <div className="section-heading-center">
+          <div className="eyebrow">FAST MATERIAL DISCOVERY</div>
+          <h2>Explore by artisan material</h2>
+        </div>
+        <div className="home-material-pills">
+          {[
+            ['Brassware', '/collections/brass', 'Urli & Bowls'],
+            ['Copperware', '/collections/copper', 'Jugs & Carafes'],
+            ['Woodcraft', '/collections/wood', 'Carved Décor'],
+            ['Ceramics', '/collections/ceramic', 'Glazed Vases'],
+            ['Stoneware', '/collections/stone', 'Sculptural Art'],
+            ['Glassware', '/collections/glass', 'Hand-blown Form'],
+          ].map(([label, href, desc]) => (
+            <a href={href} key={label} className="material-pill-card">
+              <span className="pill-name">{label}</span>
+              <span className="pill-desc">{desc}</span>
+              <span className="pill-arrow" aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* Trending / Featured Product Showcase */}
+      <section className="section home-featured" aria-labelledby="featured-title">
+        <div className="section-heading">
+          <div>
+            <div className="eyebrow">CURATED PIECES · READY TO SHIP</div>
+            <h2 id="featured-title">Trending Artisan Objects</h2>
+          </div>
+          <a className="button" href="/shop">View Full Catalog ({localCatalog.length}) <Arrow/></a>
+        </div>
+        <div className="product-grid home-product-grid">
+          {featured.map(product => (
+            <ProductCard key={product.id} product={product} from="/" />
+          ))}
+        </div>
+      </section>
+
+      {/* Material & Mood Collections Grid */}
+      <section className="section collections" id="collections" aria-labelledby="collections-title">
+        <div className="section-heading">
+          <div>
+            <div className="eyebrow">EXPLORE OUR COLLECTIONS</div>
+            <h2 id="collections-title">Curated by heritage &amp; craft</h2>
+          </div>
+          <p>From warm metallic accents to natural textures,<br className="desktop-break"/> discover a starting point for your space.</p>
+        </div>
+        <div className="category-grid">
+          {categories.map((category, index) => (
+            <article className="category-card" key={category.kind}>
+              <div className="category-art">
+                <ObjectArt kind={category.kind}/>
+                <span className="category-number">0{index + 1}</span>
+              </div>
+              <div className="category-title">
+                <h3>{category.name}</h3>
+                <span aria-hidden="true">↗</span>
+              </div>
+              <p>{category.detail}</p>
+              <a className="coming-soon" href={category.path}>Browse {category.name} →</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Brand Story / Approach */}
+      <section className="story" id="approach" aria-labelledby="story-title">
+        <div className="story-visual">
+          <ObjectArt kind="wood"/>
+          <span className="visual-label">AN EXPLORATION OF FORM &amp; TEXTURE</span>
+        </div>
+        <div className="story-copy">
+          <div className="eyebrow">THE SORAVIAGLOBAL APPROACH</div>
+          <h2 id="story-title">Good objects.<br/><em>Thoughtfully selected.</em></h2>
+          <p>We’re creating a destination for handicrafts and home décor, bringing together objects chosen for their material, finish and distinctive character.</p>
+          <p>Our focus is on helping you discover pieces that feel at home in your everyday surroundings.</p>
+          <span className="editorial-note">Handcrafted in India &middot; Exported Globally</span>
+        </div>
+      </section>
+    </>
+  );
+}
+
 function App() {
   const path = location.pathname.replace(/\/$/, '') || '/';
   if (path === '/admin' || path.startsWith('/admin/')) return <div className="theme-warm"><AdminPage/></div>;
@@ -95,20 +273,7 @@ function App() {
   return <div className={warmTheme ? 'theme-warm' : undefined}>
     <a className="skip-link" href="#main">Skip to content</a>
     <div id="home"><Header/></div>
-    <main id="main">{path === "/support" ? <SupportPage/> : path === "/contact" ? <ContactPage/> : path === "/track-order" ? <TrackingPage/> : path === "/policies" || path.startsWith("/policies/") ? <PoliciesPage path={path}/> : path === "/account" ? <AccountPage/> : path === "/checkout" ? <CheckoutPage/> : path === "/cart" ? <CartPage/> : path === "/search" ? <SearchPage/> : path === "/wishlist" ? <WishlistPage/> : path.startsWith("/product/") ? <ProductDetail id={path.slice("/product/".length)}/> : collection ? <Shop collection={collection}/> : path === "/shop" ? <Shop/> : collectionRoute ? <section className="section missing-collection"><div className="eyebrow">A NEW DIRECTION</div><h1>Collection not found</h1><p>This collection is not available at the moment. Explore the Shop to find another starting point.</p><a className="button" href="/shop">Browse the collection <Arrow/></a></section> : path !== "/" ? <NotFoundPage/> : <>
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="hero-copy"><div className="eyebrow"><span className="small-line"/> OBJECTS WITH CHARACTER</div><h1 id="hero-title">A little character.<br/>A lasting <em>impression.</em></h1><p>Thoughtfully selected handicrafts and décor for the spaces you make your own.</p><a className="button" href="/shop">Explore the collections <Arrow/></a><div className="hero-footnote"><span>BRASS · COPPER · WOOD · MORE</span><span>Selected with intention</span></div></div>
-        <ObjectArt kind="brass" hero/>
-      </section>
-      <section className="home-discovery" aria-label="Discover by material"><div className="eyebrow">DISCOVER BY MATERIAL</div><div className="home-material-pills">{[['Brass', '/collections/brass'], ['Copper', '/collections/copper'], ['Wood', '/collections/wood'], ['Ceramic', '/collections/ceramic'], ['Stone', '/collections/stone'], ['Glass', '/collections/glass']].map(([label, href]) => <a href={href} key={label}>{label}<span aria-hidden="true">↗</span></a>)}</div></section>
-      <section className="artisan-highlights" aria-label="Artisan highlights"><span>Handcrafted Indian décor</span><span>Materials with character</span><span>Global delivery enquiries welcome</span></section>
-      <div className="values-strip"><span>A considered selection</span><span>Material, texture & form</span><span>Details worth discovering</span></div>
-      <section className="section collections" id="collections" aria-labelledby="collections-title">
-        <div className="section-heading"><div><div className="eyebrow">FIND YOUR KIND OF CHARACTER</div><h2 id="collections-title">Explore by material & mood</h2></div><p>From warm metallic accents to natural textures,<br className="desktop-break"/> discover a starting point for your space.</p></div>
-        <div className="category-grid">{categories.map((category, index) => <article className="category-card" key={category.kind}><div className="category-art"><ObjectArt kind={category.kind}/><span className="category-number">0{index + 1}</span></div><div className="category-title"><h3>{category.name}</h3><span aria-hidden="true">↗</span></div><p>{category.detail}</p><a className="coming-soon" href={category.path}>Browse {category.name} →</a></article>)}</div>
-      </section>
-      <section className="story" id="approach" aria-labelledby="story-title"><div className="story-visual"><ObjectArt kind="wood"/><span className="visual-label">AN EXPLORATION OF FORM & TEXTURE</span></div><div className="story-copy"><div className="eyebrow">THE SORAVIAGLOBAL APPROACH</div><h2 id="story-title">Good objects.<br/><em>Thoughtfully selected.</em></h2><p>We’re creating a destination for handicrafts and home décor, bringing together objects chosen for their material, finish and distinctive character.</p><p>Our focus is on helping you discover pieces that feel at home in your everyday surroundings.</p><span className="editorial-note">Draft brand introduction · awaiting business approval</span></div></section>
-    </>}</main>
+    <main id="main">{path === "/support" ? <SupportPage/> : path === "/contact" ? <ContactPage/> : path === "/track-order" ? <TrackingPage/> : path === "/policies" || path.startsWith("/policies/") ? <PoliciesPage path={path}/> : path === "/account" ? <AccountPage/> : path === "/checkout" ? <CheckoutPage/> : path === "/cart" ? <CartPage/> : path === "/search" ? <SearchPage/> : path === "/wishlist" ? <WishlistPage/> : path.startsWith("/product/") ? <ProductDetail id={path.slice("/product/".length)}/> : collection ? <Shop collection={collection}/> : path === "/shop" ? <Shop/> : collectionRoute ? <section className="section missing-collection"><div className="eyebrow">A NEW DIRECTION</div><h1>Collection not found</h1><p>This collection is not available at the moment. Explore the Shop to find another starting point.</p><a className="button" href="/shop">Browse the collection <Arrow/></a></section> : path !== "/" ? <NotFoundPage/> : <HomePage/>}</main>
     <footer><div className="footer-top"><a className="wordmark" href="/" aria-label="SoraviaGlobal home"><img src="/images/soravia-emblem-mark.png" alt="SoraviaGlobal Emblem" className="brand-logo-emblem" /><div className="wordmark-text-wrap"><span className="wordmark-title">SORAVIA<span className="wordmark-gold">GLOBAL</span></span><span className="wordmark-tagline">EXPORTS · HANDICRAFTS · HOME DÉCOR</span></div></a><p>Considered objects.<br/>Spaces with personality.</p><nav aria-label="Footer navigation"><a href="/shop">Shop</a><a href="/search">Search</a><a href="/wishlist">Wishlist</a><a href="/cart">Cart</a><a href="/account">Account</a><a href="/#collections">Collections</a><a href="/#approach">Our approach</a><a href="/images/reference/credits.html" target="_blank" rel="noopener noreferrer">Image credits</a></nav></div><nav className="footer-support" aria-label="Customer service"><a href="/support">Help & FAQs</a><a href="/contact">Contact</a><a href="/track-order">Track order</a><a href="/policies/shipping">Shipping</a><a href="/policies/returns">Returns & cancellations</a><a href="/policies/privacy">Privacy</a><a href="/policies/terms">Terms</a></nav><div className="footer-region"><RegionControl/></div><div className="footer-bottom"><span>© {new Date().getFullYear()} SoraviaGlobal</span><span>Catalog and ordering coming soon</span><a href="#home">Back to top ↑</a></div></footer>
   </div>;
 }
