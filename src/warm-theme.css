@@ -459,6 +459,50 @@
   color: #1e3524;
 }
 
+/* Clean, Refined Shop Banner CTAs (Replaces odd wide-gap button) */
+.theme-warm .luxury-explore,
+.theme-warm .collection-jump {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  padding: 13px 22px !important;
+  background: #1a1714 !important;
+  color: #ffffff !important;
+  font-family: 'DM Sans', -apple-system, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
+  border: 1px solid #1a1714 !important;
+  border-radius: 4px !important;
+  text-decoration: none !important;
+  width: fit-content !important;
+  margin: 14px 0 24px 0 !important;
+  box-shadow: 0 4px 12px rgba(26, 23, 20, 0.15) !important;
+  transition: all 0.2s ease !important;
+}
+
+.theme-warm .luxury-explore:hover,
+.theme-warm .collection-jump:hover {
+  background: #8c5b23 !important;
+  border-color: #8c5b23 !important;
+  color: #ffffff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(140, 91, 35, 0.25) !important;
+}
+
+.theme-warm .luxury-explore span,
+.theme-warm .collection-jump span {
+  font-size: 16px !important;
+  line-height: 1 !important;
+  transition: transform 0.2s ease !important;
+}
+
+.theme-warm .luxury-explore:hover span,
+.theme-warm .collection-jump:hover span {
+  transform: translateY(3px) !important;
+}
+
 .theme-warm .collection-scope {
   border-left-color: #9e7d44;
   color: #4b5449;
