@@ -39,7 +39,37 @@ function Header() {
           <span className="wordmark-tagline">EXPORTS · HANDICRAFTS · HOME DÉCOR</span>
         </div>
       </a>
-      <nav className="desktop-nav" aria-label="Main navigation"><a href="/shop" aria-current={location.pathname === "/shop" ? "page" : undefined}>Shop</a><a href="/#collections">Explore collections</a><a href="/#approach">Our approach</a></nav>
+      <nav className="desktop-nav" aria-label="Main navigation">
+        <a href="/shop" aria-current={location.pathname === "/shop" ? "page" : undefined}>Shop</a>
+        <div className="nav-mega-wrap">
+          <a className="nav-mega-trigger" href="/#collections" aria-haspopup="true">
+            Explore collections <span className="mega-caret" aria-hidden="true">▾</span>
+          </a>
+          <div className="nav-mega-menu" role="group" aria-label="Explore collections">
+            <div className="nav-mega-menu-inner">
+              {[
+                { label: 'Brassware', href: '/collections/brass', desc: 'Urli, Bowls & Vessels', icon: '✦' },
+                { label: 'Copperware', href: '/collections/copper', desc: 'Jugs, Planters & Accents', icon: '◈' },
+                { label: 'Woodcraft', href: '/collections/wood', desc: 'Hand-carved Decor', icon: '⌂' },
+                { label: 'Ceramics', href: '/collections/ceramic', desc: 'Glazed Vases & Bowls', icon: '◉' },
+                { label: 'Stoneware', href: '/collections/stone', desc: 'Sculptural Art Objects', icon: '◇' },
+                { label: 'Glassware', href: '/collections/glass', desc: 'Hand-blown Accents', icon: '◌' },
+                { label: 'Decorative Chess', href: '/category/decorative-chess', desc: 'Artisan Statement Sets', icon: '♟' },
+              ].map(cat => (
+                <a href={cat.href} key={cat.href} className="nav-mega-item">
+                  <span className="mega-icon" aria-hidden="true">{cat.icon}</span>
+                  <div className="mega-item-text">
+                    <span className="mega-item-title">{cat.label}</span>
+                    <span className="mega-item-desc">{cat.desc}</span>
+                  </div>
+                  <span className="mega-arrow" aria-hidden="true">↗</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+        <a href="/#approach">Our approach</a>
+      </nav>
       <nav className="header-actions" aria-label="Account, search, favourites and cart"><a href="/search" aria-current={location.pathname === "/search" ? "page" : undefined}>Search</a><a href="/wishlist" aria-current={location.pathname === "/wishlist" ? "page" : undefined} aria-label={`Wishlist, ${ids.length} saved ${ids.length === 1 ? "object" : "objects"}`}>♡ <span className="wishlist-word">Wishlist</span><span className="wishlist-count">{ids.length}</span></a><a className="header-account" href="/account" aria-current={location.pathname === "/account" ? "page" : undefined}>Account</a><MiniCart/></nav>
       <button className="menu-button" aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen(!open)}>{open ? 'Close −' : 'Menu +'}</button>
     </header>
@@ -70,10 +100,12 @@ function App() {
         <div className="hero-copy"><div className="eyebrow"><span className="small-line"/> OBJECTS WITH CHARACTER</div><h1 id="hero-title">A little character.<br/>A lasting <em>impression.</em></h1><p>Thoughtfully selected handicrafts and décor for the spaces you make your own.</p><a className="button" href="/shop">Explore the collections <Arrow/></a><div className="hero-footnote"><span>BRASS · COPPER · WOOD · MORE</span><span>Selected with intention</span></div></div>
         <ObjectArt kind="brass" hero/>
       </section>
+      <section className="home-discovery" aria-label="Discover by material"><div className="eyebrow">DISCOVER BY MATERIAL</div><div className="home-material-pills">{[['Brass', '/collections/brass'], ['Copper', '/collections/copper'], ['Wood', '/collections/wood'], ['Ceramic', '/collections/ceramic'], ['Stone', '/collections/stone'], ['Glass', '/collections/glass']].map(([label, href]) => <a href={href} key={label}>{label}<span aria-hidden="true">↗</span></a>)}</div></section>
+      <section className="artisan-highlights" aria-label="Artisan highlights"><span>Handcrafted Indian décor</span><span>Materials with character</span><span>Global delivery enquiries welcome</span></section>
       <div className="values-strip"><span>A considered selection</span><span>Material, texture & form</span><span>Details worth discovering</span></div>
       <section className="section collections" id="collections" aria-labelledby="collections-title">
         <div className="section-heading"><div><div className="eyebrow">FIND YOUR KIND OF CHARACTER</div><h2 id="collections-title">Explore by material & mood</h2></div><p>From warm metallic accents to natural textures,<br className="desktop-break"/> discover a starting point for your space.</p></div>
-        <div className="category-grid">{categories.map((category, index) => <article className="category-card" key={category.kind}><div className="category-art"><ObjectArt kind={category.kind}/><span className="category-number">0{index + 1}</span></div><div className="category-title"><h3>{category.name}</h3><span aria-hidden="true">↗</span></div><p>{category.detail}</p><a className="coming-soon" href={category.path}>Explore collection →</a></article>)}</div>
+        <div className="category-grid">{categories.map((category, index) => <article className="category-card" key={category.kind}><div className="category-art"><ObjectArt kind={category.kind}/><span className="category-number">0{index + 1}</span></div><div className="category-title"><h3>{category.name}</h3><span aria-hidden="true">↗</span></div><p>{category.detail}</p><a className="coming-soon" href={category.path}>Browse {category.name} →</a></article>)}</div>
       </section>
       <section className="story" id="approach" aria-labelledby="story-title"><div className="story-visual"><ObjectArt kind="wood"/><span className="visual-label">AN EXPLORATION OF FORM & TEXTURE</span></div><div className="story-copy"><div className="eyebrow">THE SORAVIAGLOBAL APPROACH</div><h2 id="story-title">Good objects.<br/><em>Thoughtfully selected.</em></h2><p>We’re creating a destination for handicrafts and home décor, bringing together objects chosen for their material, finish and distinctive character.</p><p>Our focus is on helping you discover pieces that feel at home in your everyday surroundings.</p><span className="editorial-note">Draft brand introduction · awaiting business approval</span></div></section>
     </>}</main>
